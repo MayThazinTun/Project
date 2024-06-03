@@ -1,6 +1,6 @@
 <?php require_once("./Layout/header.php") ?>
 
-    <div class="row" id="contact">
+    <div class="row p-3 mx-1" id="contact">
         <div class="col-7">
             <img src="" id="img">
         </div>
