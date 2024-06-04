@@ -15,6 +15,6 @@
             excepturi nihil quas enim libero facilis, corrupti error molestias quo pariatur repudiandae numquam?
             Asperiores, sit nihil.
         </p>
-        <div class="btn border border-1-dark" id="btn">Shop now <i class="fa-solid fa-arrow-right"></i> </div>
+        <div class="btn border border-1-dark" id="btn"><a href="./home.php" style="text-decoration:none; color:black;"> Shop now <i class="fa-solid fa-arrow-right"></i> </a></div>
     </div>
 </div>
