@@ -2,10 +2,22 @@
     <div>
 
     </div>
-    <div class="row">
-        <div class="col-2">
-            
-        </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Contact us</td>
+                    <td>My Account</td>
+                    <td>Information</td>
+                    <td>Catagories</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div>
 
