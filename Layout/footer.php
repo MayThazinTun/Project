@@ -48,7 +48,7 @@
                 </p>
             </div>
             <div class="col-2">
-                <h5 style="color:gray;">My account</h5>
+                <h5 style="color:gray;">Catagories</h5>
                 <p>
                     <a href="" style="text-decoration: none; color:gray;">T-shirts</a><br>
                     <a href="" style="text-decoration: none; color:gray;">Bags</a><br>
@@ -81,8 +81,8 @@
             </ul>
         </div>
     </div>
-    <div>
-
+    <div class=" bg-light py-3" style="height:60px;">
+        <p class="text-secondary text-center">Developed by team </p>
     </div>
 </div>
 </body>
