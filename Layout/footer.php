@@ -1,7 +1,7 @@
 <div class="d-grid gap-4 mx-3">
     <div class="row gap-3 bg-light">
         <div class="col text-center mb-2">
-            <img src="./images/shopbag_logo.png"  class="rounded me-3" style="width: 80px;height: 80px;">
+            <img src="../images/shopbag_logo.png"  class="rounded me-3" style="width: 80px;height: 80px;">
         </div>
         <div class="col-3 text-center">
             <div class="input-group py-4">

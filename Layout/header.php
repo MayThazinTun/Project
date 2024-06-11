@@ -13,4 +13,4 @@
 
 <body>
 
-<?php require_once("./Layout/nav.php") ?>
+<?php require_once("../Layout/nav.php") ?>

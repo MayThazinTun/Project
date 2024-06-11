@@ -1,26 +1,34 @@
-<nav class="d-flex justify-content-between py-3 px-5 border border-bottom-2">
+<nav class="d-flex justify-content-between py-2 px-5 border border-bottom-2">
     <div class="d-flex align-item-center">
-        <img src="./images/Logo.png" class="rounded me-3" style="width: 50px;height: 50px;">
-        <h3><a href="./index.php" style="text-decoration:none;" class="text-dark">Tee World Myanmar</a></h3>
+        <img src="../images/Logo.png" class="rounded me-3" style="width: 50px;height: 50px;">
+        <h3 class="m-0 py-2"><a href="../user/index.php" style="text-decoration:none;" class="text-dark">Tee World Myanmar</a></h3>
     </div>
-    <div>
-        <ul class="nav me-4">
+    <div class=" m-0 py-2">
+        <ul class="nav">
             <li class="nav-item">
-                <a href="./index.php" class="nav-link text-dark">Home</a>
+                <a href="../user/index.php" class="nav-link text-dark">Home</a>
             </li>
             <li class="nav-item">
-                <a href="./tshirt.php" class="nav-link text-dark">T-shirts</a>
+                <a href="../user/tshirt.php" class="nav-link text-dark">T-shirts</a>
             </li>
             <li class="nav-item">
-                <a href="./store.php" class="nav-link text-dark">Store</a>
+                <a href="../user/store.php" class="nav-link text-dark">Store</a>
             </li>
-            <!-- cart and history with if or php-->
-            <li class="nav-item">
-                <a href="./carts.php" class="nav-link text-dark">Cart</a>
+            <li class="nav-item" aria-label="">
+                <!-- check already login or not -->
+
+                <a href="../Register/signin.php" class="nav-link"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #000000;"></i></a>
             </li>
-            <li class="nav-item">
-                <a href="./Register/signin.php" class="nav-link text-dark" target=”_blank”>Login</a>
+
+            <!-- history after login or register-->
+
+            <!-- change login btn into myaccount after login -->
+            <li class="nav-item ms-3">
+                <button type="button" class="btn btn-dark p-0">
+                    <a href="../Register/signin.php" class="nav-link text-white p-2"><i class="fa-regular fa-circle-user fa-lg" style="color: #ffffff;"></i>  Login</a>
+                </button>
             </li>
+
         </ul>
     </div>
 </nav>
