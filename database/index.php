@@ -45,7 +45,7 @@ function createUsersTable($mysqli)
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
-        role ENUM('admin', 'user') NOT NULL,
+        role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
@@ -118,7 +118,7 @@ function createTypesTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS types(
         type_id INT(11) AUTO_INCREMENT PRIMARY KEY,
-        type_price INT(11),
+        type_price INT(11) DEFAULT 0,
         type_name VARCHAR(255) NOT NULL
     )";
     if ($mysqli->query($sql)) {
@@ -146,7 +146,7 @@ function createSizesTable($mysqli)
     $sql = "CREATE TABLE IF NOT EXISTS sizes(
         size_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         size VARCHAR(255) NOT NULL,
-        size_price INT(11)
+        size_price INT(11) DEFAULT 0
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -159,7 +159,7 @@ function createStickersTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS stickers(
         sticker_id INT(11) AUTO_INCREMENT PRIMARY KEY,
-        sticker_price INT(11)
+        sticker_price INT(11) DEFAULT 0
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -189,7 +189,7 @@ function allTables($mysqli)
     createProductsTable($mysqli);
     echo "all tables created successfully";
 }
-// allTables($mysqli);
+allTables($mysqli);
 
 // Drop Database
 // dropDatabase($mysqli);
