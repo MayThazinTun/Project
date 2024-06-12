@@ -11,21 +11,33 @@ function create_user($mysqli, $name, $email, $password, $role)
     return false;
 }
 
+// //create 5 users
+// $mysqli = new mysqli("localhost", "root", "", "shopping");
+// for ($i = 1; $i < 6; $i++) {
+//     create_user($mysqli, "user" . $i, "user" . $i . "@gmail.com", "123", "user");
+// }
+
 //get all users
 function get_all_users($mysqli)
 {
     $sql = "SELECT * FROM `users`";
     $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    }
-    return false;
+    return $result;
 }
 
 //get user by id
 function get_user_by_id($mysqli, $id)
 {
     $sql = "SELECT * FROM `users` WHERE `id` = $id";
+    $result = $mysqli->query($sql);
+    return $result;
+}
+
+//get user by email
+
+function get_user_by_email($mysqli, $email)
+{
+    $sql = "SELECT * FROM `users` WHERE `email` = '$email'";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }

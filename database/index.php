@@ -36,6 +36,9 @@ function selectDatabase($mysqli)
     }
     return false;
 }
+selectDatabase($mysqli);
+
+
 
 //create users table /name,email,password,role[admin/user] user connect with orders table
 function createUsersTable($mysqli)
@@ -45,7 +48,7 @@ function createUsersTable($mysqli)
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
-        role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+        role ENUM('admin', 'user') DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
@@ -189,7 +192,7 @@ function allTables($mysqli)
     createProductsTable($mysqli);
     echo "all tables created successfully";
 }
-allTables($mysqli);
+// allTables($mysqli);
 
 // Drop Database
 // dropDatabase($mysqli);

@@ -9,6 +9,11 @@ function create_category($mysqli, $category_name)
     }
     return false;
 }
+// //create 7 categories
+//     $mysqli = new mysqli("localhost", "root", "", "shopping");
+//     for ($i = 1; $i < 8; $i++) {
+//         create_category($mysqli, "Category $i");
+//     }
 
 // get all categories
 function get_all_categories($mysqli)
@@ -48,3 +53,4 @@ function delete_category_by_id($mysqli, $category_id)
     }
     return false;
 }
+
