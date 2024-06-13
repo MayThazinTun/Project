@@ -1,5 +1,7 @@
 <?php
 require_once('../../database/index.php');
+require_once('../baseUrl.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -45,16 +47,16 @@ require_once('../../database/index.php');
             <div class="left col-2">
                 <span class="admin_text">Admin</span>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="<?php echo 'http://localhost:8000/admin/users/index.php' ?>">User Info</a></li>
-                    <li class="list-group-item"><a href="<?php echo 'http://localhost:8000/admin/category/index.php' ?>">Categories</a></li>
-                    <li class="list-group-item"><a href="<?php echo 'http://localhost:8000/admin/products/index.php' ?>">Products</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/users/index.php' ?>">User Info</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/category/index.php' ?>">Categories</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/products/index.php' ?>">Products</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/' ?>">Logout</a></li>
                     <li class="list-group-item"><a href="#">Electronic Accessories</a></li>
                     <li class="list-group-item"><a href="#">TV & Home Appliances</a></li>
                     <li class="list-group-item"><a href="#">Women's Fashion</a></li>
                     <li class="list-group-item"><a href="#">Men's Fashion</a></li>
                     <li class="list-group-item"><a href="#">Groceries & Pets</a></li>
                     <li class="list-group-item"><a href="#">Home & Lifestyle</a></li>
-                    <li class="list-group-item"><a href="../">Logout</a></li>
                 </ul>
             </div>
             <div class="right col-10">
