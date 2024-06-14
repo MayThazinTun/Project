@@ -58,17 +58,31 @@ function createUsersTable($mysqli)
     return false;
 }
 
-//create orders table /order_id,user_id,product_id,created_at,updated_at order connect with users table and products table
+//create orders table /order_id,user_id,product_id,invoice_id,created_at,updated_at order connect with users table and products table
 function createOrdersTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS orders(
         order_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         user_id INT(11) NOT NULL,
         product_id INT(11) NOT NULL,
+        invoice_id INT(11) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
         FOREIGN KEY (product_id) REFERENCES products(id)
+        FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id)
+    )";
+    if ($mysqli->query($sql)) {
+        return true;
+    }
+    return false;
+}
+
+//create invoices table /invoice_id,total_amount
+function createInvoiceTable($mysqli){
+    $sql = "CREATE TABLE IF NOT EXISTS invoices(
+        invoice_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        total_amount INT(11) NOT NULL
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -190,6 +204,7 @@ function allTables($mysqli)
     createSizesTable($mysqli);
     createStickersTable($mysqli);
     createProductsTable($mysqli);
+    createInvoiceTable($mysqli);
     echo "all tables created successfully";
 }
 // allTables($mysqli);
