@@ -1,11 +1,11 @@
-#btn{
+#btn {
     border-radius: 100px;
     font-weight: bold;
     background-color: rgba(250, 235, 215, 0.774);
 }
 
-#card{
-    margin-top:150px; 
+#card {
+    margin-top: 150px;
     margin-bottom: 145px;
     text-align: justify;
     /* padding: 30px; */
@@ -22,4 +22,27 @@
 #img {
     width: auto;
     height: 50%;
+}
+
+.nav-item:hover {
+    background-color: rgb(222, 219, 219);
+}
+
+.btn:hover {
+    background-color: gray;
+    border: 1px solid black;
+}
+
+input[type=file]::file-selector-button {
+    border: 1px solid gray;
+    color: white;
+    padding: .2em .4em;
+    border-radius: .2em;
+    background-color: black;
+    transition: 0.3s;
+}
+
+input[type=file]::file-selector-button:hover {
+    background-color: gray;
+    border: 1px solid black;
 }
