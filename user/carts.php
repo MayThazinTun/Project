@@ -14,7 +14,7 @@
                             Select All
                         </label>
                     </div>
-                    <hr> 
+                    <hr>
                     <!-- list of product that customer add to cart -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
@@ -29,16 +29,20 @@
                     <h5 class="card-title">Order Summary</h5>
                     <hr>
                     <div class="card-text">
-                        <p>product type : count  price</p>
+                        <p>product type : count price</p>
                         <!-- sometime discount will be include -->
-                         <hr>
-                         <div class="d-flex justify-content-between">
+                        <hr>
+                        <div class="d-flex justify-content-between">
                             <h5>Total</h5>
                             <h5>total price</h5>
-                         </div>
+                        </div>
                     </div>
                     <div class="d-grid">
-                        <a href="" class="btn btn-dark mt-2">Process to order</a>
+                        <?php require_once ("./order.php") ?>
+                        <?php require_once ("./buy.php") ?>
+                        <?php require_once ("./invoice.php");?>
+                        <a class="btn btn-dark" data-bs-toggle="modal" href="#order" role="button">Process
+                            to Order</a>
                     </div>
                 </div>
             </div>
