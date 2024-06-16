@@ -51,6 +51,32 @@ if (isset($_GET['updated_id'])) {
     }
 }
 
+
+// Category Pagination
+
+// Page Limit for Users
+$limit = 5;
+
+// Page Number where we are
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+// Offset for pagination 
+$offset = ($page - 1) * $limit;
+
+$total_categories = get_total_category_count($mysqli);
+
+// Calculate total pages
+$total_pages = ceil($total_categories / $limit);
+
+$categories = get_all_categories_pagination($mysqli, $limit, $offset);
+
+// var_dump(
+//     "Page " . $page,
+//     "Offset " . $offset,
+//     "Total Category " . $total_categories,
+//     "Total Pages " . $total_pages
+// );
+
 ?>
 
 <div class="container-fluid mt-5">
@@ -90,19 +116,42 @@ if (isset($_GET['updated_id'])) {
                     </div>
                 </form>
                 <ul class="list-group">
-                    <?php
-                    $categories = get_all_categories($mysqli);
-                    foreach ($categories as $category) {
-                        echo "<li class='list-group-item d-flex justify-content-between align-items-center'>";
-                        echo "<span>" . $category['category_name'] . "</span>";
-                        echo "<div>";
-                        echo "<span class='badge text-bg-warning rounded-pill'><a href='index.php?updated_id=" . $category['category_id'] . "' class='btn btn-warning btn-sm'>Edit</a></span>";
-                        echo "<span class='badge text-bg-danger rounded-pill'><a href='index.php?deleted_id=" . $category['category_id'] . "' class='btn btn-danger btn-sm'>Delete</a></span>";
-                        echo "</div>";
-                        echo "</li>";
-                    }
-                    ?>
+                    <?php foreach ($categories as $category) : ?>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><?php echo $category['category_name'] ?></span>
+                            <div>
+                                <span class="badge text-bg-warning rounded-pill"><a href="index.php?updated_id=<?php echo $category['category_id'] ?>" class="btn btn-warning btn-sm">Edit</a></span>
+                                <span class="badge text-bg-danger rounded-pill"><a href="index.php?deleted_id=<?php echo $category['category_id'] ?>" class="btn btn-danger btn-sm">Delete</a></span>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
+                <!-- Pagination -->
+                <div class="container mt-3">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <?php if ($page > 1) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page - 1 ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                                <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <?php if ($page < $total_pages) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page + 1 ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
 

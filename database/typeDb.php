@@ -10,6 +10,20 @@ function create_type($mysqli, $type_id, $type_price, $type_name)
     return false;
 }
 
+// // create 10 types
+// function create_10_types($mysqli)
+// {
+//     for ($i = 1; $i <= 10; $i++) {
+//         $type_id = $i;
+//         $type_price = $i * 10;
+//         $type_name = "Type $i";
+//         create_type($mysqli, $type_id, $type_price, $type_name);
+//     }
+//     return true;
+// }
+// $mysqli = new mysqli("localhost", "root", "", "shopping");
+// create_10_types($mysqli);
+
 //get all types
 function get_all_types($mysqli)
 {

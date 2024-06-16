@@ -8,6 +8,7 @@ admin/
 │   └── adminHeader.php
 ├── products/
 │   └── index.php
+│   └── create.php
 ├── users/
 │   ├── create.php
 │   ├── edit.php

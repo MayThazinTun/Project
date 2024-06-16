@@ -36,7 +36,6 @@ function selectDatabase($mysqli)
     }
     return false;
 }
-selectDatabase($mysqli);
 
 
 
@@ -79,7 +78,8 @@ function createOrdersTable($mysqli)
 }
 
 //create invoices table /invoice_id,total_amount
-function createInvoiceTable($mysqli){
+function createInvoiceTable($mysqli)
+{
     $sql = "CREATE TABLE IF NOT EXISTS invoices(
         invoice_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         total_amount INT(11) NOT NULL
@@ -110,10 +110,10 @@ function createProductsTable($mysqli)
     $sql = "CREATE TABLE IF NOT EXISTS products(
         product_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         category_id INT(11) NOT NULL,
-        type_id INT(11) NOT NULL,
-        color_id INT(11) NOT NULL,
-        size_id INT(11) NOT NULL,
-        sticker_id INT(11) NOT NULL,
+        type_id INT(11),
+        color_id INT(11),
+        size_id INT(11),
+        sticker_id INT(11),
         product_name VARCHAR(255) NOT NULL,
         product_price INT(11) NOT NULL,
         product_quantity INT(11) NOT NULL,
@@ -208,6 +208,11 @@ function allTables($mysqli)
     echo "all tables created successfully";
 }
 // allTables($mysqli);
+
+
+// Select Database
+selectDatabase($mysqli);
+
 
 // Drop Database
 // dropDatabase($mysqli);

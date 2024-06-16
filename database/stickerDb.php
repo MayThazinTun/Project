@@ -1,6 +1,6 @@
 <?php
 
-//create stickers
+// create stickers
 function create_sticker($mysqli, $sticker_id, $sticker_price)
 {
     $sql = "INSERT INTO `stickers`(`sticker_id`, `sticker_price`) VALUES ('$sticker_id','$sticker_price')";
@@ -9,6 +9,16 @@ function create_sticker($mysqli, $sticker_id, $sticker_price)
     }
     return false;
 }
+
+// //Example 5 stickers
+// for ($sticker_id = 1; $sticker_id <= 5; $sticker_id++) {
+
+//     $sticker_price = rand(1, 100);
+
+//     $mysqli = new mysqli("localhost", "root", "", "shopping");
+//     create_sticker($mysqli, $sticker_id, $sticker_price);
+// }
+
 
 //get all stickers
 function get_all_stickers($mysqli)
@@ -52,11 +62,3 @@ function delete_sticker_by_id($mysqli, $sticker_id)
     return false;
 }
 
-//Example 5 stickers
-for ($sticker_id = 1; $sticker_id <= 5; $sticker_id++) {
-
-    $sticker_price = rand(1, 100);
-
-    $mysqli = new mysqli("localhost", "root", "", "shopping");
-    create_sticker($mysqli, $sticker_id, $sticker_price);
-}

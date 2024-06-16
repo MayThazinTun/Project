@@ -28,12 +28,12 @@ function createSizes($mysqli, $sizes)
 // createSizes($mysqli, $sizes);
 
 //get all sizes
-function getSizes($mysqli)
+function get_all_sizes($mysqli)
 {
     $sql = "SELECT * FROM `sizes`";
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     return false;
 }

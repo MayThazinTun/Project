@@ -56,12 +56,12 @@ function createColors($mysqli, $colors)
 // createColors($mysqli, $colors);
 
 //get all colors
-function getColors($mysqli)
+function get_all_colors($mysqli)
 {
     $sql = "SELECT * FROM `colors`";
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     return false;
 }

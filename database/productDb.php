@@ -11,7 +11,7 @@ function create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $s
 }
 
 // get all products
-function get_all_products($mysqli)
+function getAll($mysqli)
 {
     $sql = "SELECT * FROM `products`";
     $result = $mysqli->query($sql);
@@ -20,6 +20,102 @@ function get_all_products($mysqli)
     }
     return false;
 }
+
+function get_all_products($mysqli)
+{
+    $sql = "SELECT * FROM products
+INNER JOIN categories ON products.category_id = categories.category_id
+INNER JOIN types ON products.type_id = types.type_id
+INNER JOIN colors ON products.color_id = colors.color_id
+INNER JOIN sizes ON products.size_id = sizes.size_id
+INNER JOIN stickers ON products.sticker_id = stickers.sticker_id";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return false;
+}
+//////////////////////////////////
+//////////////////////////////////
+
+function get_all_products_paginated($mysqli, $limit, $offset, $search = '')
+{
+    $sql = "SELECT products.*, categories.category_name, types.type_name, colors.color_name, sizes.size, stickers.sticker_price 
+            FROM `products` 
+            INNER JOIN `categories` ON products.category_id = categories.category_id 
+            INNER JOIN `types` ON products.type_id = types.type_id 
+            INNER JOIN `colors` ON products.color_id = colors.color_id 
+            INNER JOIN `sizes` ON products.size_id = sizes.size_id 
+            INNER JOIN `stickers` ON products.sticker_id = stickers.sticker_id
+            WHERE 1";
+    if (!empty($search)) {
+        $search = $mysqli->real_escape_string($search);
+        $sql .= " AND (products.product_name LIKE '%$search%'
+                      OR products.product_price LIKE '%$search%'
+                      OR products.created_at LIKE '%$search%'
+                      OR categories.category_name LIKE '%$search%'
+                      OR types.type_name LIKE '%$search%'
+                      OR colors.color_name LIKE '%$search%'
+                      OR sizes.size LIKE '%$search%'
+                      OR stickers.sticker_price LIKE '%$search%'
+                      OR products.product_quantity LIKE '%$search%')";
+    }
+
+    $sql .= " ORDER BY products.created_at DESC LIMIT $limit OFFSET $offset";
+
+    $result = $mysqli->query($sql);
+
+    if ($result === false) {
+        error_log("Database Query Failed: " . $mysqli->error);
+        return [];
+    }
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    return [];
+}
+
+function get_total_product_count($mysqli, $search = '')
+{
+    $sql = "SELECT COUNT(*) as count FROM `products` 
+            INNER JOIN `categories` ON products.category_id = categories.category_id 
+            INNER JOIN `types` ON products.type_id = types.type_id 
+            INNER JOIN `colors` ON products.color_id = colors.color_id 
+            INNER JOIN `sizes` ON products.size_id = sizes.size_id 
+            INNER JOIN `stickers` ON products.sticker_id = stickers.sticker_id 
+            WHERE 1";
+
+    if (!empty($search)) {
+        $search = $mysqli->real_escape_string($search);
+        $sql .= " AND (products.product_name LIKE '%$search%' 
+                      OR products.product_price LIKE '%$search%' 
+                      OR products.created_at LIKE '%$search%'
+                      OR categories.category_name LIKE '%$search%'
+                      OR types.type_name LIKE '%$search%'
+                      OR colors.color_name LIKE '%$search%'
+                      OR sizes.size LIKE '%$search%'
+                      OR stickers.sticker_price LIKE '%$search%'
+                      OR products.product_quantity LIKE '%$search%')";
+    }
+
+    $result = $mysqli->query($sql);
+
+    if ($result === false) {
+        error_log("Database Query Failed: " . $mysqli->error);
+        return 0;
+    }
+
+    $row = $result->fetch_assoc();
+    return $row['count'];
+}
+
+//////////////////////////////////
+//////////////////////////////////
+
+
+
 
 // get product by id
 function get_product_by_id($mysqli, $id)

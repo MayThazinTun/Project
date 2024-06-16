@@ -14,7 +14,7 @@ function create_user($mysqli, $name, $email, $password, $role)
 // //create 5 users
 // $mysqli = new mysqli("localhost", "root", "", "shopping");
 // for ($i = 1; $i < 6; $i++) {
-//     create_user($mysqli, "user" . $i, "user" . $i . "@gmail.com", "123", "user");
+//     create_user($mysqli, "admin" . $i, "admin" . $i . "@gmail.com", "123", "admin");
 // }
 
 //get all users
@@ -61,4 +61,28 @@ function delete_user($mysqli, $id)
         return true;
     }
     return false;
+}
+
+
+function get_all_users_pagination($mysqli, $limit, $offset, $search)
+{
+    $search = mysqli_real_escape_string($mysqli, $search);
+    $sql = "SELECT * FROM `users` 
+            WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%'
+            LIMIT $limit OFFSET $offset";
+
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    return [];
+}
+
+function get_total_user_count($mysqli, $search)
+{
+    $search = mysqli_real_escape_string($mysqli, $search);
+    $sql = "SELECT count(*) as total FROM `users` WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%'";
+    $result = $mysqli->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
 }
