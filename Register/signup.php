@@ -1,4 +1,5 @@
-<?php require_once ("../Layout/header.php") ?>
+<?php require_once ("../Login/header.php") ?>
+<?php require_once ("../Login/nav.php") ?>
 
 <div class="container-fluid py-5 "
     style="background: rgb(205,198,214); background: linear-gradient(90deg, rgba(205,198,214,1) 0%, rgba(204,126,219,1) 15%, rgba(235,169,75,1) 31%, rgba(163,233,27,1) 46%, rgba(90,227,92,1) 57%, rgba(73,240,132,1) 70%, rgba(48,209,183,1) 84%, rgba(110,167,201,1) 96%);">
@@ -91,4 +92,4 @@
 
 </div>
 
-<?php require_once ("../Layout/footer.php") ?>
+<?php require_once ("../Login/footer.php") ?>

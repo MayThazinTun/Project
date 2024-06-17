@@ -1,4 +1,4 @@
-<?php require_once ("../Layout/header.php") ?>
+<?php require_once ("../Login/header.php") ?>
 
 <div class="row mx-1">
     <div class="col-8 px-4">
@@ -41,7 +41,7 @@
                         <div class="preview" id="preview">
                             <img id="preview-image" src="" alt="Image preview">
                         </div>
-                        <button type="submit" class="btn btn-dark">Upload</button>
+                        <a class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">Upload</a>
                     </form>
                 </div>
             </div>
@@ -70,13 +70,34 @@
                 Price
             </div>
             <div class="row justify-content-center gap-2 px-2 py-2">
-                <a href="#" class="btn btn-dark col">Add to cart</a>
-                <?php require_once ("./order.php") ?>
-                <?php require_once ("./buy.php") ?>
-                <?php require_once ("./invoice.php"); ?>
-                <a class="col btn btn-dark" data-bs-toggle="modal" href="#order" role="button">Order</a>
+                <button type="button" class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">
+                    Add to cart
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                You need to login first!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a href="../Register/signin.php" class="btn btn-dark">OK</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">Order</a>
             </div>
         </div>
     </div>
 
-    <?php require_once ("../Layout/footer.php") ?>
+
+
+    <?php require_once ("../Login/footer.php") ?>

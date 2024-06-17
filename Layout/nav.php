@@ -7,33 +7,35 @@
     <div class=" m-0 py-2">
         <ul class="nav">
             <li class="nav-item">
-                <a href="../user/index.php" class="nav-link text-dark">Home</a>
+                <a href="../user/index.php" class="nav-link text-dark" title="Home"><i class="fa-solid fa-house fa-xl" style="color: #000000;"></i></a>
             </li>
             <li class="nav-item">
-                <a href="../user/tshirt.php" class="nav-link text-dark">T-shirts</a>
+                <a href="../user/tshirt.php" class="nav-link text-dark" title="T-shirts"><i class="fa-solid fa-shirt fa-xl" style="color: #000000;"></i></a>
             </li>
             <li class="nav-item">
-                <a href="../user/store.php" class="nav-link text-dark">Store</a>
+                <a href="../user/store.php" class="nav-link text-dark" title="Store"><i class="fa-solid fa-store fa-xl" style="color: #000000;"></i></a>
             </li>
             <li class="nav-item" aria-label="">
                 <!-- check already login or not -->
 
-                <a href="../Register/signin.php" class="nav-link"><i class="fa-solid fa-cart-shopping fa-xl"
+                <a href="../user/carts.php" class="nav-link text-dark" title="Cart"><i class="fa-solid fa-cart-shopping fa-xl"
                         style="color: #000000;"></i></a>
             </li>
 
             <!-- history after login or register-->
             <li class="nav-item">
-                <a href="../user/history.php" class="nav-link text-dark">History</a>
+                <a href="../user/history.php" class="nav-link text-dark" title="History"><i class="fa-solid fa-clock-rotate-left fa-xl" style="color: #000000;"></i></a>
             </li>
             <!-- change login btn into myaccount after login -->
-            <li class="nav-item ms-3">
+            <!-- <li class="nav-item ms-3">
                 <button type="button" class="btn btn-dark p-0">
                     <a href="../Register/signin.php" class="nav-link text-white p-2"><i
                             class="fa-regular fa-circle-user fa-lg" style="color: #ffffff;"></i> Login</a>
                 </button>
+            </li> -->
+            <li class="nav-item">
+                <a href="../user/account.php" class="nav-link text-dark" title="My Account"><i class="fa-solid fa-circle-user fa-xl" style="color: #000000;"></i></a>
             </li>
-
         </ul>
     </div>
 </nav>
