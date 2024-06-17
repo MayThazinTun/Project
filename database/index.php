@@ -205,13 +205,9 @@ function allTables($mysqli)
     createStickersTable($mysqli);
     createProductsTable($mysqli);
     createInvoiceTable($mysqli);
-    echo "all tables created successfully";
+    // echo "all tables created successfully";
 }
-// allTables($mysqli);
-
-
-// Select Database
-selectDatabase($mysqli);
+allTables($mysqli);
 
 
 // Drop Database

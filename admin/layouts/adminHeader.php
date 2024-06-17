@@ -1,6 +1,6 @@
 <?php
 require_once('../../database/index.php');
-require_once('../baseUrl.php');
+require_once('../../baseUrl.php');
 
 ?>
 
