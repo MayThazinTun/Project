@@ -74,28 +74,27 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
     <div class="container">
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
-                <?php if ($page > 1) : ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1 ?>&&search=<?php echo htmlspecialchars($search); ?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+                <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
+                    <a class="page-link" href="<?php if ($page > 1) echo '?page=' . ($page - 1);
+                                                else echo '#'; ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
                 <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
                     <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                        <a class="page-link" href="?page=<?php echo $i ?>&search=<?php echo htmlspecialchars($search) ?>"><?php echo $i; ?></a>
+                        <a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i; ?></a>
                     </li>
                 <?php endfor; ?>
-                <?php if ($page < $total_pages) : ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1 ?>&&search=<?php echo htmlspecialchars($search); ?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+                <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
+                    <a class="page-link" href="<?php if ($page < $total_pages) echo '?page=' . ($page + 1);
+                                                else echo '#'; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
+
 
 </div>
 

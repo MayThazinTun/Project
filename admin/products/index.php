@@ -30,42 +30,50 @@ $products = get_all_products_paginated($mysqli, $limit, $offset, $search);
         </form>
     </div>
 
-    <?php
-    if (!empty($products)) {
-        echo '<div class="row row-cols-1 row-cols-md-4 g-4">';
-        foreach ($products as $product) {
-            echo '<div class="col">
+    <?php if (!empty($products)) : ?>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <?php foreach ($products as $product) : ?>
+                <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">' . htmlspecialchars($product['product_name']) . '</h5>
-                            <p class="card-text">Product Price: ' . htmlspecialchars($product['product_price']) . '</p>
-                            <p class="card-text">Product Quantity: ' . htmlspecialchars($product['product_quantity']) . '</p>
-                            <p class="card-text">Category: ' . htmlspecialchars($product['category_name']) . '</p>
-                            <a href="show.php?id=' . urlencode($product['product_id']) . '" class="btn btn-primary btn-sm">Details</a>
+                            <h5 class="card-title"><?php echo htmlspecialchars($product['product_name']); ?></h5>
+                            <p class="card-text">Product Price: <?php echo htmlspecialchars($product['product_price']); ?></p>
+                            <p class="card-text">Product Quantity: <?php echo htmlspecialchars($product['product_quantity']); ?></p>
+                            <p class="card-text">Category: <?php echo htmlspecialchars($product['category_name']); ?></p>
+                            <a href="show.php?id=<?php echo urlencode($product['product_id']); ?>" class="btn btn-primary btn-sm">Details</a>
                         </div>
                     </div>
-                </div>';
-        }
-        echo '</div>';
+                </div>
+            <?php endforeach; ?>
+        </div>
 
-        // Pagination 
-        echo '<nav aria-label="Pagination" class="mt-3">
-                <ul class="pagination justify-content-center">';
-        if ($page > 1) {
-            echo '<li class="page-item"><a class="page-link" href="?page=' . ($page - 1) . '&search=' . urlencode($search) . '"><span aria-hidden="true">&laquo;</span></a></li>';
-        }
-        for ($i = 1; $i <= $total_pages; $i++) {
-            echo '<li class="page-item ' . ($i == $page ? 'active' : '') . '"><a class="page-link" href="?page=' . $i . '&search=' . urlencode($search) . '">' . $i . '</a></li>';
-        }
-        if ($page < $total_pages) {
-            echo '<li class="page-item"><a class="page-link" href="?page=' . ($page + 1) . '&search=' . urlencode($search) . '"><span aria-hidden="true">&raquo;</span></a></li>';
-        }
-        echo '  </ul>
-              </nav>';
-    } else {
-        echo '<p>No products found.</p>';
-    }
-    ?>
+        <!-- Pagination -->
+        <nav aria-label="Pagination" class="mt-3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo ($page > 1) ? $page - 1 : '#'; ?>" aria-label="Previous" <?php echo ($page <= 1) ? 'tabindex="-1" aria-disabled="true"' : ''; ?>>
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+
+                <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo ($page < $total_pages) ? $page + 1 : '#'; ?>" aria-label="Next" <?php echo ($page >= $total_pages) ? 'tabindex="-1" aria-disabled="true"' : ''; ?>>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    <?php else : ?>
+        <p>No products found.</p>
+    <?php endif; ?>
+
 </div>
 
 <?php require_once('../layouts/adminFooter.php'); ?>
