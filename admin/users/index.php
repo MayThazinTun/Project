@@ -50,6 +50,7 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
+                <th scope="col">Images</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -58,10 +59,15 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
             $ID = 1;
             foreach ($users as $user) : ?>
                 <tr>
-                    <td><?php echo $ID ?></td>
+                    <td><?php echo $ID++ ?></td>
                     <td><?php echo $user['name']; ?></td>
                     <td><?php echo $user['email']; ?></td>
                     <td><?php echo $user['role']; ?></td>
+                    <td>
+                        <?php foreach (explode(",", $user['images']) as $photo) : ?>
+                            <img src="<?php echo $photo; ?>" alt="" width="60px" height="60px">
+                        <?php endforeach; ?>
+                    </td>
                     <td>
                         <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2'><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i class="fa-solid fa-trash"></i></a>
@@ -69,7 +75,6 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
                 </tr>
 
             <?php
-                $ID++;
             endforeach;
             ?>
 
