@@ -1,15 +1,15 @@
 <?php
 
 //create user
-function create_user($mysqli, $name, $email, $password, $role)
+function create_user($mysqli, $name, $email, $password, $role, $photo_paths)
 {
-    $password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO `users`(`name`,`email`,`password`,`role`) VALUES ('$name','$email','$password','$role')";
+    $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`, `images`) VALUES ('$name', '$email', '$password', '$role', '$photo_paths')";
     if ($mysqli->query($sql)) {
         return true;
     }
     return false;
 }
+
 
 // //create 5 users
 // $mysqli = new mysqli("localhost", "root", "", "shopping");
@@ -43,10 +43,10 @@ function get_user_by_email($mysqli, $email)
 }
 
 //update user by id
-function update_user_by_id($mysqli, $id, $name, $email, $password, $role)
+function update_user_by_id($mysqli, $id, $name, $email, $password, $role, $images)
 {
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "UPDATE `users` SET `name`='$name',`email`='$email',`password`='$password',`role`='$role' WHERE `id` = $id";
+    $sql = "UPDATE `users` SET `name`='$name',`email`='$email',`password`='$password',`role`='$role',`images`='$images' WHERE `id` = $id";
     if ($mysqli->query($sql)) {
         return true;
     }

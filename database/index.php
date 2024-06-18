@@ -39,7 +39,7 @@ function selectDatabase($mysqli)
 
 
 
-//create users table /name,email,password,role[admin/user] user connect with orders table
+//create users table /name,email,password,role[admin/user],images user connect with orders table
 function createUsersTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS users(
@@ -48,6 +48,7 @@ function createUsersTable($mysqli)
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         role ENUM('admin', 'user') DEFAULT 'user',
+        images VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
@@ -57,7 +58,7 @@ function createUsersTable($mysqli)
     return false;
 }
 
-//create orders table /order_id,user_id,product_id,invoice_id,created_at,updated_at order connect with users table and products table
+//create orders table /order_id,user_id,product_id,invoice_id,shipping_address,created_at,updated_at order connect with users table and products table
 function createOrdersTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS orders(
@@ -65,6 +66,7 @@ function createOrdersTable($mysqli)
         user_id INT(11) NOT NULL,
         product_id INT(11) NOT NULL,
         invoice_id INT(11) NOT NULL,
+        -- shipping_address VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
@@ -104,7 +106,7 @@ function createCategoriesTable($mysqli)
 }
 
 //Product connect with (categories,types,colors,sizes,stickers) tables
-//create products table product_id,category_id,type_id,color_id,size_id,sticker_id,product_name,product_price,product_quantity,created_at,updated_at
+//create products table product_id,category_id,type_id,color_id,size_id,sticker_id,product_name,product_price,product_quantity,product_images,description,created_at,updated_at
 function createProductsTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS products(
@@ -117,6 +119,8 @@ function createProductsTable($mysqli)
         product_name VARCHAR(255) NOT NULL,
         product_price INT(11) NOT NULL,
         product_quantity INT(11) NOT NULL,
+        -- product_images VARCHAR(255),
+        -- product_description VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (category_id) REFERENCES categories(category_id),
@@ -171,12 +175,13 @@ function createSizesTable($mysqli)
     return false;
 }
 
-//create stickers table sticker_id,sticker_price product can change depend on stickers
+//create stickers table sticker_id,sticker_price,sticker_images product can change depend on stickers
 function createStickersTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS stickers(
         sticker_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         sticker_price INT(11) DEFAULT 0
+        -- sticker_images VARCHAR(255)
     )";
     if ($mysqli->query($sql)) {
         return true;
