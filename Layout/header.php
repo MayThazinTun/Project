@@ -1,3 +1,9 @@
+<?php 
+require_once("../database/index.php");
+require_once('../database/userDb.php');
+require_once('../database/auth_user.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

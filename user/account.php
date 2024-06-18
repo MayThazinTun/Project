@@ -1,4 +1,9 @@
-<?php require_once ("../Layout/header.php") ?>
+<?php require_once ("../Layout/header.php");
+if(isset($_POST['logout'])){
+    setcookie('user', '', -1, '/');
+    header("Location:../signin.php"); 
+}
+?>
 
 <div class="row">
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height:92vh">
@@ -29,6 +34,9 @@
                     <a href="" class="btn btn-outline-dark border-0 text-start ps-4">Profile</a>
                 </div>
             </div>
+            <form method="post" class="d-grid">
+                <button name="logout" class="btn btn-outline-secondary border-0 text-start ps-1">Logout</button>
+            </form>
         </div>
     </div>
 

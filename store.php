@@ -1,8 +1,20 @@
-<?php require_once ("../Login/header.php") ?>
+<?php require_once ("./Login/header.php");
+$user = null;
+if (isset($_COOKIE['user'])) {
+    $user = json_decode($_COOKIE['user'], true);
+}
+if ($user) {
+    if ($user['role']==='admin') {
+        header("Location:./admin/index.php");
+    } else {
+        header("Location:./user/index.php");
+    }
+}
+?>
 
 <div class="row">
     <div class="col-auto">
-        <?php require_once ("../Layout/sidebar.php") ?>
+        <?php require_once ("./Layout/sidebar.php") ?>
     </div>
     <div class="col">
         <div class="card mt-3" style="width:300px; height: auto;">
@@ -32,7 +44,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <a href="../Register/signin.php" class="btn btn-dark">OK</a>
+                                    <a href="./Register/signin.php" class="btn btn-dark">OK</a>
                                 </div>
                             </div>
                         </div>
@@ -44,4 +56,4 @@
     </div>
 </div>
 
-<?php require_once ("../Login/footer.php") ?>
+<?php require_once ("./Login/footer.php") ?>

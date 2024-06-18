@@ -1,4 +1,20 @@
-<?php require_once ("../Login/header.php") ?>
+<?php 
+
+require_once ("./Login/header.php");
+
+$user = null;
+if (isset($_COOKIE['user'])) {
+    $user = json_decode($_COOKIE['user'], true);
+}
+if ($user) {
+    if ($user['role']==='admin') {
+        header("Location:./admin/index.php");
+    } else {
+        header("Location:./user/index.php");
+    }
+}
+
+?>
     
     <div class="container-fluid py-1" id="contact">
         <div class="row p-3 mx-1 justify-content-center">
