@@ -103,16 +103,19 @@ $categories = get_all_categories_pagination($mysqli, $limit, $offset);
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                 </div>"
                     ?>
-                    <div class="mb-2">
-                        <label for="category_name" class="form-label">Category name</label>
-                        <input type="text" name="category_name" value="<?php echo $category_name ?>" class="form-control" id="category_name">
-                    </div>
-                    <div class="my-3">
-                        <?php if (isset($_GET['updated_id'])) {
-                            echo '<button type="submit" name="update" class="btn btn-primary">Update</button>';
-                        } else {
-                            echo '<button type="submit" name="submit" class="btn btn-primary">Create</button>';
-                        } ?>
+                    <div class="my-4 row align-items-center">
+                        <label for="category_name" class="form-label mb-3">Category name</label>
+                        <div class="col">
+                            <input type="text" name="category_name" value="<?php echo $category_name ?>" class="form-control" id="category_name">
+                        </div>
+                        <div class="col-auto">
+                            <?php if (isset($_GET['updated_id'])) : ?>
+                                <button type="submit" name="update" class="btn btn-primary">Update&nbsp;<i class="fa-solid fa-circle-plus"></i></button>
+                                <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
+                            <?php else : ?>
+                                <button type="submit" name="submit" class="btn btn-primary">Create&nbsp;<i class="fa-solid fa-circle-plus"></i></button>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </form>
                 <ul class="list-group">
@@ -120,8 +123,8 @@ $categories = get_all_categories_pagination($mysqli, $limit, $offset);
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span><?php echo $category['category_name'] ?></span>
                             <div>
-                                <span class="badge text-bg-warning rounded-pill"><a href="index.php?updated_id=<?php echo $category['category_id'] ?>" class="btn btn-warning btn-sm">Edit</a></span>
-                                <span class="badge text-bg-danger rounded-pill"><a href="index.php?deleted_id=<?php echo $category['category_id'] ?>" class="btn btn-danger btn-sm">Delete</a></span>
+                                <a href="index.php?updated_id=<?php echo $category['category_id'] ?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="index.php?deleted_id=<?php echo $category['category_id'] ?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </li>
                     <?php endforeach; ?>

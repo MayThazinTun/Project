@@ -21,12 +21,12 @@ $products = get_all_products_paginated($mysqli, $limit, $offset, $search);
 
 <div class="container-fluid mt-5">
     <div class="d-flex justify-content-between mb-3">
-        <a href="./create.php" class="btn btn-primary">Create New Product</a>
+        <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;Product&nbsp;<i class="fa-solid fa-store"></i></a>
         <!-- Search Form -->
         <form method="get" class="d-flex">
-            <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 200px;">
-            <button type="submit" class="btn btn-primary me-2">Search</button>
-            <a href="index.php" class="btn btn-secondary">Clear</a>
+            <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 150px;">
+            <button type="submit" class="btn btn-primary me-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
         </form>
     </div>
 

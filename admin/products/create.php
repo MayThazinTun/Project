@@ -10,7 +10,7 @@ require_once('../../database/stickerDb.php');
 
 
 $category_id = $type_id = $color_id = $size_id = $sticker_id = $product_name = $product_price = $product_quantity = "";
-$category_id_error = $type_id_error = $color_id_error = $size_id_error = $sticker_id_error = $product_name_error = $product_price_error = $product_quantity_error = $invalid ="";
+$category_id_error = $type_id_error = $color_id_error = $size_id_error = $sticker_id_error = $product_name_error = $product_price_error = $product_quantity_error = $invalid = "";
 
 if (isset($_POST['submit'])) {
     $category_id = htmlspecialchars($_POST["category_id"]);

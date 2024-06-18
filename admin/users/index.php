@@ -35,12 +35,12 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
 <div class="container mt-2">
     <h1 class="text-center">Users Information</h1>
     <div class="d-flex justify-content-between mb-2">
-        <a href="./create.php" class="btn btn-primary">Create User</a>
+        <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;<i class="fas fa-user-plus"></i></a>
         <!-- Search Form -->
         <form method="get" class="d-flex">
-            <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 200px;">
-            <button type="submit" class="btn btn-primary me-2">Search</button>
-            <a href="index.php" class="btn btn-secondary">Clear</a>
+            <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 150px;">
+            <button type="submit" class="btn btn-primary me-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
         </form>
     </div>
     <table class="table table-striped table-bordered my-4">
@@ -54,18 +54,24 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $user) : ?>
+            <?php
+            $ID = 1;
+            foreach ($users as $user) : ?>
                 <tr>
-                    <td><?php echo $user['id']; ?></td>
+                    <td><?php echo $ID ?></td>
                     <td><?php echo $user['name']; ?></td>
                     <td><?php echo $user['email']; ?></td>
                     <td><?php echo $user['role']; ?></td>
                     <td>
-                        <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2 btn-sm'>Edit</a>
-                        <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger btn-sm'>Delete</a>
+                        <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2'><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
-            <?php endforeach; ?>
+
+            <?php
+                $ID++;
+            endforeach;
+            ?>
 
         </tbody>
     </table>
