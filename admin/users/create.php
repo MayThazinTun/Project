@@ -6,11 +6,20 @@ $name = $email = $password = $role = "";
 $name_error = $email_error = $password_error = $role_error = "";
 $photos_error = "";
 
+// Define the folder for default avatars
+$default_avatar_folder = "../../images/avatars/";
+
+// Get the list of default avatars
+$default_avatars = array_diff(scandir($default_avatar_folder), array('..', '.'));
+
 if (isset($_POST['submit'])) {
     $name = htmlspecialchars($_POST["name"]);
     $email = htmlspecialchars($_POST["email"]);
     $password = htmlspecialchars($_POST["password"]);
     $role = htmlspecialchars($_POST["role"]);
+
+    // Check if a default avatar is selected
+    $selected_avatar = isset($_POST['default_avatar']) ? htmlspecialchars($_POST['default_avatar']) : null;
 
     // Upload Images
     $photos = $_FILES['images'];
@@ -18,33 +27,34 @@ if (isset($_POST['submit'])) {
     $photos_tmp = $photos['tmp_name'];
     $photos_error_array = $photos['error'];
     $photos_paths = [];
-    // die(var_dump($photos_error_array));
 
     // Allow extensions
     $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
     foreach ($photos_name as $index => $photo_name) {
-        $photo_ext = pathinfo($photo_name, PATHINFO_EXTENSION);
+        if (!empty($photo_name)) {
+            $photo_ext = pathinfo($photo_name, PATHINFO_EXTENSION);
 
-        if ($photos_error_array[$index] !== UPLOAD_ERR_OK) {
-            $photos_error = "Error uploading file: " . $photo_name;
-            break;
-        }
-        if (!in_array(strtolower($photo_ext), $allowed_extensions)) {
-            $photos_error = "Invalid file type: " . $photo_name;
-            break;
-        }
+            if ($photos_error_array[$index] !== UPLOAD_ERR_OK) {
+                $photos_error = "Error uploading file: " . $photo_name;
+                break;
+            }
+            if (!in_array(strtolower($photo_ext), $allowed_extensions)) {
+                $photos_error = "Invalid file type: " . $photo_name;
+                break;
+            }
 
-        $newFileName = time() . "_" . $photo_name;
-        $uploadDir = "../../images/users/";
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-        $photo_destination = $uploadDir . $newFileName;
-        if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-            $photos_paths[] = $photo_destination;
-        } else {
-            $photos_error = "Error uploading file: " . $photo_name;
-            break;
+            $newFileName = time() . "_" . $photo_name;
+            $uploadDir = "../../images/users/";
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $photo_destination = $uploadDir . $newFileName;
+            if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
+                $photos_paths[] = $photo_destination;
+            } else {
+                $photos_error = "Error uploading file: " . $photo_name;
+                break;
+            }
         }
     }
 
@@ -59,7 +69,13 @@ if (isset($_POST['submit'])) {
             $email_error = "Email already exists";
         } else {
             $password = password_hash($password, PASSWORD_DEFAULT);
-            $photo_paths_str = implode(",", $photos_paths);
+            if (!empty($photos_paths)) {
+                $photo_paths_str = implode(",", $photos_paths);
+            } else if (!empty($selected_avatar)) {
+                $photo_paths_str = $selected_avatar;
+            } else {
+                $photo_paths_str = "../../images/avatars/default_avatar1.png"; // Default avatar if no image is uploaded or selected
+            }
             if (create_user($mysqli, $name, $email, $password, $role, $photo_paths_str)) {
                 header("Location: index.php");
                 $name = $email = $password = $role = "";
@@ -70,7 +86,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
 ?>
 
 <div class="container mt-2">
@@ -112,6 +127,21 @@ if (isset($_POST['submit'])) {
                     <div class="col-8">
                         <input type="file" name="images[]" class="form-control" id="images" multiple>
                         <small class="text-danger"><?php echo htmlspecialchars($photos_error); ?></small>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-4">
+                        <label class="form-label">Default Avatars</label>
+                    </div>
+                    <div class="col-8 d-flex flex-wrap">
+                        <?php foreach ($default_avatars as $avatar): ?>
+                            <div class="form-check me-2">
+                                <input class="form-check-input" type="radio" name="default_avatar" value="<?php echo htmlspecialchars($default_avatar_folder . $avatar); ?>">
+                                <label class="form-check-label">
+                                    <img src="<?php echo htmlspecialchars($default_avatar_folder . $avatar); ?>" alt="Default Avatar" style="max-width: 60px; max-height: 60px;">
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 <div class="form-group row mb-3">

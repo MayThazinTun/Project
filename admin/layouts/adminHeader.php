@@ -51,13 +51,13 @@ require_once('../../baseUrl.php');
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/users/index.php' ?>">User Info</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/category/index.php' ?>">Categories</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/products/index.php' ?>">Products</a></li>
-                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/' ?>">Logout</a></li>
-                    <li class="list-group-item"><a href="#">Electronic Accessories</a></li>
-                    <li class="list-group-item"><a href="#">TV & Home Appliances</a></li>
-                    <li class="list-group-item"><a href="#">Women's Fashion</a></li>
-                    <li class="list-group-item"><a href="#">Men's Fashion</a></li>
+                    <li class="list-group-item"><a href="#">Types</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/colors/index.php' ?>">Colors</a></li>
+                    <li class="list-group-item"><a href="#">Sizes</a></li>
+                    <li class="list-group-item"><a href="#">Sticker</a></li>
                     <li class="list-group-item"><a href="#">Groceries & Pets</a></li>
                     <li class="list-group-item"><a href="#">Home & Lifestyle</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/' ?>">Logout</a></li>
                 </ul>
             </div>
             <div class="right col-10">

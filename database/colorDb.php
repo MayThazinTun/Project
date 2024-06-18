@@ -40,20 +40,28 @@ $colors =
         ]
     ];
 
-//create set colors
-function createColors($mysqli, $colors)
-{
-    foreach ($colors as $color) {
-        $color_id = $color['color_id'];
-        $color_name = $color['color_name'];
+// // create set colors
+// function createColors($mysqli, $colors)
+// {
+//     foreach ($colors as $color) {
+//         $color_id = $color['color_id'];
+//         $color_name = $color['color_name'];
 
-        $sql = "INSERT INTO `colors`(`color_id`, `color_name`) VALUES ('$color_id', '$color_name')";
-        $mysqli->query($sql);
-    }
-}
+//         $sql = "INSERT INTO `colors`(`color_id`, `color_name`) VALUES ('$color_id', '$color_name')";
+//         $mysqli->query($sql);
+//     }
+// }
 
 // $mysqli = new mysqli("localhost", "root", "","shopping");
 // createColors($mysqli, $colors);
+
+
+function createColors($mysqli, $colors)
+{
+    $sql = "INSERT INTO `colors`(`color_name`) VALUES ('$colors')";
+    $mysqli->query($sql);
+}
+
 
 //get all colors
 function get_all_colors($mysqli)
@@ -98,4 +106,27 @@ function deleteColor($mysqli, $color_id)
     $sql = "DELETE FROM `colors` WHERE `color_id` = '$color_id'";
     $result = $mysqli->query($sql);
     return $result;
+}
+
+// Get color by Pagination
+function get_all_colors_pagination($mysqli, $limit, $offset)
+{
+    $sql = "SELECT * FROM `colors` 
+            ORDER BY `color_id` DESC
+            LIMIT $limit OFFSET $offset";
+
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return [];
+    }
+}
+
+function get_total_colors_count($mysqli)
+{
+    $sql = "SELECT count(*) as total FROM `colors`";
+    $result = $mysqli->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
 }
