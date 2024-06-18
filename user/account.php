@@ -34,8 +34,8 @@ if(isset($_POST['logout'])){
                     <a href="" class="btn btn-outline-dark border-0 text-start ps-4">Profile</a>
                 </div>
             </div>
-            <form method="post" class="d-grid">
-                <button name="logout" class="btn btn-outline-secondary border-0 text-start ps-1">Logout</button>
+            <form method="post" class="">
+                <button name="logout" class="btn btn-outline-secondary border-0"><i class="fa-solid fa-arrow-right-from-bracket fa-xl" style="color: #616161;"></i> Logout</button>
             </form>
         </div>
     </div>

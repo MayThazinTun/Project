@@ -28,7 +28,7 @@ require_once ("./database/userDb.php");
 
 <body>
 
-    <?php require_once ("../Layout/nav.php");
+    <?php require_once ("./Login/nav.php");
     $user = null;
     if (isset($_COOKIE['user'])) {
         $user = json_decode($_COOKIE['user'], true);
@@ -69,13 +69,10 @@ require_once ("./database/userDb.php");
 
         if (empty($name_err) && empty($email_err) && empty($password_err) && empty($re_password_err) && empty($check_err)) {
             $databaseEmail = get_user_by_email($mysqli, $email);
-            // $databaseEmail = $databaseEmails->fetch_assoc();
             if ($databaseEmail['email'] == $email) {
                 $email_error = "Email already exists";
             } else {
-                // $password = password_hash($password, PASSWORD_DEFAULT);
-                // var_dump($password);
-                if (create_user($mysqli, $name, $email, $password, 'user')) {
+                if (create_user($mysqli, $name, $email, $password, 'user', null)) {
                     $success = true;
                     // header("Location: signup.php");
                     $name = $email = $password = $role = "";
@@ -119,7 +116,7 @@ require_once ("./database/userDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="text" class="form-control" id="username" name="name">
+                                <input type="text" class="form-control" id="username" name="name" value="<?php echo $name ?>">
                                 <small class="text-danger"><?php echo $name_err ?></small>
                             </div>
                         </div>
@@ -129,7 +126,7 @@ require_once ("./database/userDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>">
                                 <small class="text-danger"><?php echo $email_err ?></small>
                             </div>
                         </div>
@@ -139,7 +136,7 @@ require_once ("./database/userDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="text" class="form-control" id="address" name="address">
+                                <input type="text" class="form-control" id="address" name="address" value="<?php echo $address ?>">
                                 <small class="text-danger"><?php echo $address_err ?></small>
                             </div>
                         </div>
@@ -149,7 +146,7 @@ require_once ("./database/userDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" value="<?php echo $password ?>">
                                 <small class="text-danger"><?php echo $password_err ?></small>
                             </div>
                         </div>
@@ -159,7 +156,7 @@ require_once ("./database/userDb.php");
                             </div>
 
                             <div class="col-6 text-start">
-                                <input type="password" class="form-control" id="c_password" name="re_password">
+                                <input type="password" class="form-control" id="c_password" name="re_password" value="<?php echo $re_password ?>">
                                 <small class="text-secondary">Confirm password</small>
                                 <small class="text-danger"><?php echo $re_password_err ?></small>
                             </div>
