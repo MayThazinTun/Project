@@ -2,6 +2,9 @@
 if(isset($_POST['logout'])){
     setcookie('user', '', -1, '/');
     header("Location:../signin.php"); 
+    if(isset($_COOKIE['user'])):
+        setcookie('user', '', time()-7000000, '/');
+    endif;
 }
 ?>
 
