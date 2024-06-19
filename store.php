@@ -14,14 +14,20 @@ if ($user) {
 
 <div class="row">
     <div class="col-auto">
-        <?php require_once ("./Layout/sidebar.php") ?>
+        <?php require_once ("./Login/sidebar.php") ?>
     </div>
     <div class="col">
+        <?php 
+        $products = getAll($mysqli);
+        if(isset($_GET['$category_id'])){
+            $products = get_product_by_category_id($mysqli,$_GET['category_id']);
+        }while( $products ) {
+        ?>
         <div class="card mt-3" style="width:300px; height: auto;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Description</p>
+                <h5 class="card-title"><?php echo $product['product_name'] ?></h5>
+                <p class="card-text"></p>
                 <div class="row justify-content-center gap-2 px-2">
                     <!-- Button trigger modal -->
                     <button type="button" class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">
@@ -53,6 +59,7 @@ if ($user) {
                 </div>
             </div>
         </div>
+        <?php } ?>
     </div>
 </div>
 

@@ -7,5 +7,5 @@ if (isset($_COOKIE['user'])) {
 }
 
 if(!$user){
-    header("Location: ./signin.php");
+    header("Location: ../index.php");
 }

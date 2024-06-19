@@ -70,12 +70,13 @@ require_once ("./database/userDb.php");
         if (empty($name_err) && empty($email_err) && empty($password_err) && empty($re_password_err) && empty($check_err)) {
             $databaseEmail = get_user_by_email($mysqli, $email);
             if ($databaseEmail['email'] == $email) {
-                $email_error = "Email already exists";
+                $email_err = "Email already exists";
             } else {
+                $password = password_hash($password,PASSWORD_DEFAULT);
                 if (create_user($mysqli, $name, $email, $password, 'user', null)) {
                     $success = true;
-                    // header("Location: signup.php");
-                    $name = $email = $password = $role = "";
+                    header("Location: signup.php");
+                    // $name = $email = $password = $role = $re_password = "";
                 } else {
                     $invalid = true;
                 }

@@ -138,6 +138,14 @@ function get_product_by_name($mysqli, $name)
     }
     return false;
 }
+function get_product_by_category_id($mysqli, $category_id){
+    $sql = "SELECT * FROM `products` WHERE `category_id` = $category_id";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    }
+    return false;
+}
 
 // update product by id
 function update_product_by_id($mysqli, $id, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity)
