@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
         if ($user['email'] == $email) {
             if (password_verify($password, $user['password'])) {
                 if ($user['role'] === "admin") {
+                    setcookie("admin", json_encode($user), time() + 3600 * 24 * 7 * 2, '/');
                     header("Location:../admin/users/index.php");
                 } else {
                     $role_error = "You are not admin";

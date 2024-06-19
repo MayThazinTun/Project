@@ -2,6 +2,14 @@
 require_once('../../database/index.php');
 require_once('../../baseUrl.php');
 
+$admin = null;
+if (isset($_COOKIE['admin'])) {
+    $admin = json_decode($_COOKIE['admin'], true);
+}
+if(!$admin){
+    header("location: ../index.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +65,7 @@ require_once('../../baseUrl.php');
                     <li class="list-group-item"><a href="#">Sticker</a></li>
                     <li class="list-group-item"><a href="#">Groceries & Pets</a></li>
                     <li class="list-group-item"><a href="#">Home & Lifestyle</a></li>
-                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/' ?>">Logout</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/logout.php' ?>">Logout</a></li>
                 </ul>
             </div>
             <div class="right col-10">
