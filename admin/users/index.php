@@ -8,7 +8,7 @@ if (isset($_GET['deleted_id'])) {
 
 
 // Page Limit for Users
-$limit = 6;
+$limit = 5;
 
 // Page Number where we are
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -25,11 +25,6 @@ $total_pages = ceil($total_users / $limit);
 
 $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
 
-// var_dump("Page ".$page,"Search ".$search,
-//         "Offset ".$offset,"Total Users ".$total_users,
-//         "Total Pages ".$total_pages);
-
-
 ?>
 
 <div class="container mt-2">
@@ -43,7 +38,7 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
             <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
         </form>
     </div>
-    <table class="table table-striped table-bordered my-4">
+    <table class="table table-striped table-bordered my-4 text-center">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -59,25 +54,21 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
             $ID = 1;
             foreach ($users as $user) : ?>
                 <tr>
-                    <td><?php echo $ID++ ?></td>
-                    <td><?php echo $user['name']; ?></td>
-                    <td><?php echo $user['email']; ?></td>
-                    <td><?php echo $user['role']; ?></td>
-                    <td>
+                    <td class="align-middle"><?php echo $ID++ ?></td>
+                    <td class="align-middle"><?php echo $user['name']; ?></td>
+                    <td class="align-middle"><?php echo $user['email']; ?></td>
+                    <td class="align-middle"><?php echo $user['role']; ?></td>
+                    <td class="align-middle">
                         <?php foreach (explode(",", $user['images']) as $photo) : ?>
-                            <img src="<?php echo $photo; ?>" alt="" width="60px" height="60px">
+                            <img src="<?php echo $photo; ?>" alt="" class="img-fluid rounded-circle mx-auto d-block" style="max-width: 60px; max-height: 60px;">
                         <?php endforeach; ?>
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2'><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
-
-            <?php
-            endforeach;
-            ?>
-
+            <?php endforeach; ?>
         </tbody>
     </table>
 
