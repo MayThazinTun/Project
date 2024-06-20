@@ -27,7 +27,9 @@ if ($user) {
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $product['product_name'] ?></h5>
-                <p class="card-text"></p>
+                <p class="card-text">Color : <?php echo $product['product_color'] ?></p>
+                <p class="card-text">Size : <?php echo $product['product_size'] ?></p>
+                <p class="card-text">Price : <?php echo $product['product_price'] ?></p>
                 <div class="row justify-content-center gap-2 px-2">
                     <!-- Button trigger modal -->
                     <button type="button" class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">

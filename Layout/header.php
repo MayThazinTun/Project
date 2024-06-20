@@ -1,8 +1,9 @@
-<?php 
-require_once("../database/index.php");
-require_once('../database/userDb.php');
-require_once('../database/auth_user.php');
+<?php
+require_once ("../database/index.php");
+require_once ('../database/userDb.php');
+require_once ('../database/auth_user.php');
 require_once ("../database/categoryDb.php");
+require_once ("../database/productDb.php");
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +28,7 @@ require_once ("../database/categoryDb.php");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    
 </head>
 
 <body>

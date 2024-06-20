@@ -1,13 +1,14 @@
 <div class="d-grid gap-4 mx-3">
     <div class="row gap-3 bg-light">
         <div class="col text-center mb-2">
-            <img src="../images/shopbag_logo.png"  class="rounded me-3" style="width: 80px;height: 80px;">
+            <img src="../images/shopbag_logo.png" class="rounded me-3" style="width: 80px;height: 80px;">
         </div>
         <div class="col-3 text-center">
             <div class="input-group py-4">
-                <input type="email" class="form-control" placeholder="Email Address"
-                    aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary bg-dark" type="button" id="button-addon2"><i class="fa-solid fa-arrow-right fa-flip-vertical fa-xl" style="color: #ffffff;"></i></button>
+                <input type="email" class="form-control" placeholder="Email Address" aria-label="Recipient's username"
+                    aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary bg-dark" type="button" id="button-addon2"><i
+                        class="fa-solid fa-arrow-right fa-flip-vertical fa-xl" style="color: #ffffff;"></i></button>
             </div>
         </div>
         <div class="col mt-2 d-flex gap-3 justify-content-center py-4">
@@ -86,5 +87,13 @@
     </div>
 </div>
 </body>
+<!-- call global jspdf functions cdn link -->
+<!-- Include jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Include html2canvas library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Include jsPDF html2canvas plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/html2canvas.min.js"></script>
+<script src="./assets/app.js" defer></script>
 
 </html>
