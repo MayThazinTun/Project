@@ -58,6 +58,21 @@ function createUsersTable($mysqli)
     return false;
 }
 
+function createDefaultAdmin($mysqli)
+{
+    $email = 'admin@gmail.com';
+    $password = password_hash("123", PASSWORD_DEFAULT);
+
+    $sql = "SELECT * FROM `users` WHERE `email` = '$email'";
+    $result = $mysqli->query($sql);
+
+    if ($result && $result->num_rows == 0) {
+        $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`, `images`) VALUES ('admin', '$email', '$password', 'admin', null)";
+        return $mysqli->query($sql);
+    }
+    return false;
+}
+
 //create orders table /order_id,user_id,product_id,invoice_id,shipping_address,created_at,updated_at order connect with users table and products table
 function createOrdersTable($mysqli)
 {
@@ -210,6 +225,7 @@ function allTables($mysqli)
     createStickersTable($mysqli);
     createProductsTable($mysqli);
     createInvoiceTable($mysqli);
+    createDefaultAdmin($mysqli);
     // echo "all tables created successfully";
 }
 allTables($mysqli);
