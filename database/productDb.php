@@ -3,6 +3,14 @@
 //create products
 function create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity)
 {
+    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`product_name`,`product_price`,`product_quantity`) VALUES ('$category_id',null,null,null,null,'$product_name','$product_price','$product_quantity')";
+    if ($mysqli->query($sql)) {
+        return true;
+    }
+    return false;
+}
+function createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity)
+{
     $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`product_name`,`product_price`,`product_quantity`) VALUES ('$category_id','$type_id','$color_id','$size_id','$sticker_id','$product_name','$product_price','$product_quantity')";
     if ($mysqli->query($sql)) {
         return true;

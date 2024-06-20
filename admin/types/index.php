@@ -1,31 +1,14 @@
 <?php
 require_once('../layouts/adminHeader.php');
-require_once('../../database/productDb.php');
+require_once('../../database/typeDb.php');
 
-// Handle search input
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-
-// Number of products per page (2 rows * 4 columns)
-$limit = 8;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$total_products = get_total_product_count($mysqli, $search);
-$total_pages = ceil($total_products / $limit);
-
-$products = get_all_products_paginated($mysqli, $limit, $offset, $search);
 
 ?>
 
 <div class="container-fluid mt-5">
     <div class="d-flex justify-content-between mb-3">
-        <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;Product&nbsp;<i class="fa-solid fa-store"></i></a>
+        <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;Types&nbsp;</a>
         <!-- Search Form -->
-        <form method="get" class="d-flex">
-            <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 150px;">
-            <button type="submit" class="btn btn-primary me-2"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
-        </form>
     </div>
 
     <?php if (!empty($products)) : ?>

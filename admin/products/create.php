@@ -22,35 +22,59 @@ if (isset($_POST['submit'])) {
     $product_price = htmlspecialchars($_POST["product_price"]);
     $product_quantity = htmlspecialchars($_POST["product_quantity"]);
 
-    if (empty($type_id)) {
-        $type_id_error = "Type is required";
-    }
-    if (empty($color_id)) {
-        $color_id_error = "Color is required";
-    }
-    if (empty($size_id)) {
-        $size_id_error = "Size is required";
-    }
-    if (empty($sticker_id)) {
-        $sticker_id_error = "Sticker is required";
-    }
-    if (empty($product_name)) {
-        $product_name_error = "Name is required";
-    }
-    if (empty($product_price)) {
-        $product_price_error = "Price is required";
-    }
-    if (empty($product_quantity)) {
-        $product_quantity_error = "Quantity is required";
-    }
+    if (empty($type_id) && empty($color_id) && empty($size_id) && empty($sticker_id)) {
+        if (empty($category_id)) {
+            $category_id_error = "Category is required";
+        }
+        if (empty($product_name)) {
+            $product_name_error = "Name is required";
+        }
+        if (empty($product_price)) {
+            $product_price_error = "Price is required";
+        }
+        if (empty($product_quantity)) {
+            $product_quantity_error = "Quantity is required";
+        }
 
-    if (empty($type_id_error) && empty($color_id_error) && empty($size_id_error) && empty($sticker_id_error) && empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
-        $result = create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity);
-        if ($result) {
-            header("Location: index.php");
-            exit;
-        } else {
-            $invalid = "Something went wrong";
+        if (empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
+            $result = create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity);
+            if ($result) {
+                header("Location: index.php");
+                exit;
+            } else {
+                $invalid = "Something went wrong";
+            }
+        }
+    }else{
+        if (empty($category_id)) {
+            $category_id_error = "Category is required";
+        }
+        if(empty($type_id)) {
+            $type_id_error = "Type is required";
+        }
+        if(empty($color_id)) {
+            $color_id_error = "Color is required";
+        }
+        if(empty($size_id)) {
+            $size_id_error = "Size is required";
+        }
+        if (empty($product_name)) {
+            $product_name_error = "Name is required";
+        }
+        if (empty($product_price)) {
+            $product_price_error = "Price is required";
+        }
+        if (empty($product_quantity)) {
+            $product_quantity_error = "Quantity is required";
+        }
+        if (empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
+            $result = createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity);
+            if ($result) {
+                header("Location: index.php");
+                exit;
+            } else {
+                $invalid = "Something went wrong";
+            }
         }
     }
 }
@@ -69,7 +93,7 @@ if (isset($_POST['submit'])) {
             ?>
             <form class="row" method="post">
                 <div class="col-md-6 mb-2">
-                    <label for="category_id" class="form-label">Choose Category</label>
+                    <label for="category_id" class="form-label">Product Category</label>
                     <div>
                         <select class="form-select" name="category_id">
                             <?php $categories = get_all_categories($mysqli);
@@ -82,9 +106,10 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="type_id" class="form-label">Choose Type</label>
+                    <label for="type_id" class="form-label">Product Type</label>
                     <div>
                         <select class="form-select" name="type_id">
+                            <option value="" selected>Select type(optional)...</option>
                             <?php $types = get_all_types($mysqli);
                             foreach ($types as $type) {
                                 echo '<option value="' . $type['type_id'] . '">' . $type['type_name'] . '</option>';
@@ -95,9 +120,10 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="color_id" class="form-label">Choose Color</label>
+                    <label for="color_id" class="form-label">Product Color</label>
                     <div>
                         <select class="form-select" name="color_id">
+                            <option value="" selected>Select color(optional)...</option>
                             <?php $colors = get_all_colors($mysqli);
                             foreach ($colors as $color) {
                                 echo '<option value="' . $color['color_id'] . '">' . $color['color_name'] . '</option>';
@@ -108,9 +134,10 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="size_id" class="form-label">Choose Size</label>
+                    <label for="size_id" class="form-label">Product Size</label>
                     <div>
                         <select class="form-select" name="size_id">
+                            <option value="" selected>Select size(optional)...</option>
                             <?php $sizes = get_all_sizes($mysqli);
                             foreach ($sizes as $size) {
                                 echo '<option value="' . $size['size_id'] . '">' . $size['size'] . '</option>';
@@ -121,9 +148,10 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="sticker_id" class="form-label">Choose Sticker</label>
+                    <label for="sticker_id" class="form-label">Product Sticker</label>
                     <div>
                         <select class="form-select" name="sticker_id">
+                            <option value="" selected>Select sticker(optional)...</option>
                             <?php $stickers = get_all_stickers($mysqli);
                             foreach ($stickers as $sticker) {
                                 echo '<option value="' . $sticker['sticker_id'] . '">' . $sticker['sticker_price'] . '</option>';

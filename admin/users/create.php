@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
             }
 
             $newFileName = time() . "_" . $photo_name;
-            $uploadDir = "../../images/users/";
+            $uploadDir = "../../images/All/users/";
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }

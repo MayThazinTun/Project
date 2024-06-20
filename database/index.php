@@ -149,13 +149,13 @@ function createProductsTable($mysqli)
     return false;
 }
 
-//create types table type_id,type_price,type_name product prices can change depend on type
+//create types table type_id,type_price,type_Image product prices can change depend on type
 function createTypesTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS types(
         type_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         type_price INT(11) DEFAULT 0,
-        type_name VARCHAR(255) NOT NULL
+        type_images VARCHAR(255)
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -195,8 +195,8 @@ function createStickersTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS stickers(
         sticker_id INT(11) AUTO_INCREMENT PRIMARY KEY,
-        sticker_price INT(11) DEFAULT 0
-        -- sticker_images VARCHAR(255)
+        sticker_price INT(11) DEFAULT 0,
+        sticker_images VARCHAR(255)
     )";
     if ($mysqli->query($sql)) {
         return true;
