@@ -26,11 +26,9 @@ function get_type_by_id($mysqli, $type_id)
 {
     $sql = "SELECT * FROM `types` WHERE `type_id`='$type_id'";
     $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    }
-    return false;
+    return $result;
 }
+
 
 // update type by id
 function update_type_by_id($mysqli, $type_id, $type_price, $type_images)

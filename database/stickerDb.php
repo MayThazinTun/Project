@@ -27,16 +27,13 @@ function get_sticker_by_id($mysqli, $sticker_id)
 {
     $sql = "SELECT * FROM `stickers` WHERE `sticker_id` = '$sticker_id'";
     $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-    return false;
+    return $result;
 }
 
 //update sticker by id
-function update_sticker_by_id($mysqli, $sticker_id, $sticker_price)
+function update_sticker_by_id($mysqli, $sticker_id, $sticker_price, $sticker_images)
 {
-    $sql = "UPDATE `stickers` SET `sticker_price` = '$sticker_price' WHERE `sticker_id` = '$sticker_id'";
+    $sql = "UPDATE `stickers` SET `sticker_price` = '$sticker_price',`sticker_images` = '$sticker_images' WHERE `sticker_id` = '$sticker_id'";
     if ($mysqli->query($sql)) {
         return true;
     }
