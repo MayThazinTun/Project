@@ -52,3 +52,28 @@ function delete_sticker_by_id($mysqli, $sticker_id)
     }
     return false;
 }
+
+
+
+// Get Stickers by Pagination
+function get_all_stickers_pagination($mysqli, $limit, $offset)
+{
+    $sql = "SELECT * FROM `stickers` 
+            ORDER BY `sticker_id` DESC
+            LIMIT $limit OFFSET $offset";
+
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return [];
+    }
+}
+
+function get_total_stickers_count($mysqli)
+{
+    $sql = "SELECT count(*) as total FROM `stickers`";
+    $result = $mysqli->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
+}

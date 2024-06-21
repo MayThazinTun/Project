@@ -55,7 +55,7 @@ if (isset($_GET['updated_id'])) {
 
 // color Pagination
 
-// Page Limit for Users
+// Page Limit for Colors
 $limit = 5;
 
 // Page Number where we are
@@ -64,12 +64,12 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 // Offset for pagination 
 $offset = ($page - 1) * $limit;
 
-$total_categories = get_total_colors_count($mysqli);
+$total_colors = get_total_colors_count($mysqli);
 
 // Calculate total pages
-$total_pages = ceil($total_categories / $limit);
+$total_pages = ceil($total_colors / $limit);
 
-$categories = get_all_colors_pagination($mysqli, $limit, $offset);
+$colors = get_all_colors_pagination($mysqli, $limit, $offset);
 
 ?>
 
@@ -113,7 +113,7 @@ $categories = get_all_colors_pagination($mysqli, $limit, $offset);
                     </div>
                 </form>
                 <ul class="list-group">
-                    <?php foreach ($categories as $color) : ?>
+                    <?php foreach ($colors as $color) : ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span><?php echo $color['color_name'] ?></span>
                             <div>

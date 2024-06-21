@@ -8,7 +8,7 @@ if (isset($_GET['deleted_id'])) {
 }
 
 // Page Limit for Sizes
-$limit = 5;
+$limit = 8;
 
 // Page Number where we are
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
