@@ -51,3 +51,28 @@ function delete_type_by_id($mysqli, $type_id)
     }
     return false;
 }
+
+
+
+// Get types by Pagination
+function get_all_types_pagination($mysqli, $limit, $offset)
+{
+    $sql = "SELECT * FROM `types` 
+            ORDER BY `type_id` DESC
+            LIMIT $limit OFFSET $offset";
+
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return [];
+    }
+}
+
+function get_total_types_count($mysqli)
+{
+    $sql = "SELECT count(*) as total FROM `types`";
+    $result = $mysqli->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
+}
