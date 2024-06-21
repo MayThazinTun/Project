@@ -11,21 +11,31 @@ $sizes = [
     ['size_id' => 7, 'size' => 'XXL'],
     ['size_id' => 8, 'size' => 'XXXL'],
 ];
-function createSizes($mysqli, $sizes)
-{
-    foreach ($sizes as $size) {
-        $size_id = $size['size_id'];
-        $size = $size['size'];
+// Create Custom Sizes
+// function createSizes($mysqli, $sizes)
+// {
+//     foreach ($sizes as $size) {
+//         $size_id = $size['size_id'];
+//         $size = $size['size'];
 
-        $size_price = 0;
+//         $size_price = 0;
 
-        $sql = "INSERT INTO `sizes`(`size_id`, `size`, `size_price`) VALUES ('$size_id', '$size', '$size_price')";
+//         $sql = "INSERT INTO `sizes`(`size_id`, `size`, `size_price`) VALUES ('$size_id', '$size', '$size_price')";
 
-        $mysqli->query($sql);
-    }
-}
+//         $mysqli->query($sql);
+//     }
+// }
 // $mysqli = new mysqli("localhost", "root", "", "shopping");
 // createSizes($mysqli, $sizes);
+
+function create_size($mysqli, $size, $size_price)
+{
+    $sql = "INSERT INTO `sizes`(`size`, `size_price`) VALUES ('$size', '$size_price')";
+    if ($mysqli->query($sql)) {
+        return true;
+    }
+    return false;
+}
 
 //get all sizes
 function get_all_sizes($mysqli)
@@ -43,7 +53,7 @@ function getSizeById($mysqli, $size_id)
 {
     $sql = "SELECT * FROM `sizes` WHERE `size_id` = '$size_id'";
     $result = $mysqli->query($sql);
-    return $result->fetch_assoc();
+    return $result;
 }
 
 //update size by id
@@ -65,4 +75,20 @@ function deleteSizeById($mysqli, $size_id)
 {
     $sql = "DELETE FROM `sizes` WHERE `size_id` = '$size_id'";
     $mysqli->query($sql);
+}
+
+function get_total_sizes_count($mysqli) {
+    $sql = "SELECT COUNT(*) as total FROM `sizes`";
+    $result = $mysqli->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
+}
+
+function get_all_sizes_pagination($mysqli, $limit, $offset) {
+    $sql = "SELECT * FROM `sizes` LIMIT $limit OFFSET $offset";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    return [];
 }

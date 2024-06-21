@@ -177,18 +177,15 @@ function createColorsTable($mysqli)
 }
 
 //create sizes table size_id,size,size_price product can change depend on sizes
-function createSizesTable($mysqli)
-{
+function createSizesTable($mysqli) {
     $sql = "CREATE TABLE IF NOT EXISTS sizes(
         size_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         size VARCHAR(255) NOT NULL,
         size_price INT(11) DEFAULT 0
     )";
-    if ($mysqli->query($sql)) {
-        return true;
-    }
-    return false;
+    return $mysqli->query($sql);
 }
+
 
 //create stickers table sticker_id,sticker_price,sticker_images product can change depend on stickers
 function createStickersTable($mysqli)

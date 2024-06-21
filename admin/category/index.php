@@ -19,11 +19,13 @@ if (isset($_POST['submit'])) {
     if (empty($category_name)) {
         $category_name_error = "Category name is required";
     } else {
-        if (create_category($mysqli, $category_name)) {
-            $success = "Category created successfully";
-            $category_name = "";
-        } else {
-            $invalid = "Something went wrong";
+        if ($category_name) {
+            if (create_category($mysqli, $category_name)) {
+                $success = "Category created successfully";
+                $category_name = "";
+            } else {
+                $invalid = "Something went wrong";
+            }
         }
     }
 }

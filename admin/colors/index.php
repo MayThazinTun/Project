@@ -17,10 +17,11 @@ if (isset($_GET['invalid'])) {
 if (isset($_POST['submit'])) {
     $color_name = $_POST['color_name'];
     if (empty($color_name)) {
-        $color_name_error = "color name is required";
+        $color_name_error = "Color is required";
     } else {
-        if (createColors($mysqli, $color_name)) {
-            $success = "color created successfully";
+        if ($color_name) {
+            createColors($mysqli, $color_name);
+            $success = "Color created successfully";
             $color_name = "";
         } else {
             $invalid = "Something went wrong";

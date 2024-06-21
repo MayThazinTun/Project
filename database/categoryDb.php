@@ -54,42 +54,6 @@ function delete_category_by_id($mysqli, $category_id)
     return false;
 }
 
-/*
-function get_all_users_pagination($mysqli, $limit, $offset, $search)
-{
-    $search = mysqli_real_escape_string($mysqli, $search);
-    $sql = "SELECT * FROM `users` 
-            WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%'
-            LIMIT $limit OFFSET $offset";
-
-    $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-    return [];
-}
-
-function get_total_user_count($mysqli, $search)
-{
-    $search = mysqli_real_escape_string($mysqli, $search);
-    $sql = "SELECT count(*) as total FROM `users` WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%'";
-    $result = $mysqli->query($sql);
-    $row = $result->fetch_assoc();
-    return $row['total'];
-}
-
-*/
-// function get_all_categories_pagination($mysqli, $limit, $offset, $search){
-//     $search = mysqli_real_escape_string($mysqli, $search);
-//     $sql = "SELECT * FROM `categories` 
-//             WHERE `category_name` LIKE '%$search%'
-//             LIMIT $limit OFFSET $offset";
-
-//     $result = $mysqli->query($sql);
-//     if ($result->num_rows > 0) {
-//         return $result->fetch_all(MYSQLI_ASSOC);
-//     }
-// }
 
 function get_all_categories_pagination($mysqli, $limit, $offset)
 {
