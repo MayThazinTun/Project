@@ -9,8 +9,9 @@ require_once('../../database/sizeDb.php');
 require_once('../../database/stickerDb.php');
 
 
-$category_id = $type_id = $color_id = $size_id = $sticker_id = $product_name = $product_price = $product_quantity = "";
-$category_id_error = $type_id_error = $color_id_error = $size_id_error = $sticker_id_error = $product_name_error = $product_price_error = $product_quantity_error = $invalid = "";
+$category_id = $type_id = $color_id = $size_id = $sticker_id = $product_name = $product_price = $product_quantity = $product_description = "";
+$category_id_error = $type_id_error = $color_id_error = $size_id_error = $sticker_id_error = $product_name_error = $product_price_error = $product_quantity_error = $invalid = $product_description_error = "";
+$photos_error = "";
 
 if (isset($_POST['submit'])) {
     $category_id = htmlspecialchars($_POST["category_id"]);
@@ -21,6 +22,44 @@ if (isset($_POST['submit'])) {
     $product_name = htmlspecialchars($_POST["product_name"]);
     $product_price = htmlspecialchars($_POST["product_price"]);
     $product_quantity = htmlspecialchars($_POST["product_quantity"]);
+    $product_description = htmlspecialchars($_POST["product_description"]);
+
+    // Upload Images
+    $photos = $_FILES['images'];
+    $photos_name = $photos['name'];
+    $photos_tmp = $photos['tmp_name'];
+    $photos_error_array = $photos['error'];
+    $photos_paths = [];
+
+
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+    foreach ($photos_name as $index => $photo_name) {
+        if (!empty($photo_name)) {
+            $photo_ext = pathinfo($photo_name, PATHINFO_EXTENSION);
+
+            if ($photos_error_array[$index] !== UPLOAD_ERR_OK) {
+                $photos_error = "Error uploading file: " . $photo_name;
+                break;
+            }
+            if (!in_array(strtolower($photo_ext), $allowed_extensions)) {
+                $photos_error = "Invalid file type: " . $photo_name;
+                break;
+            }
+
+            $newFileName = time() . "_" . $photo_name;
+            $uploadDir = "../../images/All/products/";
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $photo_destination = $uploadDir . $newFileName;
+            if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
+                $photos_paths[] = $photo_destination;
+            } else {
+                $photos_error = "Error uploading file: " . $photo_name;
+                break;
+            }
+        }
+    }
 
     if (empty($type_id) && empty($color_id) && empty($size_id) && empty($sticker_id)) {
         if (empty($category_id)) {
@@ -35,9 +74,13 @@ if (isset($_POST['submit'])) {
         if (empty($product_quantity)) {
             $product_quantity_error = "Quantity is required";
         }
+        if (empty($product_description)) {
+            $product_description_error = "Description is required";
+        }
 
         if (empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
-            $result = create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity);
+            $photo_paths_str = implode(",", $photos_paths);
+            $result = create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity,$photo_paths_str,$product_description);
             if ($result) {
                 header("Location: index.php");
                 exit;
@@ -68,7 +111,8 @@ if (isset($_POST['submit'])) {
             $product_quantity_error = "Quantity is required";
         }
         if (empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
-            $result = createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity);
+            $photo_paths_str = implode(",", $photos_paths);
+            $result = createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity,$photo_paths_str,$product_description);
             if ($result) {
                 header("Location: index.php");
                 exit;
@@ -84,14 +128,14 @@ if (isset($_POST['submit'])) {
 <div class="container mt-2">
     <h1 class="text-center my-4">Create New Product</h1>
     <div class="d-flex justify-content-center">
-        <div class="card col-7 p-5">
+        <div class="card col-7 p-4">
             <?php if ($invalid)
                 echo    "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
                                     <strong>$invalid</strong>
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                                 </div>"
             ?>
-            <form class="row" method="post">
+            <form class="row" method="post" enctype="multipart/form-data" >
                 <div class="col-md-6 mb-2">
                     <label for="category_id" class="form-label">Product Category</label>
                     <div>
@@ -182,7 +226,20 @@ if (isset($_POST['submit'])) {
                         <small class="text-danger"><?php echo $product_quantity_error ?></small>
                     </div>
                 </div>
-
+                <div class="col-md-6 mb-2">
+                    <label for="product_images" class="form-label">Product Images</label>
+                    <div>
+                        <input type="file" name="images[]" class="form-control" id="images" multiple>
+                        <small class="text-danger"><?php echo htmlspecialchars($photos_error); ?></small>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_description" class="form-label">Product Description</label>
+                    <div>
+                        <input type="text" name="product_description" class="form-control" value="<?php echo $product_description ?>" id="product_description">
+                        <small class="text-danger"><?php echo $product_description_error ?></small>
+                    </div>
+                </div>
                 <div class="text-center mt-5">
                     <button type="submit" name="submit" class="btn btn-primary">Create</button>
                     <a href="./index.php" class="btn btn-warning">Cancel</a>

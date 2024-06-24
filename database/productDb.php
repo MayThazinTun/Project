@@ -1,17 +1,17 @@
 <?php
 
 //create products
-function create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity)
+function create_product($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity, $product_images, $product_description)
 {
-    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`product_name`,`product_price`,`product_quantity`) VALUES ('$category_id',null,null,null,null,'$product_name','$product_price','$product_quantity')";
+    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`product_name`,`product_price`,`product_quantity`,`product_images`,`product_description`) VALUES ('$category_id',null,null,null,null,'$product_name','$product_price','$product_quantity',null,null)";
     if ($mysqli->query($sql)) {
         return true;
     }
     return false;
 }
-function createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity)
+function createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity, $product_images, $product_description)
 {
-    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`product_name`,`product_price`,`product_quantity`) VALUES ('$category_id','$type_id','$color_id','$size_id','$sticker_id','$product_name','$product_price','$product_quantity')";
+    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`product_name`,`product_price`,`product_quantity`,`product_images`,`product_description`) VALUES ('$category_id','$type_id','$color_id','$size_id','$sticker_id','$product_name','$product_price','$product_quantity','$product_images','$product_description')";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -67,7 +67,8 @@ function get_all_products_paginated($mysqli, $limit, $offset, $search = '')
                       OR colors.color_name LIKE '%$search%'
                       OR sizes.size LIKE '%$search%'
                       OR stickers.sticker_price LIKE '%$search%'
-                      OR products.product_quantity LIKE '%$search%')";
+                      OR products.product_quantity LIKE '%$search%'
+                      OR products.product_description LIKE '%$search%')";
     }
 
     $sql .= " ORDER BY products.created_at DESC LIMIT $limit OFFSET $offset";
@@ -106,7 +107,8 @@ function get_total_product_count($mysqli, $search = '')
                       OR colors.color_name LIKE '%$search%'
                       OR sizes.size LIKE '%$search%'
                       OR stickers.sticker_price LIKE '%$search%'
-                      OR products.product_quantity LIKE '%$search%')";
+                      OR products.product_quantity LIKE '%$search%'
+                      OR products.product_description LIKE '%$search%')";
     }
 
     $result = $mysqli->query($sql);
@@ -127,15 +129,30 @@ function get_total_product_count($mysqli, $search = '')
 
 
 // get product by id
-function get_product_by_id($mysqli, $id)
+function get_product_by_id($mysqli, $product_id)
 {
-    $sql = "SELECT * FROM `products` WHERE `id` = '$id'";
-    $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
+    $sql = "SELECT products.*, categories.category_name, types.type_price, colors.color_name, sizes.size, stickers.sticker_price 
+            FROM `products` 
+            LEFT JOIN `categories` ON products.category_id = categories.category_id 
+            LEFT JOIN `types` ON products.type_id = types.type_id 
+            LEFT JOIN `colors` ON products.color_id = colors.color_id 
+            LEFT JOIN `sizes` ON products.size_id = sizes.size_id 
+            LEFT JOIN `stickers` ON products.sticker_id = stickers.sticker_id
+            WHERE products.product_id = ?";
+
+    $stmt = $mysqli->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param('i', $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
     }
-    return false;
+    return null;
 }
+
+
 
 // get product by name
 function get_product_by_name($mysqli, $name)
@@ -168,9 +185,9 @@ function update_product_by_id($mysqli, $id, $category_id, $type_id, $color_id, $
 }
 
 // delete product by id
-function delete_product_by_id($mysqli, $id)
+function delete_product_by_id($mysqli, $product_id)
 {
-    $sql = "DELETE FROM `products` WHERE `id` = '$id'";
+    $sql = "DELETE FROM `products` WHERE `product_id` = '$product_id'";
     if ($mysqli->query($sql)) {
         return true;
     }
