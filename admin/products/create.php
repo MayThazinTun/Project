@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
                             <option value="" selected>Select type(optional)...</option>
                             <?php $types = get_all_types($mysqli);
                             foreach ($types as $type) {
-                                echo '<option value="' . $type['type_id'] . '">' . $type['type_name'] . '</option>';
+                                echo '<option value="' . $type['type_id'] . '">' . $type['type_price'] . '</option>';
                             }
                             ?>
                         </select>

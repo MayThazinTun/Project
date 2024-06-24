@@ -17,7 +17,7 @@ $products = get_all_products_paginated($mysqli, $limit, $offset, $search);
 
 ?>
 
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-4">
     <div class="d-flex justify-content-between mb-3">
         <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;Product&nbsp;<i class="fa-solid fa-store"></i></a>
         <!-- Search Form -->

@@ -49,13 +49,13 @@ INNER JOIN stickers ON products.sticker_id = stickers.sticker_id";
 
 function get_all_products_paginated($mysqli, $limit, $offset, $search = '')
 {
-    $sql = "SELECT products.*, categories.category_name, types.type_name, colors.color_name, sizes.size, stickers.sticker_price 
+    $sql = "SELECT products.*, categories.category_name, types.type_price, colors.color_name, sizes.size, stickers.sticker_price 
             FROM `products` 
-            INNER JOIN `categories` ON products.category_id = categories.category_id 
-            INNER JOIN `types` ON products.type_id = types.type_id 
-            INNER JOIN `colors` ON products.color_id = colors.color_id 
-            INNER JOIN `sizes` ON products.size_id = sizes.size_id 
-            INNER JOIN `stickers` ON products.sticker_id = stickers.sticker_id
+            LEFT JOIN `categories` ON products.category_id = categories.category_id 
+            LEFT JOIN `types` ON products.type_id = types.type_id 
+            LEFT JOIN `colors` ON products.color_id = colors.color_id 
+            LEFT JOIN `sizes` ON products.size_id = sizes.size_id 
+            LEFT JOIN `stickers` ON products.sticker_id = stickers.sticker_id
             WHERE 1";
     if (!empty($search)) {
         $search = $mysqli->real_escape_string($search);
@@ -63,7 +63,7 @@ function get_all_products_paginated($mysqli, $limit, $offset, $search = '')
                       OR products.product_price LIKE '%$search%'
                       OR products.created_at LIKE '%$search%'
                       OR categories.category_name LIKE '%$search%'
-                      OR types.type_name LIKE '%$search%'
+                      OR types.type_price LIKE '%$search%'
                       OR colors.color_name LIKE '%$search%'
                       OR sizes.size LIKE '%$search%'
                       OR stickers.sticker_price LIKE '%$search%'
@@ -89,11 +89,11 @@ function get_all_products_paginated($mysqli, $limit, $offset, $search = '')
 function get_total_product_count($mysqli, $search = '')
 {
     $sql = "SELECT COUNT(*) as count FROM `products` 
-            INNER JOIN `categories` ON products.category_id = categories.category_id 
-            INNER JOIN `types` ON products.type_id = types.type_id 
-            INNER JOIN `colors` ON products.color_id = colors.color_id 
-            INNER JOIN `sizes` ON products.size_id = sizes.size_id 
-            INNER JOIN `stickers` ON products.sticker_id = stickers.sticker_id 
+            LEFT JOIN `categories` ON products.category_id = categories.category_id 
+            LEFT JOIN `types` ON products.type_id = types.type_id 
+            LEFT JOIN `colors` ON products.color_id = colors.color_id 
+            LEFT JOIN `sizes` ON products.size_id = sizes.size_id 
+            LEFT JOIN `stickers` ON products.sticker_id = stickers.sticker_id 
             WHERE 1";
 
     if (!empty($search)) {
@@ -102,7 +102,7 @@ function get_total_product_count($mysqli, $search = '')
                       OR products.product_price LIKE '%$search%' 
                       OR products.created_at LIKE '%$search%'
                       OR categories.category_name LIKE '%$search%'
-                      OR types.type_name LIKE '%$search%'
+                      OR types.type_price LIKE '%$search%'
                       OR colors.color_name LIKE '%$search%'
                       OR sizes.size LIKE '%$search%'
                       OR stickers.sticker_price LIKE '%$search%'
