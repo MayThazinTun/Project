@@ -8,7 +8,7 @@ if (isset($_COOKIE['user'])) {
 }
 if ($user) {
     if ($user['role']==='admin') {
-        header("Location:./admin/index.php");
+        header("Location:./admin/users/index.php");
     } else {
         header("Location:./user/index.php");
     }

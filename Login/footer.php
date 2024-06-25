@@ -1,5 +1,5 @@
-<div class="d-grid gap-4 mx-3">
-    <div class="row gap-3 bg-light">
+<div class="d-grid gap-4 mx-1">
+    <div class="row gap-2 bg-light">
         <div class="col text-center mb-2">
             <img src="./images/shopbag_logo.png"  class="rounded me-3" style="width: 80px;height: 80px;">
         </div>
@@ -30,11 +30,9 @@
             <div class="col-2">
                 <h5 style="color:gray;">My account</h5>
                 <p>
-                    <a href="" style="text-decoration: none; color:gray;">Search Terms</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Advanced Search</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Help & FAQs</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Store Location</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Orders & Returns</a><br>
+                    <a href="" style="text-decoration: none; color:gray;">Profile</a><br>
+                    <a href="" style="text-decoration: none; color:gray;">Edit Profile</a><br>
+                    <a href="" style="text-decoration: none; color:gray;">Change password</a><br>
                 </p>
             </div>
             <div class="col-2">
@@ -42,19 +40,21 @@
                 <p>
                     <a href="" style="text-decoration: none; color:gray;">Contact Us</a><br>
                     <a href="" style="text-decoration: none; color:gray;">About Us</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Careers</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Refunds & Returns</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Deliveries</a><br>
+                    <a href="" style="text-decoration: none; color:gray;">Shop Address</a><br>
                 </p>
             </div>
             <div class="col-2">
                 <h5 style="color:gray;">Catagories</h5>
                 <p>
-                    <a href="" style="text-decoration: none; color:gray;">T-shirts</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Bags</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Shoes</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Slippers</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Hats</a><br>
+                    <?php
+                    $categories = get_all_categories($mysqli);
+                    while ($category = $categories->fetch_assoc()) {
+                        ?>
+                        <a href="./store.php?category_id=<?php echo $category['category_id'] ?>"
+                            style="text-decoration: none; color:gray;"><?php echo $category['category_name'] ?></a><br>
+                        <?php
+                    }
+                    ?>
                 </p>
             </div>
         </div>

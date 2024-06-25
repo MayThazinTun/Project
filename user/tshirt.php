@@ -1,6 +1,6 @@
-<?php require_once ("../Layout/header.php") ?>
+<?php require_once ("./Layout/header.php") ?>
 
-<div class="row mx-1">
+<div class="row">
     <div class="col-8 px-4">
         <!-- choose shirt type -->
         <div>
@@ -79,4 +79,4 @@
         </div>
     </div>
 
-    <?php require_once ("../Layout/footer.php") ?>
+    <?php require_once ("./Layout/footer.php") ?>

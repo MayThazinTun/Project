@@ -1,6 +1,8 @@
 <?php
 require_once ("./database/index.php");
 require_once ('./database/userDb.php');
+require_once ("./database/categoryDb.php");
+require_once ("./database/productDb.php");
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +34,7 @@ require_once ('./database/userDb.php');
     }
     if ($user) {
         if ($user['role'] === 'admin') {
-            header("Location:./admin/index.php");
+            header("Location:./admin/users/index.php");
         } else {
             header("Location:./user/index.php");
         }
@@ -80,7 +82,7 @@ require_once ('./database/userDb.php');
                         $password_err = "Password is incorrect";
                     }
                 } else {
-                    $invalid = true;
+                    // $invalid = true;
                     $email_err = "Email is incorrect";
                 }
             }

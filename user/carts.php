@@ -1,8 +1,8 @@
-<?php require_once ("../Layout/header.php"); ?>
+<?php require_once ("./Layout/header.php"); ?>
 
 <div class="row me-1">
     <div class="col-auto">
-        <?php require_once ("../Layout/sidebar.php") ?>
+        <?php require_once ("./Layout/sidebar.php") ?>
     </div>
     <div class="col p-3">
         <div class="row">
@@ -50,4 +50,4 @@
     </div>
 </div>
 
-<?php require_once ("../Layout/footer.php") ?>
+<?php require_once ("./Layout/footer.php") ?>

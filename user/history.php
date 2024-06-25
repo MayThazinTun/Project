@@ -1,4 +1,4 @@
-<?php require_once ("../Layout/header.php") ?>
+<?php require_once ("./Layout/header.php") ?>
 
 <div class="row">
     <div class="col-auto">
@@ -33,4 +33,4 @@
     </div>
 </div>
 
-<?php require_once ("../Layout/footer.php") ?>
+<?php require_once ("./Layout/footer.php") ?>

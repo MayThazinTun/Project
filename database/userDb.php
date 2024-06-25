@@ -42,6 +42,16 @@ function get_user_by_email($mysqli, $email)
     return $result->fetch_assoc();
 }
 
+function change_pw_by_id($mysqli, $id, $password){
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "UPDATE `users` SET `password` = '$password' where `id` = $id";
+    if ($mysqli->query($sql)) {
+        return true;
+    }
+    return false;
+}
+
 //update user by id
 function update_user_by_id($mysqli, $id, $name, $email, $password, $role, $images)
 {

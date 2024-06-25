@@ -1,4 +1,4 @@
-<?php require_once ("../Layout/header.php") ?>
+<?php require_once ("./Layout/header.php") ?>
 <div class="container-fluid py-1" id="contact">
     <div class="row p-3 mx-1 justify-content-center">
         <div class="col-6 d-flex align-item-center">
