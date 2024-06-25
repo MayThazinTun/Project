@@ -122,12 +122,6 @@ function get_total_product_count($mysqli, $search = '')
     return $row['count'];
 }
 
-//////////////////////////////////
-//////////////////////////////////
-
-
-
-
 // get product by id
 function get_product_by_id($mysqli, $product_id)
 {
@@ -152,8 +146,6 @@ function get_product_by_id($mysqli, $product_id)
     return null;
 }
 
-
-
 // get product by name
 function get_product_by_name($mysqli, $name)
 {
@@ -174,10 +166,44 @@ function get_product_by_category_id($mysqli, $category_id)
     return false;
 }
 
-// update product by id
-function update_product_by_id($mysqli, $id, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity)
+// Update product with optional fields
+function update_product($mysqli, $product_id, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity, $product_images, $product_description)
 {
-    $sql = "UPDATE `products` SET `category_id`='$category_id',`type_id`='$type_id',`color_id`='$color_id',`size_id`='$size_id',`sticker_id`='$sticker_id',`product_name`='$product_name',`product_price`='$product_price',`product_quantity`='$product_quantity' WHERE `id` = '$id'";
+    $sql = "UPDATE `products` SET 
+            `category_id` = '$category_id',
+            `type_id` = NULL,
+            `color_id` = NULL,
+            `size_id` = NULL,
+            `sticker_id` = NULL,
+            `product_name` = '$product_name',
+            `product_price` = '$product_price',
+            `product_quantity` = '$product_quantity',
+            `product_images` = NULL,
+            `product_description` = NULL
+            WHERE `product_id` = '$product_id'";
+
+    if ($mysqli->query($sql)) {
+        return true;
+    }
+    return false;
+}
+
+// Update product with all fields
+function update_product_all($mysqli, $product_id, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity, $product_images, $product_description)
+{
+    $sql = "UPDATE `products` SET 
+            `category_id` = '$category_id',
+            `type_id` = '$type_id',
+            `color_id` = '$color_id',
+            `size_id` = '$size_id',
+            `sticker_id` = '$sticker_id',
+            `product_name` = '$product_name',
+            `product_price` = '$product_price',
+            `product_quantity` = '$product_quantity',
+            `product_images` = '$product_images',
+            `product_description` = '$product_description'
+            WHERE `product_id` = '$product_id'";
+
     if ($mysqli->query($sql)) {
         return true;
     }
