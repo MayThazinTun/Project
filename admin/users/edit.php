@@ -2,8 +2,8 @@
 require_once('../layouts/adminHeader.php');
 require_once('../../database/userDb.php');
 
-$name = $email = $password = $role = "";
-$name_error = $email_error = $password_error = $role_error = $invalid = "";
+$name = $email = $password = $role = $address ="";
+$name_error = $email_error = $password_error = $role_error = $invalid = $address_error = "";
 $photos_error = "";
 $current_photos = [];
 
@@ -14,6 +14,7 @@ if (isset($_GET['updated_id'])) {
     $user = $result->fetch_assoc();
     $name = $user['name'];
     $email = $user['email'];
+    $address = $user['address'];
     $password = $user['password'];
     $role = $user['role'];
     $current_photos = explode(',', $user['images']);
@@ -24,6 +25,7 @@ if (isset($_GET['updated_id'])) {
 if (isset($_POST['update'])) {
     $name = htmlspecialchars($_POST["name"]);
     $email = htmlspecialchars($_POST["email"]);
+    $address = htmlspecialchars($_POST["address"]);
     $password = htmlspecialchars($_POST["password"]);
     $role = htmlspecialchars($_POST["role"]);
 
@@ -66,13 +68,14 @@ if (isset($_POST['update'])) {
 
     if (empty($name)) $name_error = "Name must not be empty";
     if (empty($email)) $email_error = "Email must not be empty";
+    if (empty($address)) $address_error = "Address must not be empty";
     if (empty($password)) $password_error = "Password must not be empty";
     if (empty($role)) $role_error = "Role must not be empty";
 
     if (empty($name_error) && empty($email_error) && empty($password_error) && empty($role_error) && empty($photos_error)) {
         // Update user
         $photo_paths_str = implode(",", array_merge($current_photos, $new_photos_paths));
-        if (update_user_by_id($mysqli, $edit_id, $name, $email, $password, $role, $photo_paths_str)) {
+        if (update_user_by_id($mysqli, $edit_id, $name, $email, $address, $password, $role, $photo_paths_str)) {
             header("Location: index.php");
             $name = $email = $password = $role = "";
             exit;
@@ -111,6 +114,15 @@ if (isset($_POST['update'])) {
                     <div class="col-8">
                         <input type="email" name="email" class="form-control" value="<?php echo $email ?>" id="email">
                         <small class="text-danger"><?php echo $email_error ?></small>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-4">
+                        <label for="address" class="form-label">Address</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" name="address" class="form-control" value="<?php echo $address ?>" id="address">
+                        <small class="text-danger"><?php echo $address_error ?></small>
                     </div>
                 </div>
                 <div class="form-group row mb-3">

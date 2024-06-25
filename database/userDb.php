@@ -1,21 +1,14 @@
 <?php
 
 //create user
-function create_user($mysqli, $name, $email, $password, $role, $photo_paths)
+function create_user($mysqli, $name, $email, $address, $password, $role, $photo_paths)
 {
-    $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`, `images`) VALUES ('$name', '$email', '$password', '$role', '$photo_paths')";
+    $sql = "INSERT INTO `users` (`name`, `email`, `address`, `password`, `role`, `images`) VALUES ('$name', '$email', '$address', '$password', '$role', '$photo_paths')";
     if ($mysqli->query($sql)) {
         return true;
     }
     return false;
 }
-
-
-// //create 5 users
-// $mysqli = new mysqli("localhost", "root", "", "shopping");
-// for ($i = 1; $i < 6; $i++) {
-//     create_user($mysqli, "admin" . $i, "admin" . $i . "@gmail.com", "123", "admin");
-// }
 
 //get all users
 function get_all_users($mysqli)
@@ -53,10 +46,10 @@ function change_pw_by_id($mysqli, $id, $password){
 }
 
 //update user by id
-function update_user_by_id($mysqli, $id, $name, $email, $password, $role, $images)
+function update_user_by_id($mysqli, $id, $name, $email, $address, $password, $role, $images)
 {
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "UPDATE `users` SET `name`='$name',`email`='$email',`password`='$password',`role`='$role',`images`='$images' WHERE `id` = $id";
+    $sql = "UPDATE `users` SET `name`='$name',`email`='$email',`address`='$address', `password`='$password',`role`='$role',`images`='$images' WHERE `id` = $id";
     if ($mysqli->query($sql)) {
         return true;
     }

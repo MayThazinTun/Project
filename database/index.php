@@ -46,6 +46,7 @@ function createUsersTable($mysqli)
         id INT(11) AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
+        address VARCHAR(255),
         password VARCHAR(255) NOT NULL,
         role ENUM('admin', 'user') DEFAULT 'user',
         images VARCHAR(255),

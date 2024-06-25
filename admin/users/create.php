@@ -2,8 +2,8 @@
 require_once('../layouts/adminHeader.php');
 require_once('../../database/userDb.php');
 
-$name = $email = $password = $role = "";
-$name_error = $email_error = $password_error = $role_error = "";
+$name = $email = $password = $role = $address ="";
+$name_error = $email_error = $password_error = $role_error = $address_error = "";
 $photos_error = "";
 
 // Define the folder for default avatars
@@ -15,6 +15,7 @@ $default_avatars = array_diff(scandir($default_avatar_folder), array('..', '.'))
 if (isset($_POST['submit'])) {
     $name = htmlspecialchars($_POST["name"]);
     $email = htmlspecialchars($_POST["email"]);
+    $address = htmlspecialchars($_POST["address"]);
     $password = htmlspecialchars($_POST["password"]);
     $role = htmlspecialchars($_POST["role"]);
 
@@ -60,10 +61,11 @@ if (isset($_POST['submit'])) {
 
     if (empty($name)) $name_error = "Name must not be empty";
     if (empty($email)) $email_error = "Email must not be empty";
+    if (empty($address)) $address_error = "Address must not be empty";
     if (empty($password)) $password_error = "Password must not be empty";
     if (empty($role)) $role_error = "Role must not be empty";
 
-    if (empty($name_error) && empty($email_error) && empty($password_error) && empty($role_error) && empty($photos_error)) {
+    if (empty($name_error) && empty($email_error) && empty($password_error) && empty($address_error) && empty($role_error) && empty($photos_error)) {
         $databaseEmail = get_user_by_email($mysqli, $email);
         if ($databaseEmail && $databaseEmail['email'] == $email) {
             $email_error = "Email already exists";
@@ -76,9 +78,9 @@ if (isset($_POST['submit'])) {
             } else {
                 $photo_paths_str = "../../images/avatars/default_avatar1.png"; // Default avatar if no image is uploaded or selected
             }
-            if (create_user($mysqli, $name, $email, $password, $role, $photo_paths_str)) {
+            if (create_user($mysqli, $name, $email, $address, $password, $role, $photo_paths_str)) {
                 header("Location: index.php");
-                $name = $email = $password = $role = "";
+                $name = $email = $password = $role = $address ="";
                 exit;
             } else {
                 $invalid = "Something went wrong";
@@ -109,6 +111,15 @@ if (isset($_POST['submit'])) {
                     <div class="col-8">
                         <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" id="email">
                         <small class="text-danger"><?php echo htmlspecialchars($email_error); ?></small>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-4">
+                        <label for="address" class="form-label">Address</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" name="address" class="form-control" value="<?php echo htmlspecialchars($address); ?>" id="address">
+                        <small class="text-danger"><?php echo htmlspecialchars($address_error); ?></small>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
