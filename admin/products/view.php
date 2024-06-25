@@ -10,43 +10,62 @@ if ($product_id) {
 }
 ?>
 
-<div class="container-fluid mt-5">
-    <div class="row">
-        <div class="d-flex justify-content-center">
-            <div class="col-6">
-                <form action="" method="post">
-                    <h3 class="text-center">Product View</h3>
+<div class="container mt-5">
+    <h1 class="text-center">Product Details</h1>
 
-                    <?php if ($product) : ?>
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="col">
-                                <div class="card">
-                                    <div class="col-md-4">
-                                        <?php $photos = explode(',', $product['product_images']); ?>
-                                        <?php if (!empty($photos[0])) : ?>
-                                            <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="img-fluid rounded-start" alt="Product Image" style="max-width: 100%; height: auto; object-fit: cover; max-height: 200px;">
-                                        <?php else : ?>
-                                            <img src="default_image.jpg" class="img-fluid rounded-start" alt="No Image Available" style="max-width: 100%; height: auto; object-fit: cover; max-height: 200px;">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo htmlspecialchars($product['product_name']); ?></h5>
-                                        <p class="card-text"><?php echo htmlspecialchars($product['product_description']); ?></p>
-                                        <p class="card-text"><small class="text-body-secondary">Price: $<?php echo htmlspecialchars($product['product_price']); ?></small></p>
-                                        <p class="card-text"><small class="text-body-secondary">Category: <?php echo htmlspecialchars($product['category_name']); ?></small></p>
-                                        <p class="card-text"><small class="text-body-secondary">Stock: <?php echo htmlspecialchars($product['product_quantity']); ?></small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <?php if ($product) : ?>
+        <div class="container row">
+            <div class="col-4">
+                <?php $photos = explode(',', $product['product_images']); ?>
+                <?php if (!empty($photos[0])) : ?>
+                    <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded" style="max-width: 20rem; max-height: 50rem;" alt="Product Image">
+                <?php else : ?>
+                    <img src="../../images/All/default_image.jpg" class="" style="max-width: 20rem; max-height: 50rem;" alt="No Image Available">
+                <?php endif; ?>
             </div>
-        <?php else : ?>
-            <p class="text-center">Product not found.</p>
-        <?php endif; ?>
+            <div class="col-8 d-flex text-center">
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h3 class="card-title">Name : <?php echo htmlspecialchars($product['product_name']); ?></h3>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Category: <?php echo htmlspecialchars($product['category_name']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Type: <?php echo htmlspecialchars($product['type_price']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Color: <?php echo htmlspecialchars($product['color_name']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Size: <?php echo htmlspecialchars($product['size']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Sticker: <?php echo htmlspecialchars($product['sticker_price']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Stock: <?php echo htmlspecialchars($product['product_quantity']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Price: <?php echo htmlspecialchars($product['product_quantity']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Description: <?php echo htmlspecialchars($product['product_description']); ?></h5>
+                        </li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="edit.php?updated_id=<?php echo $product['product_id'] ?>"><i class="btn btn-warning fa-solid fa-pen-to-square"></i></a>
+                        <a href="./index.php"><i class="fa-solid fa-backward btn btn-secondary"></i></a>
+                        <a href="index.php?deleted_id=<?php echo $product['product_id'] ?>"><i class="btn btn-danger fa-solid fa-trash"></i></a>
+                    </div>
 
-        </form>
+                </div>
+            </div>
         </div>
-    </div>
+    <?php else : ?>
+        <p class="text-center">Product not found.</p>
+    <?php endif; ?>
 
 </div>
 </div>

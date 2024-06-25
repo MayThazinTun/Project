@@ -41,7 +41,11 @@ $products = get_all_products_paginated($mysqli, $limit, $offset, $search);
                 <div class="col">
                     <div class="card me-3 mb-2" style="width: 14rem; height:fit-content">
                         <?php foreach (explode(",", $product['product_images']) as $photo) : ?>
-                            <img src="<?php echo $photo; ?>" alt="" class="card-img-top" style="max-width: 14rem; max-height: 14rem;">
+                            <?php if (!empty($photo)) : ?>
+                                <img src="<?php echo htmlspecialchars($photo); ?>" class="card-img-top" style="max-width: 14rem; max-height: 14rem;">
+                            <?php else : ?>
+                                <img src="../../images/All/default_image.jpg" class="card-img-top" style="max-width: 14rem; max-height: 14rem;" alt="No Image Available">
+                            <?php endif; ?>
                         <?php endforeach; ?>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
