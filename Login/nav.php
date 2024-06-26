@@ -1,7 +1,7 @@
 <nav class="d-flex justify-content-between py-2 px-5 border border-bottom-2">
     <div class="d-flex align-item-center">
         <img src="./images/Logo.png" class="rounded me-3" style="width: 50px;height: 50px;">
-        <h3 class="m-0 py-2"><a href="/" style="text-decoration:none;" class="text-dark">Tee World
+        <h3 class="m-0 py-2"><a href="/index.php" style="text-decoration:none;" class="text-dark">Tee World
                 Myanmar</a></h3>
     </div>
     <div class=" m-0 py-2">
