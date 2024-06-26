@@ -50,6 +50,7 @@ require_once ("./database/productDb.php");
     if (isset($_POST["submit"])) {
         $name = htmlspecialchars($_POST["name"]);
         $email = htmlspecialchars($_POST["email"]);
+        $address = htmlspecialchars($_POST["address"]);
         $password = htmlspecialchars($_POST["password"]);
         $re_password = htmlspecialchars($_POST["re_password"]);
 
@@ -58,6 +59,8 @@ require_once ("./database/productDb.php");
         }
         if (empty($email))
             $email_err = "Email must not be empty";
+        if (empty($address))
+            $address_err = "Address must not be empty";
         if (empty($password))
             $password_err = "Password must not be empty";
         if (empty($re_password))
@@ -76,10 +79,10 @@ require_once ("./database/productDb.php");
             } else {
                 $password = password_hash($password,PASSWORD_DEFAULT);
                 $photo_path = "../../images/avatars/default_avatar3.png";
-                if (create_user($mysqli, $name, $email, $password, 'user', $photo_path)) {
+                if (create_user($mysqli, $name, $email,$address, $password, 'user', $photo_path)) {
                     $success = true;
                     header("Location: signup.php");
-                    // $name = $email = $password = $role = $re_password = "";
+                    $name = $email = $address = $password = $role = $re_password = "";
                 } else {
                     $invalid = true;
                 }
