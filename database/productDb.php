@@ -24,10 +24,7 @@ function getAll($mysqli)
 {
     $sql = "SELECT * FROM `products`";
     $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
-    }
-    return false;
+        return $result;
 }
 
 function get_all_products($mysqli)

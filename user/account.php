@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once ("./Layout/header.php");
 if (isset($_POST['logout'])) {
     setcookie('user', '', -1, '/');
@@ -8,11 +8,11 @@ if (isset($_POST['logout'])) {
     endif;
 }
 
-$cookie_user= null;
-if(isset($_COOKIE['user'])){
+$cookie_user = null;
+if (isset($_COOKIE['user'])) {
     $cookie_user = json_decode($_COOKIE['user'], true);
 }
-$users = get_user_by_id($mysqli,$cookie_user['id']);
+$users = get_user_by_id($mysqli, $cookie_user['id']);
 $user = $users->fetch_assoc();
 
 ?>
@@ -31,7 +31,6 @@ $user = $users->fetch_assoc();
             <div class="collapse ps-2" id="myaccount" style="width:90%">
                 <div class="d-grid gap-2">
                     <a href="./account.php" class="btn btn-outline-dark border-0 text-start ps-4">Profile</a>
-                    <a href="./edit_profile.php" class="btn btn-outline-dark border-0 text-start ps-4">Edit profile</a>
                     <a href="./change_pw.php" class="btn btn-outline-dark border-0 text-start ps-4">Change password</a>
                 </div>
             </div>
@@ -58,13 +57,57 @@ $user = $users->fetch_assoc();
             Your Profile
         </div>
         <div class="d-flex justify-content-center">
-            <div class="card" style="width:70%;">
-                <div>
-                    <img src="<?php echo $user['images'] ?>" alt="">
+            <div class="card mt-3" style="width:60%;">
+                <div class="text-center">
+                    <img src="<?php echo $user['images'] ?>" class="m-3 rounded-circle"
+                        style="width: 150px; height: 150px;">
+
+                </div>
+                <form>
+                    <div class="row mx-5 my-3">
+                        <label for="name" class="col-4 form-label fs-4">Name</label>
+                        <input type="text" class="col form-control fs-5" value="<?php echo $user['name'] ?>" id="name"
+                            name="name">
+                    </div>
+                    <div class="row mx-5 my-3">
+                        <label for="email" class="col-4 form-label fs-4">Email</label>
+                        <input type="email" class="col form-control fs-5" value="<?php echo $user['email'] ?>"
+                            id="email" name="email">
+                    </div>
+                    <div class="row mx-5 my-3">
+                        <label for="address" class="col-4 form-label fs-4">Address</label>
+                        <input type="text" class="col form-control fs-5" value="<?php echo $user['address'] ?>"
+                            id="address" name="address">
+                    </div>
+                    <div class="text-end me-5 my-3">
+                        <a class="btn btn-dark" data-bs-toggle="modal" href="#save" role="button">Save Change</a>
+                    </div>
+                    <div class="modal fade" id="save" aria-hidden="true" aria-labelledby="save" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fs-4" id="order">Enter Password</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-dark" data-bs-toggle="modal"
+                                        data-bs-dismiss="modal">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<?php require_once ("./Layout/footer.php") ?>
+    <?php require_once ("./Layout/footer.php") ?>

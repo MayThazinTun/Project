@@ -3,6 +3,7 @@ require_once ('./database/index.php');
 require_once ("./database/userDb.php");
 require_once ("./database/categoryDb.php");
 require_once ("./database/productDb.php");
+require_once ('./baseUrl.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +51,7 @@ require_once ("./database/productDb.php");
     if (isset($_POST["submit"])) {
         $name = htmlspecialchars($_POST["name"]);
         $email = htmlspecialchars($_POST["email"]);
+        $address = htmlspecialchars($_POST["address"]);
         $password = htmlspecialchars($_POST["password"]);
         $re_password = htmlspecialchars($_POST["re_password"]);
 
@@ -58,6 +60,8 @@ require_once ("./database/productDb.php");
         }
         if (empty($email))
             $email_err = "Email must not be empty";
+        if (empty($address))
+            $address_err = "Address must not be empty";
         if (empty($password))
             $password_err = "Password must not be empty";
         if (empty($re_password))
@@ -69,14 +73,15 @@ require_once ("./database/productDb.php");
             $check_err = "You have to check this";
 
 
-        if (empty($name_err) && empty($email_err) && empty($password_err) && empty($re_password_err) && empty($check_err)) {
+        if (empty($name_err) && empty($email_err) && empty($address_err) && empty($password_err) && empty($re_password_err) && empty($check_err)) {
             $databaseEmail = get_user_by_email($mysqli, $email);
             if ($databaseEmail['email'] == $email) {
                 $email_err = "Email already exists";
             } else {
-                $password = password_hash($password,PASSWORD_DEFAULT);
-                $photo_path = "../../images/avatars/default_avatar3.png";
-                if (create_user($mysqli, $name, $email, $password, 'user', $photo_path)) {
+                $password = password_hash($password, PASSWORD_DEFAULT);
+                $photo_path = BASE_URL . 'images/avatars/default_avatar3.png';
+
+                if (create_user($mysqli, $name, $email,$address, $password, 'user', $photo_path)) {
                     $success = true;
                     header("Location: signup.php");
                     // $name = $email = $password = $role = $re_password = "";
@@ -120,7 +125,8 @@ require_once ("./database/productDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="text" class="form-control" id="username" name="name" value="<?php echo $name ?>">
+                                <input type="text" class="form-control" id="username" name="name"
+                                    value="<?php echo $name ?>">
                                 <small class="text-danger"><?php echo $name_err ?></small>
                             </div>
                         </div>
@@ -130,7 +136,8 @@ require_once ("./database/productDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="<?php echo $email ?>">
                                 <small class="text-danger"><?php echo $email_err ?></small>
                             </div>
                         </div>
@@ -140,7 +147,8 @@ require_once ("./database/productDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="text" class="form-control" id="address" name="address" value="<?php echo $address ?>">
+                                <input type="text" class="form-control" id="address" name="address"
+                                    value="<?php echo $address ?>">
                                 <small class="text-danger"><?php echo $address_err ?></small>
                             </div>
                         </div>
@@ -150,7 +158,8 @@ require_once ("./database/productDb.php");
                             </div>
 
                             <div class="col-6">
-                                <input type="password" class="form-control" id="password" name="password" value="<?php echo $password ?>">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    value="<?php echo $password ?>">
                                 <small class="text-danger"><?php echo $password_err ?></small>
                             </div>
                         </div>
@@ -160,7 +169,8 @@ require_once ("./database/productDb.php");
                             </div>
 
                             <div class="col-6 text-start">
-                                <input type="password" class="form-control" id="c_password" name="re_password" value="<?php echo $re_password ?>">
+                                <input type="password" class="form-control" id="c_password" name="re_password"
+                                    value="<?php echo $re_password ?>">
                                 <small class="text-secondary">Confirm password</small>
                                 <small class="text-danger"><?php echo $re_password_err ?></small>
                             </div>

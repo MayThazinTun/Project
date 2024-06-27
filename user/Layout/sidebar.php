@@ -5,7 +5,8 @@
   <hr>
   <div class="btn-group-vertical gap-2">
 
-    <button class="btn btn-outline-secondary border-0 text-start ps-4">All</button>
+    <button class="btn btn-outline-secondary border-0 text-start ps-4"
+        onclick="location.href='./store.php';">All</button>
     <?php
     $categories = get_all_categories($mysqli);
     while ($category = $categories->fetch_assoc()) {
