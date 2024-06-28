@@ -4,6 +4,7 @@ require_once('../../database/typeDb.php');
 
 $type_price = "";
 $type_price_error = "";
+$type_name = $type_name_error = "";
 $photos_error = "";
 $current_photos = [];
 $invalid = "";
@@ -13,11 +14,13 @@ if (isset($_GET['updated_id'])) {
     $result = get_type_by_id($mysqli, $type_id);
     $types = $result->fetch_assoc();
     $type_price = $types['type_price'];
+    $type_name = $types['type_name'];
     $current_photos = explode(',', $types['type_images']);
 }
 
 if (isset($_POST['update'])) {
     $type_price = htmlspecialchars($_POST["type_price"]);
+    $type_name = htmlspecialchars($_POST["type_name"]);
 
     // deleted photos
     if (isset($_POST['delete_photos'])) {
@@ -63,12 +66,14 @@ if (isset($_POST['update'])) {
         }
     }
 
-    if (empty($type_price)) $type_price_error = "Sticker Price must not be empty";
+    if (empty($type_price)) $type_price_error = "Type Price must not be empty";
+    
+    if(empty($type_name)) $type_name_error = "Name must not be empty";
 
-    if (empty($type_price_error) && empty($photos_error)) {
+    if (empty($type_price_error) && empty($photos_error) && empty($type_id_error)) {
         // Update user
         $photo_paths_str = implode(",", array_merge($current_photos, $new_photos_paths));
-        if (update_type_by_id($mysqli, $type_id, $type_price, $photo_paths_str)) {
+        if (update_type_by_id($mysqli, $type_id, $type_price, $photo_paths_str, $type_name)) {
             header("Location: index.php");
             exit;
         } else {
@@ -91,11 +96,20 @@ if (isset($_POST['update'])) {
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group row mb-3">
                     <div class="col-4">
-                        <label for="type_price" class="form-label">Sticker Price</label>
+                        <label for="type_price" class="form-label">Type Price</label>
                     </div>
                     <div class="col-8">
                         <input type="text" name="type_price" class="form-control" value="<?php echo htmlspecialchars($type_price); ?>" id="type_price">
                         <small class="text-danger"><?php echo $type_price_error; ?></small>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-4">
+                        <label for="type_name" class="form-label">Type name</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" name="type_name" class="form-control" value="<?php echo htmlspecialchars($type_name); ?>" id="type_name">
+                        <small class="text-danger"><?php echo $type_name_error; ?></small>
                     </div>
                 </div>
                 <div class="form-group row mb-3">

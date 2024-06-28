@@ -59,7 +59,7 @@
         <div>
             <ul class="nav me-4" style="justify-content: center;">
                 <li class="nav-item">
-                    <a href="/" class="nav-link text-secondary">Home</a>
+                    <a href="/index.php" class="nav-link text-secondary">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link text-secondary">T-shirts</a>

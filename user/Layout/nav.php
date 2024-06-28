@@ -1,10 +1,10 @@
-<nav class="d-flex justify-content-between py-2 px-5 border border-bottom-2">
-    <div class="d-flex align-item-center">
-        <img src="../images/Logo.png" class="rounded me-3" style="width: 50px;height: 50px;">
+<nav class="row justify-content-between py-2 px-3 border border-bottom-2">
+    <div class="col-auto d-flex align-item-center">
+        <img src="../images/Logo.png" class="rounded ms-3 me-3" style="width: 50px;height: 50px;">
         <h3 class="m-0 py-2"><a href="../user/index.php" style="text-decoration:none;" class="text-dark">Tee World
                 Myanmar</a></h3>
     </div>
-    <div class=" m-0 py-2">
+    <div class="col-auto m-0 py-2">
         <ul class="nav">
             <li class="nav-item">
                 <a href="./index.php" class="nav-link text-dark" title="Home"><i class="fa-solid fa-house fa-xl" style="color: #000000;"></i></a>

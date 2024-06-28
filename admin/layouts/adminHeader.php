@@ -58,7 +58,7 @@ if(!$admin){
                 <ul class="list-group">
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/users/index.php' ?>">User Info</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/category/index.php' ?>">Categories</a></li>
-                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/products/index.php' ?>">Products</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/product/index.php' ?>">Products</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/types/index.php' ?>">Types</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/colors/index.php' ?>">Colors</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/sizes/index.php' ?>">Sizes</a></li>

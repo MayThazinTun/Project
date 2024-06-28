@@ -20,7 +20,7 @@ if ($product_id) {
                 <?php if (!empty($photos[0])) : ?>
                     <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded" style="max-width: 20rem; max-height: 50rem;" alt="Product Image">
                 <?php else : ?>
-                    <img src="../../images/All/default_image.jpg" class="" style="max-width: 20rem; max-height: 50rem;" alt="No Image Available">
+                    <img src=<?php echo "../../images/All/default_image.jpg"?> class="" style="max-width: 20rem; max-height: 50rem;" alt="No Image Available">
                 <?php endif; ?>
             </div>
             <div class="col-8 d-flex text-center">
@@ -32,23 +32,29 @@ if ($product_id) {
                         <li class="list-group-item">
                             <h5 class="card-title">Category: <?php echo htmlspecialchars($product['category_name']); ?></h5>
                         </li>
-                        <li class="list-group-item">
-                            <h5 class="card-title">Type: <?php echo htmlspecialchars($product['type_price']); ?></h5>
+                        <!-- <li class="list-group-item">
+                            <h5 class="card-title">Type: <?php //echo htmlspecialchars($product['type_price']); ?></h5>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Color: <?php echo htmlspecialchars($product['color_name']); ?></h5>
+                            <h5 class="card-title">Color: <?php //echo htmlspecialchars($product['color_name']); ?></h5>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Size: <?php echo htmlspecialchars($product['size']); ?></h5>
+                            <h5 class="card-title">Size: <?php //echo htmlspecialchars($product['size']); ?></h5>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Sticker: <?php echo htmlspecialchars($product['sticker_price']); ?></h5>
+                            <h5 class="card-title">Sticker: <?php //echo htmlspecialchars($product['sticker_price']); ?></h5>
+                        </li> -->
+                        <li class="list-group-item">
+                            <h5 class="card-title">Size: <?php echo htmlspecialchars($product['product_size']); ?></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="card-title">Color: <?php echo htmlspecialchars($product['product_color']); ?></h5>
                         </li>
                         <li class="list-group-item">
                             <h5 class="card-title">Stock: <?php echo htmlspecialchars($product['product_quantity']); ?></h5>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Price: <?php echo htmlspecialchars($product['product_quantity']); ?></h5>
+                            <h5 class="card-title">Price: <?php echo htmlspecialchars($product['product_price']); ?></h5>
                         </li>
                         <li class="list-group-item">
                             <h5 class="card-title">Description: <?php echo htmlspecialchars($product['product_description']); ?></h5>

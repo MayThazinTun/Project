@@ -1,4 +1,4 @@
-<?php require_once ("../Layout/header.php");
+<?php require_once ("./Layout/header.php");
 if(isset($_POST['logout'])){
     setcookie('user', '', -1, '/');
     header("Location:../signin.php"); 

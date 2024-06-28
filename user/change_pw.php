@@ -1,4 +1,4 @@
-<?php require_once ("../Layout/header.php");
+<?php require_once ("./Layout/header.php");
 if (isset($_POST['logout'])) {
     setcookie('user', '', -1, '/');
     header("Location:../signin.php");
@@ -71,7 +71,6 @@ if (isset($_POST['submit'])) {
             <div class="collapse ps-2" id="myaccount" style="width:90%">
                 <div class="d-grid gap-2">
                     <a href="./account.php" class="btn btn-outline-dark border-0 text-start ps-4">Profile</a>
-                    <a href="./edit_profile.php" class="btn btn-outline-dark border-0 text-start ps-4">Edit profile</a>
                     <a href="./change_pw.php" class="btn btn-outline-dark border-0 text-start ps-4">Change password</a>
                 </div>
             </div>
@@ -134,4 +133,4 @@ if (isset($_POST['submit'])) {
 </div>
 
 
-<?php require_once ("../Layout/footer.php") ?>
+<?php require_once ("./Layout/footer.php") ?>

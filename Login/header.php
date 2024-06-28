@@ -3,6 +3,7 @@ require_once("./database/index.php");
 require_once('./database/userDb.php');
 require_once ("./database/categoryDb.php");
 require_once ("./database/productDb.php");
+require_once('./baseUrl.php');
 ?>
 
 <!DOCTYPE html>
