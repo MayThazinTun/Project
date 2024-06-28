@@ -8,12 +8,14 @@
         <div class="card-content row gap-3">
             <?php
             $products = getAll($mysqli);
-            if (isset($_GET['$category_id'])) {
+            //$products = get_product_by_category_id($mysqli, $_GET['category_id']);
+            if (isset($_GET['category_id'])) {
                 $products = get_product_by_category_id($mysqli, $_GET['category_id']);
+                // $products = $product->fetch_assoc();
             }
-            //var_dump($products);
+            // var_dump($_GET['category_id']);
+            // var_dump(get_product_by_category_id($mysqli, $_GET['category_id'])->fetch_assoc());
             while ($product = $products->fetch_assoc()) {
-                // var_dump($product);
                 ?>
                 <div class="card col-2 mt-3" style="width:300px; height: auto;">
                     <img src="..." class="card-img-top" alt="...">

@@ -133,4 +133,4 @@ if (isset($_POST['submit'])) {
 </div>
 
 
-<?php require_once ("../Layout/footer.php") ?>
+<?php require_once ("./Layout/footer.php") ?>

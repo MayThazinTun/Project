@@ -5,6 +5,7 @@ require_once('../../database/typeDb.php');
 $type_price = "";
 $price_error = "";
 $photos_error = "";
+$type_name = $type_name_error = "";
 
 // Define the folder for default avatars
 $default_avatar_folder = "../../images/types/";
@@ -57,8 +58,9 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($type_price)) $price_error = "Price must not be empty";
+    if(empty($type_name)) $type_name_error = "Name must not be empty";
 
-    if (empty($price_error)) {
+    if (empty($price_error) && empty($type_name_error)) {
         if (!empty($photos_paths)) {
             $photo_paths_str = implode(",", $photos_paths);
         } else if (!empty($selected_avatar)) {
@@ -66,9 +68,10 @@ if (isset($_POST['submit'])) {
         } else {
             $photo_paths_str = "../../images/types/type1.png";
         }
-        if (create_type($mysqli, $type_price, $photo_paths_str)) {
+        if (create_type($mysqli, $type_price, $photo_paths_str , $type_name)) {
             header("Location: index.php");
-            $type_price = "";
+            $type_price = $type_name= "";
+
             exit;
         } else {
             $invalid = "Something went wrong";
@@ -90,6 +93,15 @@ if (isset($_POST['submit'])) {
                     <div class="col-8">
                         <input type="number" name="type_price" class="form-control" value="<?php echo htmlspecialchars($type_price); ?>" id="type_price">
                         <small class="text-danger"><?php echo htmlspecialchars($price_error); ?></small>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-4">
+                        <label for="type_name" class="form-label">Name</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="number" name="type_name" class="form-control" value="<?php echo htmlspecialchars($type_name); ?>" id="type_name">
+                        <small class="text-danger"><?php echo htmlspecialchars($type_name_error); ?></small>
                     </div>
                 </div>
                 <div class="form-group row mb-3">

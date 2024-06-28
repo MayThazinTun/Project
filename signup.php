@@ -79,8 +79,8 @@ require_once ('./baseUrl.php');
                 $email_err = "Email already exists";
             } else {
                 $password = password_hash($password,PASSWORD_DEFAULT);
-                $photo_path = "../../images/avatars/default_avatar3.png";
-                if (create_user($mysqli, $name, $email, $password, 'user', $photo_path)) {
+                $photo_path = BASE_URL."/images/avatars/default_avatar3.png";
+                if (create_user($mysqli, $name, $email,$address, $password, 'user', $photo_path)) {
                     $success = true;
                     header("Location: signup.php");
                     $name = $email = $address = $password = $role = $re_password = "";

@@ -8,12 +8,59 @@ if (isset($_POST['logout'])) {
     endif;
 }
 
+$name = $email = $address = $password = "";
+$name_err = $email_err = $address_err = $password_err = "";
+$success = $invalid = false;
+
 $cookie_user = null;
 if (isset($_COOKIE['user'])) {
     $cookie_user = json_decode($_COOKIE['user'], true);
 }
-$users = get_user_by_id($mysqli, $cookie_user['id']);
+
+$id = $cookie_user['id'];
+$users = get_user_by_id($mysqli, $id);
 $user = $users->fetch_assoc();
+$name = $user['name'];
+$email = $user['email'];
+$address = $user['address'];
+
+if (isset($_GET['update_id'])) {
+
+    if (isset($_POST['update'])) {
+        $name = htmlspecialchars($_POST["name"]);
+        $email = htmlspecialchars($_POST["email"]);
+        $address = htmlspecialchars($_POST["address"]);
+        $password = htmlspecialchars($_POST["password"]);
+
+        if (empty($name))
+            $name_err = "Name must not be blank";
+        if (empty($email))
+            $email_err = "Email must not be blank";
+        if (empty($address))
+            $address_err = "Address must not be blank";
+        if (empty($password))
+            $password_err = "Enter password";
+
+        if (empty($name_err) && empty($email_err) && empty($address_err) && empty($password_err)) {
+            if (password_verify($password, $user['password'])) {
+                $update = update_user_by_id($mysqli, $id, $name, $email, $address, $password, 'user', $user['images']);
+                if ($update) {
+                    $success = true;
+                    echo $success;
+                    header("Location: ../user/account.php");
+                    // var_dump("updated"); die();
+                } else {
+                    $invalid = true;
+                }
+            } else {
+                $password_err = "Password incorrect";
+                $invalid = true;
+            }
+        }
+
+    }
+}
+
 
 ?>
 
@@ -63,24 +110,37 @@ $user = $users->fetch_assoc();
                         style="width: 150px; height: 150px;">
 
                 </div>
-                <form>
+                <form method="post">
+                    <?php
+                    $disabled = null;
+                    if (!isset($_GET['update_id'])) {
+                        $disabled = 'disabled';
+                    } ?>
                     <div class="row mx-5 my-3">
                         <label for="name" class="col-4 form-label fs-4">Name</label>
-                        <input type="text" class="col form-control fs-5" value="<?php echo $user['name'] ?>" id="name"
-                            name="name">
+                        <input type="text" class="col form-control fs-5" value="<?php echo $name ?>" id="name"
+                            name="name" <?php echo $disabled ?>>
                     </div>
                     <div class="row mx-5 my-3">
                         <label for="email" class="col-4 form-label fs-4">Email</label>
-                        <input type="email" class="col form-control fs-5" value="<?php echo $user['email'] ?>"
-                            id="email" name="email">
+                        <input type="email" class="col form-control fs-5" value="<?php echo $email ?>" id="email"
+                            name="email" <?php echo $disabled ?>>
                     </div>
                     <div class="row mx-5 my-3">
                         <label for="address" class="col-4 form-label fs-4">Address</label>
-                        <input type="text" class="col form-control fs-5" value="<?php echo $user['address'] ?>"
-                            id="address" name="address">
+                        <input type="text" class="col form-control fs-5" value="<?php echo $address ?>" id="address"
+                            name="address" <?php echo $disabled ?>>
                     </div>
                     <div class="text-end me-5 my-3">
-                        <a class="btn btn-dark" data-bs-toggle="modal" href="#save" role="button">Save Change</a>
+                        <?php if (isset($_GET['update_id'])) { ?>
+                            <a class="btn btn-dark" data-bs-toggle="modal" href="#save" role="button">Save
+                                Change</a>
+                            <a type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                href="../user/account.php">Cancel</a>
+                        <?php } else { ?>
+                            <a class="btn btn-dark" href="../user/account.php?update_id=<?php echo $id ?>"
+                                role="button">Edit Profile</a>
+                        <?php } ?>
                     </div>
                     <div class="modal fade" id="save" aria-hidden="true" aria-labelledby="save" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
@@ -91,13 +151,15 @@ $user = $users->fetch_assoc();
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    
+                                    <div class="row mx-3 my-3">
+                                        <label for="password" class="col-4 form-label">Enter password</label>
+                                        <input type="password" class="col form-control" id="password" name="password">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn btn-dark" data-bs-toggle="modal"
-                                        data-bs-dismiss="modal">Confirm</button>
+                                    <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+                                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                        name="update">Confirm</button>
                                 </div>
                             </div>
                         </div>

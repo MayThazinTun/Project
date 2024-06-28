@@ -80,13 +80,13 @@ function createOrdersTable($mysqli)
     $sql = "CREATE TABLE IF NOT EXISTS orders(
         order_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         user_id INT(11) NOT NULL,
-        product_id INT(11) NOT NULL,
+        category_id INT(11) NOT NULL,
         invoice_id INT(11) NOT NULL,
         -- shipping_address VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (product_id) REFERENCES products(id)
+        FOREIGN KEY (category_id) REFERENCES categories(id)
         FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id)
     )";
     if ($mysqli->query($sql)) {
@@ -121,22 +121,42 @@ function createCategoriesTable($mysqli)
     return false;
 }
 
+function createProductsTable($mysqli){
+
+    $sql = "CREATE TABLE IF NOT EXISTS products(
+    product_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    category_id INT(11) NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    product_size VARCHAR (255),
+    product_color VARCHAR(25) NOT NULL,
+    product_quantity INT(11) NOT NULL,
+    product_price INT(11) NOT NULL,
+    product_images VARCHAR(255) NOT NULL,
+    product_description VARCHAR(255)NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
+    )";
+
+    if($mysqli->query($sql)){
+            return true;
+    }
+    return false;
+} 
+
 //Product connect with (categories,types,colors,sizes,stickers) tables
 //create products table product_id,category_id,type_id,color_id,size_id,sticker_id,product_name,product_price,product_quantity,product_images,description,created_at,updated_at
-function createProductsTable($mysqli)
+function createItemsTable($mysqli)
 {
-    $sql = "CREATE TABLE IF NOT EXISTS products(
-        product_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    $sql = "CREATE TABLE IF NOT EXISTS items(
+        item_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         category_id INT(11) NOT NULL,
-        type_id INT(11),
-        color_id INT(11),
-        size_id INT(11),
+        type_id INT(11) NOT NULL,
+        color_id INT(11) NOT NULL,
+        size_id INT(11) NOT NULL,
         sticker_id INT(11),
-        product_name VARCHAR(255) NOT NULL,
-        product_price INT(11) NOT NULL,
-        product_quantity INT(11) NOT NULL,
-        product_images VARCHAR(255),
-        product_description VARCHAR(255),
+        item_quantity INT(11) NOT NULL,
+        item_note VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (category_id) REFERENCES categories(category_id),
@@ -156,7 +176,8 @@ function createTypesTable($mysqli)
     $sql = "CREATE TABLE IF NOT EXISTS types(
         type_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         type_price INT(11) DEFAULT 0,
-        type_images VARCHAR(255)
+        type_images VARCHAR(255),
+        type_name VARCHAR(255)
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -222,6 +243,7 @@ function allTables($mysqli)
     createSizesTable($mysqli);
     createStickersTable($mysqli);
     createProductsTable($mysqli);
+    createItemsTable($mysqli);
     createInvoiceTable($mysqli);
     createDefaultAdmin($mysqli);
     // echo "all tables created successfully";

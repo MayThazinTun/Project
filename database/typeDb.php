@@ -1,9 +1,9 @@
 <?php
 
 // create type
-function create_type($mysqli, $type_price, $type_images)
+function create_type($mysqli, $type_price, $type_images ,$type_name)
 {
-    $sql = "INSERT INTO `types`(`type_price`, `type_images`) VALUES ('$type_price','$type_images')";
+    $sql = "INSERT INTO `types`(`type_price`, `type_images`, `type_name`) VALUES ('$type_price','$type_images','$type_name')";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -31,9 +31,9 @@ function get_type_by_id($mysqli, $type_id)
 
 
 // update type by id
-function update_type_by_id($mysqli, $type_id, $type_price, $type_images)
+function update_type_by_id($mysqli, $type_id, $type_price, $type_images, $type_name)
 {
-    $sql = "UPDATE `types` SET `type_price`='$type_price',`type_images`='$type_images' WHERE `type_id`='$type_id'";
+    $sql = "UPDATE `types` SET `type_price`='$type_price',`type_images`='$type_images' ,`type_name`='$type_name' WHERE `type_id`='$type_id'";
     if ($mysqli->query($sql)) {
         return true;
     }

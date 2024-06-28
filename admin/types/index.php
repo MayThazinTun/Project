@@ -41,6 +41,7 @@ $types = get_all_types_pagination($mysqli, $limit, $offset);
                             <?php endforeach; ?>
                             <div class="card-body">
                                 <h5 class="card-title">Price&nbsp;: <span><?php echo $type['type_price'] ?></span></h5>
+                                <h5 class="card-title">Name&nbsp;: <span><?php echo $type['type_name'] ?></span></h5>
                             </div>
                             <div class="card-body text-end">
                                 <a href="edit.php?updated_id=<?php echo $type['type_id'] ?>"><i class="btn btn-warning fa-solid fa-pen-to-square"></i></a>

@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height:92vh">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height:130vh">
   <div class="fs-5 ps-3">
     Catagories
   </div>
