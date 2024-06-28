@@ -137,7 +137,11 @@ function get_product_by_name($mysqli, $name)
 }
 function get_product_by_category_id($mysqli, $category_id)
 {
-    $sql = "SELECT * FROM `products` WHERE `category_id` = $category_id";
+    $sql = "SELECT products.product_id,categories.category_id,
+    products.product_name, products.product_size,
+    products.product_color, products.product_quantity, 
+    products.product_price,products.product_images, 
+    products.product_description FROM `products` INNER JOIN `categories` ON products.category_id = categories.category_id WHERE products.category_id = $category_id";
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
         return $result;

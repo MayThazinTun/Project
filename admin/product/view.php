@@ -20,7 +20,7 @@ if ($product_id) {
                 <?php if (!empty($photos[0])) : ?>
                     <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded" style="max-width: 20rem; max-height: 50rem;" alt="Product Image">
                 <?php else : ?>
-                    <img src="../../images/All/default_image.jpg" class="" style="max-width: 20rem; max-height: 50rem;" alt="No Image Available">
+                    <img src=<?php echo "../../images/All/default_image.jpg"?> class="" style="max-width: 20rem; max-height: 50rem;" alt="No Image Available">
                 <?php endif; ?>
             </div>
             <div class="col-8 d-flex text-center">

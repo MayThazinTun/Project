@@ -9,7 +9,7 @@ if (isset($_POST['logout'])) {
 }
 
 $name = $email = $address = $password = "";
-$name_err = $email_err = $address_err = $password_err = "";
+$name_err = $email_err = $address_err = $password_err = $photos_error = "";
 $success = $invalid = false;
 
 $cookie_user = null;
@@ -23,6 +23,7 @@ $user = $users->fetch_assoc();
 $name = $user['name'];
 $email = $user['email'];
 $address = $user['address'];
+$photo_paths_str = $user['images'];
 
 if (isset($_GET['update_id'])) {
 
@@ -32,6 +33,41 @@ if (isset($_GET['update_id'])) {
         $address = htmlspecialchars($_POST["address"]);
         $password = htmlspecialchars($_POST["password"]);
 
+        // Upload Images
+        $photos = $_FILES['images'];
+        $photos_name = $photos['name'];
+        $photos_tmp = $photos['tmp_name'];
+        $photos_error_array = $photos['error'];
+        $photos_paths = [];
+
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+        foreach ($photos_name as $index => $photo_name) {
+            if (!empty($photo_name)) {
+                $photo_ext = pathinfo($photo_name, PATHINFO_EXTENSION);
+
+                if ($photos_error_array[$index] !== UPLOAD_ERR_OK) {
+                    $photos_error = "Error uploading file: " . $photo_name;
+                    break;
+                }
+                if (!in_array(strtolower($photo_ext), $allowed_extensions)) {
+                    $photos_error = "Invalid file type: " . $photo_name;
+                    break;
+                }
+
+                $newFileName = time() . "_" . $photo_name;
+                $uploadDir = "../images/All/users/";
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $photo_destination = $uploadDir . $newFileName;
+                if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
+                    $photos_paths[] = $photo_destination;
+                } else {
+                    $photos_error = "Error uploading file: " . $photo_name;
+                    break;
+                }
+            }
+        }
         if (empty($name))
             $name_err = "Name must not be blank";
         if (empty($email))
@@ -42,8 +78,9 @@ if (isset($_GET['update_id'])) {
             $password_err = "Enter password";
 
         if (empty($name_err) && empty($email_err) && empty($address_err) && empty($password_err)) {
+            $photo_paths_str = implode(",", $photos_paths);
             if (password_verify($password, $user['password'])) {
-                $update = update_user_by_id($mysqli, $id, $name, $email, $address, $password, 'user', $user['images']);
+                $update = update_user_by_id($mysqli, $id, $name, $email, $address, $password, 'user', $photo_paths_str);
                 if ($update) {
                     $success = true;
                     echo $success;
@@ -105,12 +142,18 @@ if (isset($_GET['update_id'])) {
         </div>
         <div class="d-flex justify-content-center">
             <div class="card mt-3" style="width:60%;">
-                <div class="text-center">
-                    <img src="<?php echo $user['images'] ?>" class="m-3 rounded-circle"
-                        style="width: 150px; height: 150px;">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="text-center">
+                        <img src="<?php echo $photo_paths_str ?>" class="m-3 rounded-circle"
+                            style="width: 150px; height: 150px;">
+                        <?php if (isset($_GET['update_id'])) { ?>
+                            <label for="upload_image" class="btn btn-outline-secondary border-0 form-label"><i
+                                    class="fa-solid fa-pen-to-square fa-xl" style="color: #000000;"></i></label>
+                            <input type="file" name="images[]" id="upload_image" accept="image/*" class="form-control"
+                                style="visibility: hidden; width: 0; height: 0;">
+                        <?php } ?>
+                    </div>
 
-                </div>
-                <form method="post">
                     <?php
                     $disabled = null;
                     if (!isset($_GET['update_id'])) {

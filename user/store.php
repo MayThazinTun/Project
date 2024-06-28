@@ -15,29 +15,34 @@
             }
             // var_dump($_GET['category_id']);
             // var_dump(get_product_by_category_id($mysqli, $_GET['category_id'])->fetch_assoc());
-            while ($product = $products->fetch_assoc()) {
-                ?>
-                <div class="card col-2 mt-3" style="width:300px; height: auto;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $product['product_name'] ?></h5>
-                        <p class="card-text">Color : <?php //echo $product['product_color'] ?></p>
-                        <p class="card-text">Size : <?php //echo $product['product_size'] ?></p>
-                        <p class="card-text">Price : <?php echo $product['product_price'] ?></p>
-                        <div class="row justify-content-center gap-2 px-2">
+            if ($products) {
+                while ($product = $products->fetch_assoc()) {
+                    // var_dump($product['product_quantity']);
+                    ?>
+                    <div class="card col-2 mt-3" style="width:300px; height: auto;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $product['product_name'] ?></h5>
+                            <p class="card-text">Color : <?php echo $product['product_color'] ?></p>
+                            <p class="card-text">Size : <?php echo $product['product_size'] ?></p>
+                            <p class="card-text">Price : <?php echo $product['product_price'] ?></p>
+                            <div class="row justify-content-center gap-2 px-2">
 
-                            <button type="button" class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#">
-                                Add to cart
-                            </button>
+                                <button type="button" class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#">
+                                    Add to cart
+                                </button>
 
 
-                            <?php require_once ("./order.php") ?>
-                            <?php require_once ("./buy.php") ?>
-                            <?php require_once ("./invoice.php"); ?>
-                            <a class="col btn btn-dark" data-bs-toggle="modal" href="#order" role="button"> Order</a>
+                                <?php require_once ("./order.php") ?>
+                                <?php require_once ("./buy.php") ?>
+                                <?php require_once ("./invoice.php"); ?>
+                                <a class="col btn btn-dark" data-bs-toggle="modal" href="#order" role="button"> Order</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php }
+            } else { ?>
+                <h1 class="text-secondary text-center mt-5">Out of stock!</h1>
             <?php } ?>
         </div>
 
