@@ -3,7 +3,7 @@
 //create products
 function create_item($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $item_price,$item_quantity, $item_note)
 {
-    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ('$category_id','$type_id','$color_id','$size_id','$sticker_id','$item_price','$item_quantity',null)";
+    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ($category_id,$type_id,$color_id,$size_id,$sticker_id,$item_price,$item_quantity,null)";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -11,7 +11,7 @@ function create_item($mysqli, $category_id, $type_id, $color_id, $size_id, $stic
 }
 function createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)
 {
-    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ('$category_id','$type_id','$color_id','$size_id','$sticker_id','$item_price','$item_quantity','$item_note')";
+    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ($category_id,$type_id,$color_id,$size_id,$sticker_id,$item_price,$item_quantity,'$item_note')";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -189,15 +189,15 @@ function get_item_by_category_id($mysqli, $category_id)
 function update_item_all($mysqli, $item_id, $category_id, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)
 {
     $sql = "UPDATE `items` SET 
-            `category_id` = '$category_id',
-            `type_id` = '$type_id',
-            `color_id` = '$color_id',
-            `size_id` = '$size_id',
-            `sticker_id` = '$sticker_id',
-            `item_price` = '$item_price',
-            `item_quantity` = '$item_quantity',
+            `category_id` = $category_id,
+            `type_id` = $type_id,
+            `color_id` = $color_id,
+            `size_id` = $size_id,
+            `sticker_id` = $sticker_id,
+            `item_price` = $item_price,
+            `item_quantity` = $item_quantity,
             `item_note` = NULL
-            WHERE `item_id` = '$item_id'";
+            WHERE `item_id` = $item_id";
 
     if ($mysqli->query($sql)) {
         return true;
@@ -208,7 +208,7 @@ function update_item_all($mysqli, $item_id, $category_id, $type_id, $color_id, $
 // delete product by id
 function delete_item_by_id($mysqli, $item_id)
 {
-    $sql = "DELETE FROM `items` WHERE `item_id` = '$item_id'";
+    $sql = "DELETE FROM `items` WHERE `item_id` = $item_id";
     if ($mysqli->query($sql)) {
         return true;
     }

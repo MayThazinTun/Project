@@ -30,7 +30,7 @@ $sizes = [
 
 function create_size($mysqli, $size, $size_price)
 {
-    $sql = "INSERT INTO `sizes`(`size`, `size_price`) VALUES ('$size', '$size_price')";
+    $sql = "INSERT INTO `sizes`(`size`, `size_price`) VALUES ('$size', $size_price)";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -51,7 +51,7 @@ function get_all_sizes($mysqli)
 //get sizes by id
 function getSizeById($mysqli, $size_id)
 {
-    $sql = "SELECT * FROM `sizes` WHERE `size_id` = '$size_id'";
+    $sql = "SELECT * FROM `sizes` WHERE `size_id` = $size_id";
     $result = $mysqli->query($sql);
     return $result;
 }
@@ -59,21 +59,21 @@ function getSizeById($mysqli, $size_id)
 //update size by id
 function updateSizeById($mysqli, $size_id, $size, $size_price)
 {
-    $sql = "UPDATE `sizes` SET `size` = '$size', `size_price` = '$size_price' WHERE `size_id` = '$size_id'";
+    $sql = "UPDATE `sizes` SET `size` = '$size', `size_price` = $size_price WHERE `size_id` = $size_id";
     $mysqli->query($sql);
 }
 
 // update size by name
 function updateSizeByName($mysqli, $size, $size_price)
 {
-    $sql = "UPDATE `sizes` SET `size_price` = '$size_price' WHERE `size` = '$size'";
+    $sql = "UPDATE `sizes` SET `size_price` = $size_price WHERE `size` = '$size'";
     $mysqli->query($sql);
 }
 
 //delete size by id
 function deleteSizeById($mysqli, $size_id)
 {
-    $sql = "DELETE FROM `sizes` WHERE `size_id` = '$size_id'";
+    $sql = "DELETE FROM `sizes` WHERE `size_id` = $size_id";
     $mysqli->query($sql);
 }
 

@@ -3,7 +3,7 @@
 //create orders
 function create_order($mysqli, $user_id, $category_id,$invoice_id)
 {
-    $sql = "INSERT INTO `orders`(`user_id`,`category_id`,`invoice_id`) VALUES ('$user_id','$category_id','$invoice_id')";
+    $sql = "INSERT INTO `orders`(`user_id`,`category_id`,`invoice_id`) VALUES ($user_id,$category_id,$invoice_id)";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -24,7 +24,7 @@ function get_all_orders($mysqli)
 //get order by id
 function get_order_by_id($mysqli, $id)
 {
-    $sql = "SELECT * FROM `orders` WHERE `id` = '$id'";
+    $sql = "SELECT * FROM `orders` WHERE `id` = $id";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
@@ -32,7 +32,7 @@ function get_order_by_id($mysqli, $id)
 //update order by id
 function update_order_by_id($mysqli, $id, $user_id, $category_id,$invoice_id)
 {
-    $sql = "UPDATE `orders` SET `user_id`='$user_id',`category_id`='$category_id',`invoice_id`='$invoice_id' WHERE `id` = '$id'";
+    $sql = "UPDATE `orders` SET `user_id`=$user_id,`category_id`=$category_id,`invoice_id`=$invoice_id WHERE `id` = $id";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -42,7 +42,7 @@ function update_order_by_id($mysqli, $id, $user_id, $category_id,$invoice_id)
 // delete order by id
 function delete_order_by_id($mysqli, $id)
 {
-    $sql = "DELETE FROM `orders` WHERE `id` = '$id'";
+    $sql = "DELETE FROM `orders` WHERE `id` = $id";
     if ($mysqli->query($sql)) {
         return true;
     }

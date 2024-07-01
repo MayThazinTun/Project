@@ -2,7 +2,7 @@
 // invoice_id,total_amount
 
 function create_invoice($mysqli, $invoice_id, $total_amount){
-    $sql = "INSERT INTO `invoices`(`invoice_id`, `total_amount`) VALUES ('$invoice_id','$total_amount')";
+    $sql = "INSERT INTO `invoices`(`invoice_id`, `total_amount`) VALUES ($invoice_id,$total_amount)";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -22,7 +22,7 @@ function get_invoice_by_id($mysqli, $id){
 }
 
 function update_invoice_by_id($mysqli, $id, $invoice_id, $total_amount){
-    $sql = "UPDATE `invoices` SET `invoice_id`='$invoice_id',`total_amount`='$total_amount' WHERE `id` = $id";
+    $sql = "UPDATE `invoices` SET `invoice_id`=$invoice_id,`total_amount`=$total_amount WHERE `id` = $id";
     if ($mysqli->query($sql)) {
         return true;
     }

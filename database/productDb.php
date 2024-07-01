@@ -4,7 +4,7 @@
 function create_product($mysqli, $category_id, $product_name, $product_size, $product_color, $product_quantity, $product_price, $product_images, $product_description)
 {
     $sql = "INSERT INTO `products`(`category_id`,`product_name`,`product_size`,`product_color`,`product_quantity`,`product_price`,`product_images`,`product_description`) 
-    VALUES ('$category_id','$product_name','$product_size','$product_color','$product_quantity','$product_price','$product_images','$product_description')";
+    VALUES ($category_id,'$product_name','$product_size','$product_color',$product_quantity,$product_price,'$product_images','$product_description')";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -157,11 +157,11 @@ function update_product($mysqli, $product_id, $category_id, $product_name, $prod
             `product_name` = '$product_name',
             `product_size` = '$product_size',
             `product_color` = '$product_color',
-            `product_quantity` = '$product_quantity',
-            `product_price` = '$product_price',
+            `product_quantity` = $product_quantity,
+            `product_price` = $product_price,
             `product_images` = '$product_images',
             `product_description` = '$product_description'
-            WHERE `product_id` = '$product_id'";
+            WHERE `product_id` = $product_id";
 
     if ($mysqli->query($sql)) {
         return true;
@@ -194,7 +194,7 @@ function update_product($mysqli, $product_id, $category_id, $product_name, $prod
 // delete product by id
 function delete_product_by_id($mysqli, $product_id)
 {
-    $sql = "DELETE FROM `products` WHERE `product_id` = '$product_id'";
+    $sql = "DELETE FROM `products` WHERE `product_id` = $product_id";
     if ($mysqli->query($sql)) {
         return true;
     }

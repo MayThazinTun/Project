@@ -3,7 +3,7 @@
 // create type
 function create_type($mysqli, $type_price, $type_images ,$type_name)
 {
-    $sql = "INSERT INTO `types`(`type_price`, `type_images`, `type_name`) VALUES ('$type_price','$type_images','$type_name')";
+    $sql = "INSERT INTO `types`(`type_price`, `type_images`, `type_name`) VALUES ($type_price,'$type_images','$type_name')";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -24,7 +24,7 @@ function get_all_types($mysqli)
 //get type by id
 function get_type_by_id($mysqli, $type_id)
 {
-    $sql = "SELECT * FROM `types` WHERE `type_id`='$type_id'";
+    $sql = "SELECT * FROM `types` WHERE `type_id`=$type_id";
     $result = $mysqli->query($sql);
     return $result;
 }
@@ -33,7 +33,7 @@ function get_type_by_id($mysqli, $type_id)
 // update type by id
 function update_type_by_id($mysqli, $type_id, $type_price, $type_images, $type_name)
 {
-    $sql = "UPDATE `types` SET `type_price`='$type_price',`type_images`='$type_images' ,`type_name`='$type_name' WHERE `type_id`='$type_id'";
+    $sql = "UPDATE `types` SET `type_price`=$type_price,`type_images`='$type_images' ,`type_name`='$type_name' WHERE `type_id`=$type_id";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -43,7 +43,7 @@ function update_type_by_id($mysqli, $type_id, $type_price, $type_images, $type_n
 // delete type by id
 function delete_type_by_id($mysqli, $type_id)
 {
-    $sql = "DELETE FROM `types` WHERE `type_id`='$type_id'";
+    $sql = "DELETE FROM `types` WHERE `type_id`=$type_id";
     if ($mysqli->query($sql)) {
         return true;
     }
