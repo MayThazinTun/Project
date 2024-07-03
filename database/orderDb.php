@@ -1,15 +1,23 @@
 <?php
 
 //create orders
-function create_order($mysqli, $user_id, $category_id,$invoice_id)
+function create_order($mysqli, $user_id, $category_id,$invoice_id,$shipping_address,$order_description)
 {
-    $sql = "INSERT INTO `orders`(`user_id`,`category_id`,`invoice_id`) VALUES ($user_id,$category_id,$invoice_id)";
+    $sql = "INSERT INTO `orders`(`user_id`,`category_id`,`invoice_id`,`shipping_address`,`order_description`) VALUES ($user_id,$category_id,$invoice_id,'$shipping_address','$order_description')";
     if ($mysqli->query($sql)) {
         return true;
     }
     return false;
 }
 
+function create_order_without_description($mysqli, $user_id, $category_id,$invoice_id,$shipping_address,$order_description)
+{
+    $sql = "INSERT INTO `orders`(`user_id`,`category_id`,`invoice_id`,`shipping_address`,`order_description`) VALUES ($user_id,$category_id,$invoice_id,'$shipping_address',null)";
+    if ($mysqli->query($sql)) {
+        return true;
+    }
+    return false;
+}
 //get all orders
 function get_all_orders($mysqli)
 {

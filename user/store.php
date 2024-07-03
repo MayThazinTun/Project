@@ -2,21 +2,14 @@
 require_once ("./Layout/header.php");
 require_once ("../database/add_to_cart.php");
 
-//add to cart
+
 $message = false;
-// echo "<pre>";
-// var_dump($category);
 
 if (isset($_GET['product_id'])) {
     $product = get_product_by_id($mysqli, $_GET['product_id']);
     $categories = get_category_by_id($mysqli, $product['category_id']);
     $category_id = $categories['category_id'];
-    //var_dump($categories['category_id']);
-    // array_push($category,[
-    //     'category_id'=>$categories['category_id']
-    // ]);
-    // $_SESSION['category']=$category;
-    // var_dump($_SESSION['category']);
+
     $isNew = true;
     $newCategory = true;
     for ($i = 0; $i < count($cart); $i++) {
@@ -38,7 +31,7 @@ if (isset($_GET['product_id'])) {
         if ($category_id == $cate[$i]['category_id']) {
             $newCategory = false;
             $cate[$i]['category_qty']++;
-
+            $cate[$i]['amount'] = $cate[$i]['category_qty'] * $cate[$i]['price'];
         }
     }
     // echo $isNew;
@@ -74,7 +67,6 @@ if (isset($_GET['product_id'])) {
         }
     }
 }
-
 ?>
 
 <div class="row">
@@ -154,12 +146,6 @@ if (isset($_GET['product_id'])) {
                                         Add to cart
                                     </a>
                                 <?php } ?>
-
-
-                                <?php require_once ("./order.php") ?>
-                                <?php require_once ("./buy.php") ?>
-                                <?php require_once ("./invoice.php"); ?>
-                                <a class="col btn btn-dark" data-bs-toggle="modal" href="#order" role="button"> Order</a>
                             </div>
                         </div>
                     </div>

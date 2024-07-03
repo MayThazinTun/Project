@@ -41,34 +41,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            for ($i = 0; $i < count($cart); $i++) {
+                                ?>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td></td>
-                                    <td></td>
+                                    <th scope="row"><?php echo $i + 1 ?></th>
+                                    <td><p><?php echo $cart[$i]['product_name'] ?></p></td>
+                                    <td><p><?php echo $cart[$i]['product_price'] ?> MMK </p></td>
+                                    <td><p><?php echo $cart[$i]['product_quantity'] ?></p></td>
+                                    <td><p><?php echo $cart[$i]['total_amount'] ?> MMK </p></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="">Larry</td>
-                                    <td>@twitter</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" class="fs-4 text-end pe-3">Total</td>
-                                    <td>totalprice</td>
-                                </tr>
+                            <?php } ?>
+                            <tr>
+                                <td colspan="4" class="text-end fs-5 pe-5 fw-bold">All total</td>
+                                <td class="fs-6 fw-bold">
+                                    <?php
+                                    $total = 0;
+                                    foreach ($cart as $amount) {
+                                        $total = $total + $amount['total_amount'];
+                                    }
+                                    echo $total;
+                                    ?>MMK
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

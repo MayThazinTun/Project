@@ -2,15 +2,7 @@
 require_once ("./Layout/header.php");
 require_once ("../database/add_to_cart.php");
 
-$checked = "";
-if (isset($_POST['selected'])) {
-    $checked = 'checked';
-    // echo 'checked';
-}
-if (isset($_POST['deselect'])) {
-    $checked = "";
-}
-
+$modal_buy = $modal_order = $modal_invoice = false;
 if (isset($_GET['dec'])) {
     $index = $_GET['dec'];
     $current = --$cart[$index]['product_quantity'];
@@ -26,7 +18,9 @@ if (isset($_GET['dec'])) {
     for ($i = 0; $i < count($cate); $i++) {
         if ($cate[$i]['category_id'] == $ctg) {
             $ct_qty = --$cate[$i]['category_qty'];
-            if ($ct_qty == 0) {
+            if ($ct_qty > 0) {
+                $cate[$i]['amount'] = $cate[$i]['category_qty'] * $cate[$i]['price'];
+            } else {
                 unset($cate[$i]);
             }
         }
@@ -58,7 +52,6 @@ if (isset($_GET['delete'])) {
     $_SESSION['category'] = $cate;
     header("Location:./carts.php");
 }
-// var_dump($category);
 
 ?>
 
@@ -72,7 +65,7 @@ if (isset($_GET['delete'])) {
             <div class="btn-group-vertical gap-2">
 
                 <button class="btn btn-outline-secondary border-0 text-start ps-4"
-                    onclick="location.href='./carts.php';">All</button>
+                    onclick="location.href='./carts.php'">All</button>
                 <?php
                 $categories = get_all_categories($mysqli);
                 while ($category = $categories->fetch_assoc()) {
@@ -93,10 +86,10 @@ if (isset($_GET['delete'])) {
     <div class="col p-3">
         <div class="row">
             <div class="col-9">
-                <div class="card p-3 " style="height: 80vh;">
+                <div class="card p-3 ps-5" style="height: 80vh; width: auto;">
                     <form method="post">
                         <!-- list of product that customer add to cart -->
-                        <div class="overflow-auto" style="height:80vh;">
+                        <div class="overflow-auto" style="height:70vh;">
                             <?php
                             if (!isset($_GET['category_id'])) {
                                 for ($i = 0; $i < count($cart); $i++) {
@@ -131,7 +124,7 @@ if (isset($_GET['delete'])) {
                                                 <?php echo $cart[$i]['total_amount'] ?>MMK
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-column">
+                                        <div class="d-flex flex-column ">
                                             <a href="./carts.php?dec=<?php echo $i ?>" class="btn" name="dec"><i
                                                     class="fa-solid fa-delete-left" style="color: #a8a8a8;"></i></a>
                                             <a href="./carts.php?delete=<?php echo $i ?>" class="btn" name="delect"><i
@@ -204,7 +197,7 @@ if (isset($_GET['delete'])) {
                                     <?php echo $categories['category_name'] ?> (<?php echo $cate[$i]['category_qty'] ?>)
                                 </div>
                                 <div>
-                                    <?php ?>
+                                    <?php echo $cate[$i]['amount'] ?>
                                 </div>
                             </div>
                         <?php } ?>
@@ -222,11 +215,12 @@ if (isset($_GET['delete'])) {
                         </div>
                     </div>
                     <div class="d-grid">
-                        <?php require_once ("./order.php") ?>
-                        <?php require_once ("./buy.php") ?>
-                        <?php require_once ("./invoice.php"); ?>
                         <a class="btn btn-dark" data-bs-toggle="modal" href="#order" role="button">Process
                             to Order</a>
+                        <?php require_once ("./cart_modal/order.php") ?>
+                        <?php require_once ("./cart_modal/buy.php") ?>
+                        <?php require_once ("./cart_modal/invoice.php"); ?>
+
                     </div>
                 </div>
             </div>
@@ -235,3 +229,19 @@ if (isset($_GET['delete'])) {
 </div>
 
 <?php require_once ("./Layout/footer.php") ?>
+<script>
+    <?php
+    if ($modal_buy === true) {
+        echo 'document.querySelector("#modal_cart_buy").click()';
+        $modal_buy = false;
+    }
+    if ($modal_order === true) {
+        echo 'document.querySelector("#back").click()';
+        $modal_order = false;
+    }
+    if ($modal_invoice === true) {
+        echo 'document.querySelector("#vouchar").click()';
+        $modal_invoice = false;
+    }
+    ?>
+</script>
