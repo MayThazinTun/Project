@@ -93,3 +93,22 @@ input[type=file]::file-selector-button:hover {
     height: auto;
     display: none;
 }
+
+input[type='color'] {
+    padding: 0;
+    width: 150%;
+    height: 150%;
+    margin: -25%;
+}
+
+.cp_wrapper {
+    overflow: hidden;
+    width: 5em;
+    height: 5em;
+    /* optional formatting below here */
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 0px grey;
+    margin: 1em;
+    margin-top: 30px;
+    margin-left: 100px;
+}

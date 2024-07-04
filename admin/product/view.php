@@ -17,8 +17,10 @@ if ($product_id) {
         <div class="container row">
             <div class="col-4">
                 <?php $photos = explode(',', $product['product_images']); ?>
-                <?php if (!empty($photos[0])) : ?>
-                    <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded" style="max-width: 20rem; max-height: 50rem;" alt="Product Image">
+                <?php if (!empty($photos[0])) :  
+                                 $dir ="../../images/All/products/".$photos[0];
+                                  ?>
+                    <img src="<?php echo htmlspecialchars($dir); ?>" class="rounded" style="max-width: 20rem; max-height: 50rem;" alt="Product Image">
                 <?php else : ?>
                     <img src=<?php echo "../../images/All/default_image.jpg"?> class="" style="max-width: 20rem; max-height: 50rem;" alt="No Image Available">
                 <?php endif; ?>

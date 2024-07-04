@@ -1,5 +1,6 @@
 <?php
 require_once('../layouts/adminHeader.php');
+require_once('../../baseUrl.php');
 require_once('../../database/typeDb.php');
 
 $type_price = "";
@@ -15,6 +16,7 @@ $default_avatars = array_diff(scandir($default_avatar_folder), array('..', '.'))
 
 if (isset($_POST['submit'])) {
     $type_price = htmlspecialchars($_POST["type_price"]);
+    $type_name = htmlspecialchars($_POST["type_name"]);
 
     // Check if a default avatar is selected
     $selected_avatar = isset($_POST['default_avatar']) ? htmlspecialchars($_POST['default_avatar']) : null;
@@ -48,8 +50,9 @@ if (isset($_POST['submit'])) {
                 mkdir($uploadDir, 0777, true);
             }
             $photo_destination = $uploadDir . $newFileName;
+            echo $photo_destination;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                $photos_paths[] = $photo_destination;
+                $photos_paths[] = $newFileName;
             } else {
                 $photos_error = "Error uploading file: " . $photo_name;
                 break;
@@ -66,7 +69,7 @@ if (isset($_POST['submit'])) {
         } else if (!empty($selected_avatar)) {
             $photo_paths_str = $selected_avatar;
         } else {
-            $photo_paths_str = "../../images/types/type1.png";
+            $photo_paths_str = "type1.png";
         }
         if (create_type($mysqli, $type_price, $photo_paths_str , $type_name)) {
             header("Location: index.php");
@@ -100,7 +103,7 @@ if (isset($_POST['submit'])) {
                         <label for="type_name" class="form-label">Name</label>
                     </div>
                     <div class="col-8">
-                        <input type="number" name="type_name" class="form-control" value="<?php echo htmlspecialchars($type_name); ?>" id="type_name">
+                        <input type="text" name="type_name" class="form-control" value="<?php echo htmlspecialchars($type_name); ?>" id="type_name">
                         <small class="text-danger"><?php echo htmlspecialchars($type_name_error); ?></small>
                     </div>
                 </div>
@@ -120,9 +123,9 @@ if (isset($_POST['submit'])) {
                     <div class="col-8 d-flex flex-wrap">
                         <?php foreach ($default_avatars as $avatar) : ?>
                             <div class="form-check me-2">
-                                <input class="form-check-input" type="radio" name="default_avatar" value="<?php echo htmlspecialchars($default_avatar_folder . $avatar); ?>">
+                                <input class="form-check-input" type="radio" name="default_avatar" value="<?php echo htmlspecialchars($avatar); ?>">
                                 <label class="form-check-label">
-                                    <img src="<?php echo htmlspecialchars($default_avatar_folder . $avatar); ?>" alt="Default Avatar" style="max-width: 60px; max-height: 60px;">
+                                    <img src="<?php echo $default_avatar_folder . htmlspecialchars($avatar); ?>" alt="Default Avatar" style="max-width: 60px; max-height: 60px;">
                                 </label>
                             </div>
                         <?php endforeach; ?>

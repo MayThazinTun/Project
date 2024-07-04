@@ -36,8 +36,10 @@ $stickers = get_all_stickers_pagination($mysqli, $limit, $offset);
                 <?php foreach ($stickers as $sticker) : ?>
                     <div class="col">
                         <div class="card me-3 mb-3" style="width: 14rem; height:fit-content">
-                            <?php foreach (explode(",", $sticker['sticker_images']) as $photo) : ?>
-                                <img src="<?php echo $photo; ?>" alt="" class="card-img-top" style="max-width: 14rem; max-height: 14rem;">
+                            <?php foreach (explode(",", $sticker['sticker_images']) as $photo) : 
+                                 $dir ="../../images/All/stickers/".$photo;
+                                 ?>
+                                <img src="<?php echo $dir; ?>" alt="" class="card-img-top" style="max-width: 14rem; max-height: 14rem;">
                             <?php endforeach; ?>
                             <div class="card-body">
                                 <h5 class="card-title">Price&nbsp;: <span><?php echo $sticker['sticker_price'] ?></span></h5>

@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
             }
             $photo_destination = $uploadDir . $newFileName;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                $photos_paths[] = $photo_destination;
+                $photos_paths[] = $newFileName;
             } else {
                 $photos_error = "Error uploading file: " . $photo_name;
                 break;
@@ -152,7 +152,7 @@ if (isset($_POST['submit'])) {
                         </select>
                         <small class="text-danger"><?php echo $category_id_error ?></small>
                     </div>
-                    </div>
+                </div>
                 <!-- <div class="col-md-6 mb-2">
                     <label for="type_id" class="form-label">Product Type</label>
                     <div>
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
                             <option value="" selected>Select type(optional)...</option>
                             <?php //$types = get_all_types($mysqli);
                             //foreach ($types as $type) {
-                                //echo '<option value="' . $type['type_id'] . '">' . $type['type_price'] . '</option>';
+                            //echo '<option value="' . $type['type_id'] . '">' . $type['type_price'] . '</option>';
                             //}
                             ?>
                         </select>
@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
                             <option value="" selected>Select color(optional)...</option>
                             <?php //$colors = get_all_colors($mysqli);
                             //foreach ($colors as $color) {
-                                //echo '<option value="' . $color['color_id'] . '">' . $color['color_name'] . '</option>';
+                            //echo '<option value="' . $color['color_id'] . '">' . $color['color_name'] . '</option>';
                             //}
                             ?>
                         </select>
@@ -188,7 +188,7 @@ if (isset($_POST['submit'])) {
                             <option value="" selected>Select size(optional)...</option>
                             <?php //$sizes = get_all_sizes($mysqli);
                             //foreach ($sizes as $size) {
-                                //echo '<option value="' . $size['size_id'] . '">' . $size['size'] . '</option>';
+                            //echo '<option value="' . $size['size_id'] . '">' . $size['size'] . '</option>';
                             //}
                             ?>
                         </select>
@@ -202,72 +202,72 @@ if (isset($_POST['submit'])) {
                             <option value="" selected>Select sticker(optional)...</option>
                             <?php //$stickers = get_all_stickers($mysqli);
                             //foreach ($stickers as $sticker) {
-                                //echo '<option value="' . $sticker['sticker_id'] . '">' . $sticker['sticker_price'] . '</option>';
+                            //echo '<option value="' . $sticker['sticker_id'] . '">' . $sticker['sticker_price'] . '</option>';
                             //}
                             ?>
                         </select>
                         <small class="text-danger"><?php //echo $sticker_id_error ?></small>
                     </div>
                 </div> -->
-                    <div class="col-md-6 mb-2">
-                        <label for="product_name" class="form-label">Enter Your Product Name</label>
-                        <div>
-                            <input type="text" name="product_name" class="form-control"
-                                value="<?php echo $product_name ?>" id="product_name">
-                            <small class="text-danger"><?php echo $product_name_error ?></small>
-                        </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_name" class="form-label">Enter Your Product Name</label>
+                    <div>
+                        <input type="text" name="product_name" class="form-control" value="<?php echo $product_name ?>"
+                            id="product_name">
+                        <small class="text-danger"><?php echo $product_name_error ?></small>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="product_size" class="form-label">Enter Your Product Size</label>
-                        <div>
-                            <input type="text" name="product_size" class="form-control"
-                                value="<?php echo $product_size ?>" id="product_size">
-                            <!-- <small class="text-danger"><?php //echo $product_size_error ?></small> -->
-                        </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_size" class="form-label">Enter Your Product Size</label>
+                    <div>
+                        <input type="text" name="product_size" class="form-control" value="<?php echo $product_size ?>"
+                            id="product_size">
+                        <!-- <small class="text-danger"><?php //echo $product_size_error ?></small> -->
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="product_color" class="form-label">Enter Your Product Color</label>
-                        <div>
-                            <input type="text" name="product_color" class="form-control"
-                                value="<?php echo $product_color ?>" id="product_color">
-                            <small class="text-danger"><?php echo $product_color_error ?></small>
-                        </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_color" class="form-label">Enter Your Product Color</label>
+                    <div>
+                        <input type="text" name="product_color" class="form-control"
+                            value="<?php echo $product_color ?>" id="product_color">
+                        <small class="text-danger"><?php echo $product_color_error ?></small>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="product_price" class="form-label">Product Price</label>
-                        <div>
-                            <input type="number" name="product_price" class="form-control"
-                                value="<?php echo $product_price ?>" id="product_price">
-                            <small class="text-danger"><?php echo $product_price_error ?></small>
-                        </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_price" class="form-label">Product Price</label>
+                    <div>
+                        <input type="number" name="product_price" class="form-control"
+                            value="<?php echo $product_price ?>" id="product_price">
+                        <small class="text-danger"><?php echo $product_price_error ?></small>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="product_quantity" class="form-label">Product Quantity</label>
-                        <div>
-                            <input type="number" name="product_quantity" class="form-control"
-                                value="<?php echo $product_quantity ?>" id="product_quantity">
-                            <small class="text-danger"><?php echo $product_quantity_error ?></small>
-                        </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_quantity" class="form-label">Product Quantity</label>
+                    <div>
+                        <input type="number" name="product_quantity" class="form-control"
+                            value="<?php echo $product_quantity ?>" id="product_quantity">
+                        <small class="text-danger"><?php echo $product_quantity_error ?></small>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="product_images" class="form-label">Product Images</label>
-                        <div>
-                            <input type="file" name="images[]" class="form-control" id="images" multiple>
-                            <small class="text-danger"><?php echo htmlspecialchars($photos_error); ?></small>
-                        </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_images" class="form-label">Product Images</label>
+                    <div>
+                        <input type="file" name="images[]" class="form-control" id="images" multiple>
+                        <small class="text-danger"><?php echo htmlspecialchars($photos_error); ?></small>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="product_description" class="form-label">Product Description</label>
-                        <div>
-                            <input type="text" name="product_description" class="form-control"
-                                value="<?php echo $product_description ?>" id="product_description">
-                            <small class="text-danger"><?php echo $product_description_error ?></small>
-                        </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <label for="product_description" class="form-label">Product Description</label>
+                    <div>
+                        <input type="text" name="product_description" class="form-control"
+                            value="<?php echo $product_description ?>" id="product_description">
+                        <small class="text-danger"><?php echo $product_description_error ?></small>
                     </div>
-                    <div class="text-center mt-5">
-                        <button type="submit" name="submit" class="btn btn-primary">Create</button>
-                        <a href="./index.php" class="btn btn-warning">Cancel</a>
-                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <button type="submit" name="submit" class="btn btn-primary">Create</button>
+                    <a href="./index.php" class="btn btn-warning">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

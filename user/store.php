@@ -115,13 +115,15 @@ if (isset($_GET['product_id'])) {
                 $products = get_product_by_category_id($mysqli, $_GET['category_id']);
             }
             if ($products) {
+                
                 while ($product = $products->fetch_assoc()) {
+                    
                     ?>
                     <div class="card col-2 ms-5 mt-3 p-1 mb-3" style="width:280px; height: auto;">
                         <?php $photos = explode(',', $product['product_images']);
                         if (!empty($photos[0])): ?>
-                            <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded"
-                                style="max-width: 20rem; max-height: 30rem;" alt="Product Image">
+                            <img src="<?php echo htmlspecialchars($photos); ?>" class="rounded"
+                                style="max-width: 20rem; max-height: 30rem;">
                         <?php else: ?>
                             <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded"
                                 style="width:270px; height:150px;" alt="No Image Available">
