@@ -79,8 +79,7 @@ function getColorById($mysqli, $color_id)
 {
     $sql = "SELECT * FROM `colors` WHERE `color_id` = $color_id";
     $result = $mysqli->query($sql);
-    $color = $result->fetch_assoc();
-    return $color;
+    return $result;
 }
 
 //get colors by name

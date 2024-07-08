@@ -71,7 +71,8 @@ if (isset($_GET['product_id'])) {
 
 <div class="row">
     <div class="col-auto">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 200px; height:100vh;">
+        <div class="shadow">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-white" style="width: 200px; height:100vh;">
             <div class="fs-5 ps-3">
                 Catagories
             </div>
@@ -95,6 +96,7 @@ if (isset($_GET['product_id'])) {
 
             </div>
         </div>
+        </div>
     </div>
     <div class="col overflow-auto" style="height:100vh;">
         <div>
@@ -107,7 +109,7 @@ if (isset($_GET['product_id'])) {
             <?php } ?>
             <hr>
         </div>
-        <div class="card-content row gap-3">
+        <div class="card-content row gap-5">
             <?php
             //Product by category
             $products = getAll($mysqli);
@@ -119,11 +121,12 @@ if (isset($_GET['product_id'])) {
                 while ($product = $products->fetch_assoc()) {
                     
                     ?>
-                    <div class="card col-2 ms-5 mt-3 p-1 mb-3" style="width:280px; height: auto;">
+                    <div class="card col-2 ms-5 mt-3 p-1 mb-3 shadow" style="width:280px; height: auto;">
                         <?php $photos = explode(',', $product['product_images']);
+                        $dir = "../images/All/products/".$photos[0];
                         if (!empty($photos[0])): ?>
-                            <img src="<?php echo htmlspecialchars($photos); ?>" class="rounded"
-                                style="max-width: 20rem; max-height: 30rem;">
+                            <img src="<?php echo $dir; ?>" class="rounded"
+                                style="width:270px; height:150px;">
                         <?php else: ?>
                             <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded"
                                 style="width:270px; height:150px;" alt="No Image Available">
@@ -159,5 +162,6 @@ if (isset($_GET['product_id'])) {
 
     </div>
 </div>
-
+<div class="shadow-top">
 <?php require_once ("./Layout/footer.php") ?>
+</div>

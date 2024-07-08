@@ -1,3 +1,4 @@
+</div>
 <div class="d-grid gap-4 mx-1">
     <div class="row gap-2 bg-light">
         <div class="col text-center mb-2">

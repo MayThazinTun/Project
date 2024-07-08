@@ -1,4 +1,5 @@
-<div class="d-grid gap-4">
+</div>
+<div class="d-grid gap-4 border bg-white">
     <div class="row bg-light">
         <div class="col text-center mb-2">
             <img src="../images/shopbag_logo.png" class="rounded me-3" style="width: 80px;height: 80px;">
@@ -31,9 +32,8 @@
             <div class="col-2">
                 <h5 style="color:gray;">My account</h5>
                 <p>
-                    <a href="" style="text-decoration: none; color:gray;">Profile</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Edit Profile</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Change password</a><br>
+                    <a href="./account.php" style="text-decoration: none; color:gray;">Profile</a><br>
+                    <a href="./change_pw.php" style="text-decoration: none; color:gray;">Change password</a><br>
                 </p>
             </div>
             <div class="col-2">

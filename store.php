@@ -27,7 +27,7 @@ if ($user) {
             <?php } ?>
             <hr>
         </div>
-        <div class="card-content row gap-3">
+        <div class="card-content row justify-content-center gap-3">
             <?php
             //Product by category
             $products = getAll($mysqli);
@@ -37,11 +37,13 @@ if ($user) {
             if ($products) {
                 while ($product = $products->fetch_assoc()) {
                     ?>
-                    <div class="card col-2 ms-5 mt-3 p-1 mb-3" style="width:280px; height: auto;">
+                    <div class="card col-2 ms-5 mt-3 p-1 mb-3 shadow" style="width:280px; height: auto;">
                         <?php $photos = explode(',', $product['product_images']);
-                        if (!empty($photos[0])): ?>
-                            <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded"
-                                style="max-width: 20rem; max-height: 30rem;" alt="Product Image">
+                        if (!empty($photos[0])): 
+                        $dir = "./images/All/products/".$photos[0];
+                        ?>
+                            <img src="<?php echo $dir; ?>" class="rounded"
+                                style="width:270px; height:150px;" alt="Product Image">
                         <?php else: ?>
                             <img src=<?php echo "./images/All/default_image.jpg" ?> class="rounded"
                                 style="width:270px; height:150px;" alt="No Image Available">
@@ -81,7 +83,7 @@ if ($user) {
                                         </div>
                                     </div>
                                 </div>
-                                <a class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">Order</a>
+                                <!-- <a class="col btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">Order</a> -->
                             </div>
                         </div>
                     </div>

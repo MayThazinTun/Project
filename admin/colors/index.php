@@ -41,7 +41,8 @@ if (isset($_GET['deleted_id'])) {
 if (isset($_GET['updated_id'])) {
     $color_id = $_GET['updated_id'];
     $color = getColorById($mysqli, $color_id);
-    $color_name = $color['color_name'];
+    $colors = $color->fetch_assoc();
+    $color_name = $colors['color_name'];
     if (isset($_POST['update'])) {
         $color_name = $_POST['color_name'];
         if (updateColor($mysqli, $color_id, $color_name)) {

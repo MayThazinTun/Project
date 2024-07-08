@@ -57,50 +57,56 @@ if (isset($_GET['delete'])) {
 
 <div class="row me-1">
     <div class="col-auto">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 200px; height:100vh;">
-            <div class="fs-5 ps-3">
-                Catagories
-            </div>
-            <hr>
-            <div class="btn-group-vertical gap-2">
+        <div class="shadow">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-white" style="width: 200px; height:100vh;">
+                <div class="fs-5 ps-3">
+                    Catagories
+                </div>
+                <hr>
+                <div class="btn-group-vertical gap-2">
 
-                <button class="btn btn-outline-secondary border-0 text-start ps-4"
-                    onclick="location.href='./carts.php'">All</button>
-                <?php
-                $categories = get_all_categories($mysqli);
-                while ($category = $categories->fetch_assoc()) {
-                    ?>
                     <button class="btn btn-outline-secondary border-0 text-start ps-4"
-                        onclick="location.href='./carts.php?category_id=<?php echo $category['category_id'] ?>';">
-                        <?php echo $category['category_name'] ?>
-                    </button>
+                        onclick="location.href='./carts.php'">All</button>
                     <?php
-                }
-                ?>
-                <!-- <button class="btn btn-outline-secondary border-0 text-start ps-4">database</button> -->
+                    $categories = get_all_categories($mysqli);
+                    while ($category = $categories->fetch_assoc()) {
+                        ?>
+                        <button class="btn btn-outline-secondary border-0 text-start ps-4"
+                            onclick="location.href='./carts.php?category_id=<?php echo $category['category_id'] ?>';">
+                            <?php echo $category['category_name'] ?>
+                        </button>
+                        <?php
+                    }
+                    ?>
+                    <!-- <button class="btn btn-outline-secondary border-0 text-start ps-4">database</button> -->
 
+                </div>
             </div>
+            <?php //var_dump($category) ?>
         </div>
-        <?php //var_dump($category) ?>
     </div>
     <div class="col p-3">
         <div class="row">
             <div class="col-9">
-                <div class="card p-3 ps-5" style="height: 80vh; width: auto;">
+                <div class="card p-3 ps-5 shadow p-3 mt-2 mb-3 bg-body rounded" style="height: 90vh; width: auto;">
                     <form method="post">
                         <!-- list of product that customer add to cart -->
                         <div class="overflow-auto" style="height:70vh;">
                             <?php
                             if (!isset($_GET['category_id'])) {
+                                if(count($cart)===0){
+                                    echo "<h3 class='text-secondary text-center'> Products are not added to cart yet <h3>";
+                                }
                                 for ($i = 0; $i < count($cart); $i++) {
                                     ?>
                                     <div class="d-flex">
                                         <div class="row justify-content-evenly" style="width:700px;">
                                             <div class="col-3 text-center">
                                                 <?php $photos = explode(',', $cart[$i]['product_images']);
+                                                $dir = "../images/All/products/" . $photos[0];
                                                 if (!empty($photos[0])): ?>
-                                                    <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded"
-                                                        style="max-width: 20rem; max-height: 30rem;" alt="Product Image">
+                                                    <img src="<?php echo $dir; ?>" class="rounded border border-1"
+                                                        style="width:170px; height:100px;" alt="Product Image">
                                                 <?php else: ?>
                                                     <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 "
                                                         style="width:170px; height:100px;" alt="No Image Available">
@@ -133,6 +139,9 @@ if (isset($_GET['delete'])) {
                                     </div>
                                 <?php }
                             } else {
+                                if(count($cart)===0){
+                                    echo "<h3 class='text-secondary text-center'> Products are not added to cart yet <h3>";
+                                }
                                 foreach ($cart as $c) {
                                     if ($c['category_id'] == $_GET['category_id']) { ?>
                                         <div class="d-flex">
@@ -180,7 +189,7 @@ if (isset($_GET['delete'])) {
                 </div>
             </div>
             <div class="col-3">
-                <div class="card p-3">
+                <div class="card p-3 shadow mt-2 bg-body rounded">
                     <h5 class="card-title">Order Summary</h5>
                     <hr>
                     <div class="card-text">

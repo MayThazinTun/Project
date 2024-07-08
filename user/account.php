@@ -1,12 +1,14 @@
 <?php
-require_once ("./Layout/header.php");
 if (isset($_POST['logout'])) {
     setcookie('user', '', -1, '/');
     header("Location:../signin.php");
     if (isset($_COOKIE['user'])):
         setcookie('user', '', time() - 7000000, '/');
     endif;
+    session_destroy();
 }
+require_once ("./Layout/header.php");
+
 
 $name = $email = $address = $password = "";
 $name_err = $email_err = $address_err = $password_err = $photos_error = "";
@@ -102,7 +104,7 @@ if (isset($_GET['update_id'])) {
 ?>
 
 <div class="row">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 200px; height:92vh">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow" style="width: 200px; height:92vh">
         <div class="fs-5 ps-3">
             Account
         </div>
@@ -141,7 +143,7 @@ if (isset($_GET['update_id'])) {
             Your Profile
         </div>
         <div class="d-flex justify-content-center">
-            <div class="card mt-3" style="width:60%;">
+            <div class="card mt-3 shadow" style="width:60%;">
                 <form method="post" enctype="multipart/form-data">
                     <div class="text-center">
                         <img src="<?php echo $photo_paths_str ?>" class="m-3 rounded-circle"
