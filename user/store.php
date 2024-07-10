@@ -1,5 +1,7 @@
 <?php
-require_once ("./Layout/header.php");
+require_once ("../database/index.php");
+require_once ("../database/categoryDb.php");
+require_once ("../database/productDb.php");
 require_once ("../database/add_to_cart.php");
 
 
@@ -67,6 +69,7 @@ if (isset($_GET['product_id'])) {
         }
     }
 }
+require_once ("./Layout/header.php");
 ?>
 
 <div class="row">

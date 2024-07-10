@@ -36,4 +36,4 @@ require_once ("../database/productDb.php");
 <body>
         <?php require_once ("./Layout/nav.php") ?>
     
-    <div class="bg-light">
+    

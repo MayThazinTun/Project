@@ -1,4 +1,4 @@
-</div>
+
 <div class="d-grid gap-4 border bg-white">
     <div class="row bg-light">
         <div class="col text-center mb-2">

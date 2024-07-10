@@ -4,6 +4,10 @@
     background-color: rgba(250, 235, 215, 0.774);
 }
 
+.types::-webkit-scrollbar {
+    display: none;
+}
+
 #card {
     margin-top: 150px;
     margin-bottom: 145px;
@@ -35,10 +39,10 @@
 
 input[type=file]::file-selector-button {
     border: 1px solid gray;
-    color: white;
+    color: black;
     padding: .2em .4em;
     border-radius: .2em;
-    background-color: black;
+    background-color: white;
     transition: 0.3s;
 }
 

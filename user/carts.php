@@ -1,5 +1,7 @@
 <?php
-require_once ("./Layout/header.php");
+require_once ("../database/index.php");
+require_once ("../database/categoryDb.php");
+require_once ("../database/productDb.php");
 require_once ("../database/add_to_cart.php");
 
 $modal_buy = $modal_order = $modal_invoice = false;
@@ -52,6 +54,7 @@ if (isset($_GET['delete'])) {
     $_SESSION['category'] = $cate;
     header("Location:./carts.php");
 }
+require_once ("./Layout/header.php");
 
 ?>
 

@@ -80,14 +80,14 @@ function createOrdersTable($mysqli)
     $sql = "CREATE TABLE IF NOT EXISTS orders(
         order_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         user_id INT(11) NOT NULL,
-        category_id INT(11) NOT NULL,
+        products_id INT(11) NOT NULL,
+        product_type ENUM('product', 'item') NOT NULL,
         invoice_id INT(11) NOT NULL,
         shipping_address VARCHAR(255) NOT NULL,
-        order_description VARCHAR(255) ,
+        order_description VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (category_id) REFERENCES categories(id)
         FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id)
     )";
     if ($mysqli->query($sql)) {
@@ -247,6 +247,7 @@ function allTables($mysqli)
     createItemsTable($mysqli);
     createInvoiceTable($mysqli);
     createDefaultAdmin($mysqli);
+    createOrdersTable($mysqli);
     // echo "all tables created successfully";
 }
 allTables($mysqli);

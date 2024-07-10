@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
                 mkdir($uploadDir, 0777, true);
             }
             $photo_destination = $uploadDir . $newFileName;
-            echo $photo_destination;
+            // echo $photo_destination;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
                 $photos_paths[] = $newFileName;
             } else {

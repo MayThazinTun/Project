@@ -2,6 +2,7 @@
 session_start();
 
 $cart = [];
+$shirtCart = [];
 $cate = [];
 $order = [];
 
@@ -15,4 +16,8 @@ if(isset($_SESSION['category'])){
 
 if(isset($_SESSION['order'])){
     $order = $_SESSION['order'];
+}
+
+if(isset($_SESSION['shirtCart'])){
+    $shirCart = $_SESSION['shirtCart'];
 }
