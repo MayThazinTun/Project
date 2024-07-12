@@ -19,5 +19,5 @@ if(isset($_SESSION['order'])){
 }
 
 if(isset($_SESSION['shirtCart'])){
-    $shirCart = $_SESSION['shirtCart'];
+    $shirtCart = $_SESSION['shirtCart'];
 }

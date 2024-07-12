@@ -46,6 +46,19 @@ if (isset($_POST['pay'])) {
                     </thead>
                     <tbody>
                         <?php
+                        for ($i = 0; $i < count($shirtCart); $i++) {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $i + 1 ?></th>
+                                <td><?php echo $shirtCart[$i]['type_name'] ?></td>
+                                <td><?php echo $shirtCart[$i]['total_price'] ?> MMK </td>
+                                <td><?php echo $shirtCart[$i]['qty'] ?></td>
+                                <td><?php echo $shirtCart[$i]['total_price'] * $shirtCart[$i]['qty'] ?> MMK </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        <?php
                         for ($i = 0; $i < count($cart); $i++) {
                             ?>
                             <tr>
@@ -64,6 +77,9 @@ if (isset($_POST['pay'])) {
                                 foreach ($cart as $amount) {
                                     $total = $total + $amount['total_amount'];
                                 }
+                                foreach ($shirtCart as $tt){
+                                    $total = $total + $tt['total_price'];
+                                }
                                 echo $total;
                                 ?>MMK
                             </td>
@@ -79,8 +95,8 @@ if (isset($_POST['pay'])) {
                         </div>
                         <div class="form-group mb-2 col">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email"
-                                aria-describedby="emailHelp" value="<?php echo $email ?>" disabled>
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                value="<?php echo $email ?>" disabled>
                         </div>
                     </div>
                     <div class="row justify-content-evenly">

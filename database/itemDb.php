@@ -3,7 +3,7 @@
 //create products
 function create_item($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $item_price,$item_quantity, $item_note)
 {
-    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ($category_id,$type_id,$color_id,$size_id,$sticker_id,$item_price,$item_quantity,null)";
+    $sql = "INSERT INTO `products`(`category_id`,`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ($category_id,$type_id,$color_id,$size_id,null,$item_price,$item_quantity,null)";
     if ($mysqli->query($sql)) {
         return true;
     }

@@ -54,6 +54,10 @@ if (isset($_GET['delete'])) {
     $_SESSION['category'] = $cate;
     header("Location:./carts.php");
 }
+if (isset($_GET['delect'])) {
+    unset($_SESSION['shirtCart'][$_GET['delect']]);
+    header("Location:./carts.php");
+}
 require_once ("./Layout/header.php");
 
 ?>
@@ -97,9 +101,54 @@ require_once ("./Layout/header.php");
                         <div class="overflow-auto" style="height:70vh;">
                             <?php
                             if (!isset($_GET['category_id'])) {
-                                if(count($cart)===0){
-                                    echo "<h3 class='text-secondary text-center'> Products are not added to cart yet <h3>";
+                                if (count($cart) === 0 && count($shirtCart) === 0) {
+                                    echo "<h3 class='text-secondary text-center'> No products are added to cart yet <h3>";
                                 }
+                                if (isset($_SESSION['shirtCart'])) {
+                                    for ($i = 0; $i < count($shirtCart); $i++) { ?>
+                                        <div class="d-flex">
+                                            <div class="row justify-content-evenly" style="width:700px;">
+                                                <div class="col-3 text-center">
+                                                    <?php $photos = explode(',', $shirtCart[$i]['type_images']);
+                                                    $dir = "../images/All/types/" . $photos[0];
+                                                    if (!empty($photos[0])): ?>
+                                                        <img src="<?php echo $dir; ?>" class="rounded border border-1"
+                                                            style="width:170px; height:100px;" alt="Product Image">
+                                                    <?php else: ?>
+                                                        <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 "
+                                                            style="width:170px; height:100px;" alt="No Image Available">
+                                                    <?php endif; ?>
+                                                    <!-- <img src="<?php //echo $cart[$i]['product_images'] ?>" alt="" style="width:auto; height:80px;"> -->
+                                                </div>
+                                                <div class="col-3 ps-5">
+                                                    <h6><?php echo $shirtCart[$i]['type_name'] ?></h6>
+                                                </div>
+                                                <div class="col-3 text-center">
+                                                    <p style="display:inline;">
+                                                        Size : <?php echo $shirtCart[$i]['size'] ?><br>
+                                                        Color
+                                                    <div class="border border-1 rounded"
+                                                        style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $shirtCart[$i]['color_name'] ?>">
+                                                    </div>
+                                                    Price : <?php echo $shirtCart[$i]['total_price'] ?>MMK<br>
+                                                    </p>
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <p> Qty <?php echo $shirtCart[$i]['qty'] ?> </p>
+                                                </div>
+                                                <div class="col-2 text-center">
+                                                    <?php echo $shirtCart[$i]['total_price'] * $shirtCart[$i]['qty'] ?>MMK
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="./carts.php?delect=<?php echo $i ?>" class="btn" name="delect"><i class="fa-solid fa-trash-can"
+                                                        style="color: #98999a;"></i></a>
+                                            </div>
+                                        </div>
+                                    <?php }
+                                } ?>
+
+                                <?php
                                 for ($i = 0; $i < count($cart); $i++) {
                                     ?>
                                     <div class="d-flex">
@@ -142,8 +191,8 @@ require_once ("./Layout/header.php");
                                     </div>
                                 <?php }
                             } else {
-                                if(count($cart)===0){
-                                    echo "<h3 class='text-secondary text-center'> Products are not added to cart yet <h3>";
+                                if (count($cart) === 0 && count($shirtCart) === 0) {
+                                    echo "<h3 class='text-secondary text-center'> No products are added to cart yet <h3>";
                                 }
                                 foreach ($cart as $c) {
                                     if ($c['category_id'] == $_GET['category_id']) { ?>
@@ -187,6 +236,7 @@ require_once ("./Layout/header.php");
                                     <?php }
                                 }
                             } ?>
+
                         </div>
                     </form>
                 </div>
@@ -198,6 +248,24 @@ require_once ("./Layout/header.php");
                     <div class="card-text">
                         <?php
                         // var_dump($_SESSION['category']);
+                        if (isset($_SESSION['shirtCart']) && $_SESSION['shirtCart']!= []) {
+                            $sq = 0;
+                            $shirtTotal = 0;
+                            foreach ($shirtCart as $sc) {
+                                $sq = $sq + $sc['qty'];
+                                $shirtTotal = $shirtTotal + $sc['total_price'];
+                            }
+                                ?>
+                                <div class="d-flex justify-content-between px-2">
+                                    <div>
+                                        Shirt (<?php echo $sq ?>)
+                                    </div>
+                                    <div>
+                                        <?php echo $shirtTotal ?>
+                                    </div>
+                                </div>
+                            <?php 
+                        }
                         for ($i = 0; $i < count($cate); $i++) {
                             //var_dump($cate['category_id']);
                             $categories = get_category_by_id($mysqli, $cate[$i]['category_id']);
@@ -221,6 +289,9 @@ require_once ("./Layout/header.php");
                             $total = 0;
                             foreach ($cart as $amount) {
                                 $total = $total + $amount['total_amount'];
+                            }
+                            foreach ($shirtCart as $tt) {
+                                $total = $total + $tt['total_price'];
                             }
                             ?>
                             <h5><?php echo $total ?>MMK</h5>

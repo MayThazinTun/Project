@@ -29,6 +29,12 @@ function get_sticker_by_id($mysqli, $sticker_id)
     $result = $mysqli->query($sql);
     return $result;
 }
+function get_sticker_by_sticker($mysqli, $sticker_images)
+{
+    $sql = "SELECT * FROM `stickers` WHERE `sticker_images` = '$sticker_images'";
+    $result = $mysqli->query($sql);
+    return $result;
+}
 
 //update sticker by id
 function update_sticker_by_id($mysqli, $sticker_id, $sticker_price, $sticker_images)

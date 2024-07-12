@@ -37,7 +37,7 @@ if (isset($_POST['order'])) {
             <div class="modal-body">
                 <?php
                 $disabled = 'disabled';
-                if ($cart != []) {
+                if ($cart != [] || $shirtCart!=[]) {
                     $disabled = '';
                     ?>
                     <table class="table">
@@ -51,6 +51,19 @@ if (isset($_POST['order'])) {
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            for ($i = 0; $i < count($shirtCart); $i++) {
+                                ?>
+                                <tr>
+                                    <th scope="row"><?php echo $i + 1 ?></th>
+                                    <td><?php echo $shirtCart[$i]['type_name'] ?></td>
+                                    <td><?php echo $shirtCart[$i]['total_price'] ?> MMK </td>
+                                    <td><?php echo $shirtCart[$i]['qty'] ?></td>
+                                    <td><?php echo $shirtCart[$i]['total_price']*$shirtCart[$i]['qty'] ?> MMK </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
                             <?php
                             for ($i = 0; $i < count($cart); $i++) {
                                 ?>
@@ -69,6 +82,9 @@ if (isset($_POST['order'])) {
                                     $total = 0;
                                     foreach ($cart as $amount) {
                                         $total = $total + $amount['total_amount'];
+                                    }
+                                    foreach ($shirtCart as $tt){
+                                        $total = $total + $tt['total_price'];
                                     }
                                     echo $total;
                                     ?>MMK

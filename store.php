@@ -27,7 +27,7 @@ if ($user) {
             <?php } ?>
             <hr>
         </div>
-        <div class="card-content row justify-content-center gap-3">
+        <div class="card-content row gap-5">
             <?php
             //Product by category
             $products = getAll($mysqli);

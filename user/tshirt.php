@@ -75,8 +75,10 @@ if (isset($_POST['size'])) {
     $_SESSION['size'] = $size;
 }
 $display = "";
+$note = "disabled";
 if (isset($_POST['sticker'])) {
     $display = "d-none";
+    $note = "";
     $stickers_id = $_POST['sticker'];
     $result = get_sticker_by_id($mysqli, $stickers_id);
     $shirtSticker = $result->fetch_assoc();
@@ -87,12 +89,22 @@ if (isset($_POST['sticker'])) {
     ];
     $_SESSION['sticker'] = $sticker;
 }
+
 if (isset($_POST['removeSticker'])) {
     $display = "";
     $sticker = [];
     $_SESSION['sticker'] = $sticker;
 }
+$shirt_note = "";
+if (isset($_POST['note'])) {
+    $shirt_note = $_POST['note'];
+    $shirtNote  = ['shirt_note'=>$shirt_note];
+}
+$_SESSION['note'] = $shirtNote;
 if (isset($_POST['addToCart'])) {
+    if (isset($_POST['note'])) {
+        $shirt_note = $_POST['note'];
+    }
     $shirtQty = $qty;
 
     $photos = $_FILES['images'];
@@ -115,8 +127,8 @@ if (isset($_POST['addToCart'])) {
                 break;
             }
 
-            $newFileName = time() . "_" . $photo_name;
-            $uploadDir = "../images/All/custom_stickers/";
+            $newFileName = "custom_" . $photo_name;
+            $uploadDir = "../images/All/stickers/";
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -132,9 +144,18 @@ if (isset($_POST['addToCart'])) {
 
     if (!empty($photos_paths)) {
         $photo_paths_str = implode(",", $photos_paths);
-    }
-    $stickerPrice = 800;
 
+        $stickerPrice = 800;
+        if (create_sticker($mysqli, $stickerPrice, $photo_paths_str)) {
+            $createSticker = get_sticker_by_sticker($mysqli, $photo_paths_str);
+            $sticker = [
+                'sticker_id' => $createSticker['sticker_id'],
+                'sticker_images' => $createSticker['sticker_images'],
+                'sticker_price' => $createSticker['sticker_price']
+            ];
+        }
+        $_SESSION['sticker'] = $sticker;
+    }
 
     if (isset($_SESSION['sticker']) && $_SESSION['sticker'] != []) {
         array_push($shirtCart, [
@@ -150,13 +171,10 @@ if (isset($_POST['addToCart'])) {
             'sticker_id' => $_SESSION['sticker']['sticker_id'],
             'sticker_images' => $_SESSION['sticker']['sticker_images'],
             'sticker_price' => $_SESSION['sticker']['sticker_price'],
+            'note' => $_SESSION['note']['shirt_note'],
+            'total_price' => $_SESSION['type']['type_price'] + $_SESSION['size']['size_price'] + $_SESSION['sticker']['sticker_price'],
             'qty' => $shirtQty
         ]);
-        unset($_SESSION['type']);
-        unset($_SESSION['color']);
-        unset($_SESSION['size']);
-        unset($_SESSION['sticker']);
-        $qty = null;
     } else {
         array_push($shirtCart, [
             'type_id' => $_SESSION['type']['type_id'],
@@ -168,15 +186,19 @@ if (isset($_POST['addToCart'])) {
             'size_id' => $_SESSION['size']['size_id'],
             'size' => $_SESSION['size']['size'],
             'size_price' => $_SESSION['size']['size_price'],
-            'sticker_images' => $photo_paths_str,
-            'sticker_price' => $stickerPrice,
+            'sticker_id' => null,
+            'sticker_images' => "",
+            'sticker_price' => 0,
+            'note' => "",
+            'total_price' => $_SESSION['type']['type_price'] + $_SESSION['size']['size_price'] + $_SESSION['sticker']['sticker_price'],
             'qty' => $shirtQty
         ]);
-        unset($_SESSION['type']);
-        unset($_SESSION['color']);
-        unset($_SESSION['size']);
-        $qty = null;
     }
+    unset($_SESSION['type']);
+    unset($_SESSION['color']);
+    unset($_SESSION['size']);
+    unset($_SESSION['sticker']);
+    $qty = null;
     // var_dump($shirtCart);
     $_SESSION['shirtCart'] = $shirtCart;
 
@@ -266,12 +288,16 @@ if (isset($_POST['addToCart'])) {
                                     <?php
                                     if ($shirt_stickers != false) {
                                         foreach ($shirt_stickers as $shirt_sticker) {
-                                            $dir = "../images/All/stickers/" . $shirt_sticker['sticker_images'];
-                                            ?>
-                                            <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker"
-                                                value="<?php echo $shirt_sticker['sticker_id'] ?>">
-                                                <img src="<?php echo $dir ?>" alt="" style="width:80px; heiht:80px;"></button>
-                                        <?php }
+                                            if (!str_contains($shirt_sticker['sticker_images'], 'custom_')) {
+
+
+                                                $dir = "../images/All/stickers/" . $shirt_sticker['sticker_images'];
+                                                ?>
+                                                <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker"
+                                                    value="<?php echo $shirt_sticker['sticker_id'] ?>">
+                                                    <img src="<?php echo $dir ?>" alt="" style="width:80px; heiht:80px;"></button>
+                                            <?php }
+                                        }
                                     } ?>
                                 </div>
                             </div>
@@ -358,9 +384,8 @@ if (isset($_POST['addToCart'])) {
                             class="form-control <?php echo $display ?>" style="">
                     </div>
                     <div class="my-2">
-                        <h5>Add Note</h5>
-                        <textarea name="note" style="width:100%; height:100px;"
-                            class="border border-secondary"></textarea>
+                        <h5>Add Note for sticker placement</h5>
+                        <textarea name="note" style="width:100%; height:100px;" class="border border-secondary" <?php echo $note; ?>> <?php echo $shirt_note; ?></textarea>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between text-secondary">

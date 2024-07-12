@@ -34,6 +34,9 @@ require_once ("../database/add_to_cart.php");
                         foreach ($cart as $product) {
                             $i = $i + $product['product_quantity'];
                         }
+                        foreach ($shirtCart as $item){
+                            $i = $i + $item['qty'];
+                        }
                         ?>
                         <span
                             class="position-absolute top-2 start-80 translate-middle badge rounded-pill bg-danger"><?php echo $i ?></span>
