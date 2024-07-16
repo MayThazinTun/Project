@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
         }
         if (empty($item_price_error) && empty($item_quantity_error)) {
             $photo_paths_str = implode(",", $photos_paths);
-            $result = createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note);
+            // $result = createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note);
             if ($result) {
                 header("Location: index.php");
                 exit;

@@ -253,7 +253,7 @@ require_once ("./Layout/header.php");
                             $shirtTotal = 0;
                             foreach ($shirtCart as $sc) {
                                 $sq = $sq + $sc['qty'];
-                                $shirtTotal = $shirtTotal + $sc['total_price'];
+                                $shirtTotal = ($shirtTotal + $sc['total_price'])*$sq;
                             }
                                 ?>
                                 <div class="d-flex justify-content-between px-2">
@@ -291,7 +291,7 @@ require_once ("./Layout/header.php");
                                 $total = $total + $amount['total_amount'];
                             }
                             foreach ($shirtCart as $tt) {
-                                $total = $total + $tt['total_price'];
+                                $total = ($total + $tt['total_price'])*$tt['qty'];
                             }
                             ?>
                             <h5><?php echo $total ?>MMK</h5>

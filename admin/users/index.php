@@ -61,8 +61,10 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
                     <td class="align-middle"><?php echo $user['address']; ?></td>
                     <td class="align-middle"><?php echo $user['role']; ?></td>
                     <td class="align-middle">
-                        <?php foreach (explode(",", $user['images']) as $photo) : ?>
-                            <img src="<?php echo $photo; ?>" alt="" class="img-fluid rounded-circle mx-auto d-block" style="max-width: 60px; max-height: 60px;">
+                        <?php foreach (explode(",", $user['images']) as $photo) :
+                            $dir = "../../images/All/users/".$photo;
+                            ?>
+                            <img src="<?php echo $dir; ?>" alt="" class="img-fluid rounded-circle mx-auto d-block" style="max-width: 60px; max-height: 60px;">
                         <?php endforeach; ?>
                     </td>
                     <td class="align-middle">

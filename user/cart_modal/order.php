@@ -83,8 +83,8 @@ if (isset($_POST['order'])) {
                                     foreach ($cart as $amount) {
                                         $total = $total + $amount['total_amount'];
                                     }
-                                    foreach ($shirtCart as $tt){
-                                        $total = $total + $tt['total_price'];
+                                    foreach ($shirtCart as $tt) {
+                                        $total = ($total + $tt['total_price'])*$tt['qty'];
                                     }
                                     echo $total;
                                     ?>MMK

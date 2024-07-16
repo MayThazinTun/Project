@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
             }
             $photo_destination = $uploadDir . $newFileName;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                $photos_paths[] = $photo_destination;
+                $photos_paths[] = $newFileName;
             } else {
                 $photos_error = "Error uploading file: " . $photo_name;
                 break;
@@ -147,9 +147,9 @@ if (isset($_POST['submit'])) {
                     <div class="col-8 d-flex flex-wrap">
                         <?php foreach ($default_avatars as $avatar): ?>
                             <div class="form-check me-2">
-                                <input class="form-check-input" type="radio" name="default_avatar" value="<?php echo htmlspecialchars($default_avatar_folder . $avatar); ?>">
+                                <input class="form-check-input" type="radio" name="default_avatar" value="<?php echo $default_avatar_folder . htmlspecialchars($avatar); ?>">
                                 <label class="form-check-label">
-                                    <img src="<?php echo htmlspecialchars($default_avatar_folder . $avatar); ?>" alt="Default Avatar" style="max-width: 60px; max-height: 60px;">
+                                    <img src="<?php echo $default_avatar_folder . htmlspecialchars($avatar); ?>" alt="Default Avatar" style="max-width: 60px; max-height: 60px;">
                                 </label>
                             </div>
                         <?php endforeach; ?>

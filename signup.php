@@ -79,7 +79,7 @@ require_once ('./baseUrl.php');
                 $email_err = "Email already exists";
             } else {
                 $password = password_hash($password,PASSWORD_DEFAULT);
-                $photo_path = BASE_URL."/images/avatars/default_avatar3.png";
+                $photo_path = "default_avatar3.png";
                 if (create_user($mysqli, $name, $email,$address, $password, 'user', $photo_path)) {
                     $success = true;
                     $create = get_user_by_email($mysqli,$email);

@@ -88,7 +88,9 @@ function createOrdersTable($mysqli)
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id)
+        FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id),
+        CONSTRAINT order_product_fk FOREIGN KEY (products_id) REFERENCES products(product_id),
+        CONSTRAINT order_item_fk FOREIGN KEY (products_id) REFERENCES items(item_id)
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -151,19 +153,19 @@ function createItemsTable($mysqli)
 {
     $sql = "CREATE TABLE IF NOT EXISTS items(
         item_id INT(11) AUTO_INCREMENT PRIMARY KEY,
-        category_id INT(11) NOT NULL,
         type_id INT(11) NOT NULL,
         color_id INT(11) NOT NULL,
         size_id INT(11) NOT NULL,
         sticker_id INT(11),
+        item_price INT(11),
         item_quantity INT(11) NOT NULL,
         item_note VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (category_id) REFERENCES categories(category_id),
         FOREIGN KEY (type_id) REFERENCES types(type_id),
         FOREIGN KEY (color_id) REFERENCES colors(color_id),
-        FOREIGN KEY (size_id) REFERENCES sizes(size_id)
+        FOREIGN KEY (size_id) REFERENCES sizes(size_id),
+        FOREIGN KEY (sticker_id) REFERENCES stickers(sticker_id)
     )";
     if ($mysqli->query($sql)) {
         return true;

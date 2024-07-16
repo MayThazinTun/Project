@@ -52,13 +52,13 @@ if (isset($_POST['update'])) {
             }
 
             $newFileName = time() . "_" . $photo_name;
-            $uploadDir = "../../images/users/";
+            $uploadDir = "../../images/All/users/";
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
             $photo_destination = $uploadDir . $newFileName;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                $new_photos_paths[] = $photo_destination;
+                $new_photos_paths[] = $newFileName;
             } else {
                 $photos_error = "Error uploading file: " . $photo_name;
                 break;
@@ -156,9 +156,11 @@ if (isset($_POST['update'])) {
                         <div class="mt-2">
                             <label>Current Photos</label>
                             <div class="d-flex flex-wrap">
-                                <?php foreach ($current_photos as $photo) : ?>
+                                <?php foreach ($current_photos as $photo) :
+                                    $dir = "../../images/All/users/".$photo;
+                                    ?>
                                     <div class="me-2 mb-2">
-                                        <img src="<?php echo htmlspecialchars($photo); ?>" alt="User Photo" style="max-width: 50px; max-height: 50px;">
+                                        <img src="<?php echo htmlspecialchars($dir); ?>" alt="User Photo" style="max-width: 50px; max-height: 50px;">
                                     </div>
                                 <?php endforeach; ?>
                             </div>

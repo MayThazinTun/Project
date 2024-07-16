@@ -1,4 +1,8 @@
 <?php
+require_once ("../database/index.php");
+require_once ('../baseUrl.php');
+require_once ('../database/auth_user.php');
+require_once ('../database/userDb.php');
 if (isset($_POST['logout'])) {
     setcookie('user', '', -1, '/');
     header("Location:../signin.php");
@@ -7,7 +11,6 @@ if (isset($_POST['logout'])) {
     endif;
     session_destroy();
 }
-require_once ("./Layout/header.php");
 
 
 $name = $email = $address = $password = "";
@@ -26,6 +29,7 @@ $name = $user['name'];
 $email = $user['email'];
 $address = $user['address'];
 $photo_paths_str = $user['images'];
+$dir = '../images/All/users/';
 
 if (isset($_GET['update_id'])) {
 
@@ -63,7 +67,7 @@ if (isset($_GET['update_id'])) {
                 }
                 $photo_destination = $uploadDir . $newFileName;
                 if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                    $photos_paths[] = $photo_destination;
+                    $photos_paths[] = $newFileName;
                 } else {
                     $photos_error = "Error uploading file: " . $photo_name;
                     break;
@@ -99,6 +103,7 @@ if (isset($_GET['update_id'])) {
 
     }
 }
+require_once ("./Layout/header.php");
 
 
 ?>
@@ -146,7 +151,7 @@ if (isset($_GET['update_id'])) {
             <div class="card mt-3 shadow" style="width:60%;">
                 <form method="post" enctype="multipart/form-data">
                     <div class="text-center">
-                        <img src="<?php echo $photo_paths_str ?>" class="m-3 rounded-circle"
+                        <img src="<?php echo $dir . $photo_paths_str ?>" class="m-3 rounded-circle"
                             style="width: 150px; height: 150px;">
                         <?php if (isset($_GET['update_id'])) { ?>
                             <label for="upload_image" class="btn btn-outline-secondary border-0 form-label"><i
