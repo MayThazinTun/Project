@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="row">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; height:92vh">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-white shadow" style="width: 200px; height:92vh">
         <div class="fs-5 ps-3">
             Account
         </div>
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="d-flex justify-content-center">
 
-            <div class="card p-3 m-5" style="width:50%; height:auto;">
+            <div class="card p-3 m-5 shadow" style="width:50%; height:auto;">
                 <form method="post">
                     <div class="row mb-3 form-group">
                         <label for="current_password" class="col-4 form-label">Current password</label>

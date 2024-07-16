@@ -4,6 +4,10 @@
     background-color: rgba(250, 235, 215, 0.774);
 }
 
+.types::-webkit-scrollbar {
+    display: none;
+}
+
 #card {
     margin-top: 150px;
     margin-bottom: 145px;
@@ -35,10 +39,10 @@
 
 input[type=file]::file-selector-button {
     border: 1px solid gray;
-    color: white;
+    color: black;
     padding: .2em .4em;
     border-radius: .2em;
-    background-color: black;
+    background-color: white;
     transition: 0.3s;
 }
 
@@ -92,4 +96,23 @@ input[type=file]::file-selector-button:hover {
     max-width: 100%;
     height: auto;
     display: none;
+}
+
+input[type='color'] {
+    padding: 0;
+    width: 150%;
+    height: 150%;
+    margin: -25%;
+}
+
+.cp_wrapper {
+    overflow: hidden;
+    width: 5em;
+    height: 5em;
+    /* optional formatting below here */
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 0px grey;
+    margin: 1em;
+    margin-top: 30px;
+    margin-left: 150px;
 }

@@ -58,7 +58,7 @@ if (isset($_POST['update'])) {
             }
             $photo_destination = $uploadDir . $newFileName;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                $new_photos_paths[] = $photo_destination;
+                $new_photos_paths[] = $newFileName;
             } else {
                 $photos_error = "Error uploading file: " . $photo_name;
                 break;
@@ -122,9 +122,11 @@ if (isset($_POST['update'])) {
                         <div class="mt-2">
                             <label>Current Photos</label>
                             <div class="d-flex flex-wrap">
-                                <?php foreach ($current_photos as $index => $photo) : ?>
+                                <?php foreach ($current_photos as $index => $photo) : 
+                                    $dir ="../../images/All/types/".$photo;
+                                    ?>
                                     <div class="me-2 mb-2">
-                                        <img src="<?php echo htmlspecialchars($photo); ?>" alt="User Photo" class="img-thumbnail" style="width: 100px; height: 100px;">
+                                        <img src="<?php echo htmlspecialchars($dir); ?>" alt="User Photo" class="img-thumbnail" style="width: 100px; height: 100px;">
                                         <div>
                                             <input type="checkbox" name="delete_photos[]" value="<?php echo $index; ?>"> Delete
                                         </div>

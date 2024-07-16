@@ -82,7 +82,9 @@ require_once ('./baseUrl.php');
                 $photo_path = BASE_URL."/images/avatars/default_avatar3.png";
                 if (create_user($mysqli, $name, $email,$address, $password, 'user', $photo_path)) {
                     $success = true;
-                    header("Location: signup.php");
+                    $create = get_user_by_email($mysqli,$email);
+                    setcookie("user", json_encode($create), time() + 3600 * 24 * 7 * 2, '/');
+                    header("Location: ./user/index.php");
                     $name = $email = $address = $password = $role = $re_password = "";
                 } else {
                     $invalid = true;

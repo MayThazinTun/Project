@@ -26,3 +26,4 @@ require_once('./baseUrl.php');
 
 <body>
 <?php require_once ("./Login/nav.php") ?>
+<div class="bg-light">

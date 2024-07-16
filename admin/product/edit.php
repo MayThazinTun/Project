@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
             }
             $photo_destination = $uploadDir . $newFileName;
             if (move_uploaded_file($photos_tmp[$index], $photo_destination)) {
-                $photos_paths[] = $photo_destination;
+                $photos_paths[] = $newFileName;
             } else {
                 $photos_error = "Error uploading file: " . $photo_name;
                 break;

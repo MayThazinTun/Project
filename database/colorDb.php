@@ -77,10 +77,9 @@ function get_all_colors($mysqli)
 //get colors by id
 function getColorById($mysqli, $color_id)
 {
-    $sql = "SELECT * FROM `colors` WHERE `color_id` = '$color_id'";
+    $sql = "SELECT * FROM `colors` WHERE `color_id` = $color_id";
     $result = $mysqli->query($sql);
-    $color = $result->fetch_assoc();
-    return $color;
+    return $result;
 }
 
 //get colors by name
@@ -95,7 +94,7 @@ function getColorByName($mysqli, $color_name)
 //update color by name
 function updateColor($mysqli, $color_id, $color_name)
 {
-    $sql = "UPDATE `colors` SET `color_name` = '$color_name' WHERE `color_id` = '$color_id'";
+    $sql = "UPDATE `colors` SET `color_name` = '$color_name' WHERE `color_id` = $color_id";
     $result = $mysqli->query($sql);
     return $result;
 }
@@ -103,7 +102,7 @@ function updateColor($mysqli, $color_id, $color_name)
 //delete color by id
 function deleteColor($mysqli, $color_id)
 {
-    $sql = "DELETE FROM `colors` WHERE `color_id` = '$color_id'";
+    $sql = "DELETE FROM `colors` WHERE `color_id` = $color_id";
     $result = $mysqli->query($sql);
     return $result;
 }
