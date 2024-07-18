@@ -1,8 +1,8 @@
 <?php
 // invoice_id,total_amount
 
-function create_invoice($mysqli, $invoice_id, $total_amount){
-    $sql = "INSERT INTO `invoices`(`invoice_id`, `total_amount`) VALUES ($invoice_id,$total_amount)";
+function create_invoice($mysqli,$total_amount){
+    $sql = "INSERT INTO `invoices`(`total_amount`) VALUES ($total_amount)";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -13,6 +13,12 @@ function get_all_invoices($mysqli){
     $sql = "SELECT * FROM `invoices`";
     $result = $mysqli->query($sql);
     return $result;
+}
+
+function get_last_invoice($mysqli){
+    $sql = "SELECT * FROM `invoices` ORDER BY `invoice_id` DESC LIMIT 1";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
 }
 
 function get_invoice_by_id($mysqli, $id){

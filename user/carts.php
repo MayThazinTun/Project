@@ -3,6 +3,12 @@ require_once ("../database/index.php");
 require_once ("../database/categoryDb.php");
 require_once ("../database/productDb.php");
 require_once ("../database/add_to_cart.php");
+require_once("../database/invoiceDb.php");
+require_once("../database/itemDb.php");
+require_once("../database/orderDb.php");
+// require_once ("./cart_modal/order.php");
+// require_once ("./cart_modal/buy.php");
+// require_once ("./cart_modal/invoice.php");
 
 $modal_buy = $modal_order = $modal_invoice = false;
 if (isset($_GET['dec'])) {
@@ -293,6 +299,8 @@ require_once ("./Layout/header.php");
                             foreach ($shirtCart as $tt) {
                                 $total = ($total + $tt['total_price'])*$tt['qty'];
                             }
+                            $order_total = ['orderTotal'=>$total];
+                            $_SESSION['orderTotal']= $order_total;
                             ?>
                             <h5><?php echo $total ?>MMK</h5>
                         </div>
@@ -326,5 +334,10 @@ require_once ("./Layout/header.php");
         echo 'document.querySelector("#vouchar").click()';
         $modal_invoice = false;
     }
+    if ($close === true) {
+        echo 'document.querySelector("#close").click()';
+        $close = false;
+    }
     ?>
+    //document.querySelector("refresh").click(window.location.href ='./carts.php');
 </script>

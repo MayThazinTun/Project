@@ -3,7 +3,7 @@
 //create products
 function create_item($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price,$item_quantity, $item_note)
 {
-    $sql = "INSERT INTO `products`(`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ($type_id,$color_id,$size_id,null,$item_price,$item_quantity,null)";
+    $sql = "INSERT INTO `items`(`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`item_note`) VALUES ($type_id,$color_id,$size_id,null,$item_price,$item_quantity,null)";
     if ($mysqli->query($sql)) {
         return true;
     }
@@ -11,13 +11,19 @@ function create_item($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_
 }
 function createItemsAll($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)
 {
-    $sql = "INSERT INTO `products`(`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`product_images`,`item_note`) VALUES ($type_id,$color_id,$size_id,$sticker_id,$item_price,$item_quantity,'$item_note')";
+    $sql = "INSERT INTO `items`(`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`item_note`) VALUES ($type_id,$color_id,$size_id,$sticker_id,$item_price,$item_quantity,'$item_note')";
     if ($mysqli->query($sql)) {
         return true;
     }
     return false;
 }
 
+//get last item
+function get_last_item($mysqli){
+    $sql = "SELECT * FROM `items` ORDER BY `item_id` DESC LIMIT 1";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
 
 // get all products
 // function getAll($mysqli)

@@ -186,7 +186,7 @@ if (isset($_POST['addToCart'])) {
             'size_id' => $_SESSION['size']['size_id'],
             'size' => $_SESSION['size']['size'],
             'size_price' => $_SESSION['size']['size_price'],
-            'sticker_id' => null,
+            'sticker_id' => "",
             'sticker_images' => "",
             'sticker_price' => 0,
             'note' => "",

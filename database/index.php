@@ -80,17 +80,19 @@ function createOrdersTable($mysqli)
     $sql = "CREATE TABLE IF NOT EXISTS orders(
         order_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         user_id INT(11) NOT NULL,
-        products_id INT(11) NOT NULL,
-        product_type ENUM('product', 'item') NOT NULL,
+        product_id INT(11) ,
+        item_id INT(11) ,
+        product_type VARCHAR(255) NOT NULL,
         invoice_id INT(11) NOT NULL,
+        order_quantity INT(11) NOT NULL,
         shipping_address VARCHAR(255) NOT NULL,
         order_description VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
         FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id),
-        CONSTRAINT order_product_fk FOREIGN KEY (products_id) REFERENCES products(product_id),
-        CONSTRAINT order_item_fk FOREIGN KEY (products_id) REFERENCES items(item_id)
+        FOREIGN KEY (product_id) REFERENCES products(product_id) ,
+        FOREIGN KEY (item_id) REFERENCES items(item_id) 
     )";
     if ($mysqli->query($sql)) {
         return true;
@@ -124,7 +126,8 @@ function createCategoriesTable($mysqli)
     return false;
 }
 
-function createProductsTable($mysqli){
+function createProductsTable($mysqli)
+{
 
     $sql = "CREATE TABLE IF NOT EXISTS products(
     product_id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -141,11 +144,11 @@ function createProductsTable($mysqli){
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
     )";
 
-    if($mysqli->query($sql)){
-            return true;
+    if ($mysqli->query($sql)) {
+        return true;
     }
     return false;
-} 
+}
 
 //Product connect with (categories,types,colors,sizes,stickers) tables
 //create products table product_id,category_id,type_id,color_id,size_id,sticker_id,product_name,product_price,product_quantity,product_images,description,created_at,updated_at
@@ -202,7 +205,8 @@ function createColorsTable($mysqli)
 }
 
 //create sizes table size_id,size,size_price product can change depend on sizes
-function createSizesTable($mysqli) {
+function createSizesTable($mysqli)
+{
     $sql = "CREATE TABLE IF NOT EXISTS sizes(
         size_id INT(11) AUTO_INCREMENT PRIMARY KEY,
         size VARCHAR(255) NOT NULL,
