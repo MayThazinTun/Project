@@ -1,5 +1,5 @@
 <?php
-require_once ("../database/add_to_cart.php");
+require_once("../database/add_to_cart.php");
 
 $cookie_user = null;
 if (isset($_COOKIE['user'])) {
@@ -22,7 +22,7 @@ if (isset($_POST['order'])) {
         'description' => $des
     ]);
     $_SESSION['order'] = $order;
-    $modal_buy = true;
+    echo "<script>location.replace('./buy.php')</script>";
 }
 
 ?>
@@ -37,9 +37,9 @@ if (isset($_POST['order'])) {
             <div class="modal-body">
                 <?php
                 $disabled = 'disabled';
-                if ($cart != [] || $shirtCart!=[]) {
+                if ($cart != [] || $shirtCart != []) {
                     $disabled = '';
-                    ?>
+                ?>
                     <table class="table">
                         <thead>
                             <tr>
@@ -53,20 +53,20 @@ if (isset($_POST['order'])) {
                         <tbody>
                             <?php
                             for ($i = 0; $i < count($shirtCart); $i++) {
-                                ?>
+                            ?>
                                 <tr>
                                     <th scope="row"><?php echo $i + 1 ?></th>
                                     <td><?php echo $shirtCart[$i]['type_name'] ?></td>
                                     <td><?php echo $shirtCart[$i]['total_price'] ?> MMK </td>
                                     <td><?php echo $shirtCart[$i]['qty'] ?></td>
-                                    <td><?php echo $shirtCart[$i]['total_price']*$shirtCart[$i]['qty'] ?> MMK </td>
+                                    <td><?php echo $shirtCart[$i]['total_price'] * $shirtCart[$i]['qty'] ?> MMK </td>
                                 </tr>
                             <?php
                             }
                             ?>
                             <?php
                             for ($i = 0; $i < count($cart); $i++) {
-                                ?>
+                            ?>
                                 <tr>
                                     <th scope="row"><?php echo $i + 1 ?></th>
                                     <td><?php echo $cart[$i]['product_name'] ?></td>
@@ -84,7 +84,7 @@ if (isset($_POST['order'])) {
                                         $total = $total + $amount['total_amount'];
                                     }
                                     foreach ($shirtCart as $tt) {
-                                        $total = ($total + $tt['total_price'])*$tt['qty'];
+                                        $total = ($total + $tt['total_price']) * $tt['qty'];
                                     }
                                     echo $total;
                                     ?>MMK
@@ -98,25 +98,21 @@ if (isset($_POST['order'])) {
                         <div class="row justify-content-evenly">
                             <div class="form-group mb-2 col">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    aria-describedby="emailHelp" value="<?php echo $name ?>" disabled>
+                                <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" value="<?php echo $name ?>" disabled>
                             </div>
                             <div class="form-group mb-2 col">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    aria-describedby="emailHelp" value="<?php echo $email ?>" disabled>
+                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value="<?php echo $email ?>" disabled>
                             </div>
                         </div>
                         <div class="row justify-content-evenly">
                             <div class="form-group mb-2 col">
                                 <label for="address" class="form-label">Address</label>
-                                <textarea type="text" class="form-control" id="address" name="address"
-                                    aria-describedby="emailHelp"><?php echo $address ?></textarea>
+                                <textarea type="text" class="form-control" id="address" name="address" aria-describedby="emailHelp"><?php echo $address ?></textarea>
                             </div>
                             <div class="form-group mb-2 col">
                                 <label for="description" class="form-label">Description</label>
-                                <textarea type="text" class="form-control" id="description" name="description"
-                                    aria-describedby="emailHelp"></textarea>
+                                <textarea type="text" class="form-control" id="description" name="description" aria-describedby="emailHelp"></textarea>
                             </div>
                         </div>
                         <div class="text-end">
@@ -128,8 +124,7 @@ if (isset($_POST['order'])) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="d-none" id="modal_cart_buy" data-bs-target="#buy" data-bs-toggle="modal"
-                    data-bs-dismiss="modal"></button>
+                <button class="d-none" id="modal_cart_buy" data-bs-target="#buy" data-bs-toggle="modal" data-bs-dismiss="modal"></button>
             </div>
 
         </div>

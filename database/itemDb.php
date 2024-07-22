@@ -142,7 +142,7 @@ function get_item_by_id($mysqli, $item_id)
             return $result->fetch_assoc();
         }
     }
-    return null;
+    return false;
 }
 
 // get product by name

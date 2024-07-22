@@ -87,13 +87,7 @@
     </div>
 </div>
 </body>
-<!-- call global jspdf functions cdn link -->
-<!-- Include jsPDF library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- Include html2canvas library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<!-- Include jsPDF html2canvas plugin -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/html2canvas.min.js"></script>
-<script src="./assets/app.js" defer></script>
+
+ 
 
 </html>

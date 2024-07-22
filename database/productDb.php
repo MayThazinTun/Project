@@ -122,7 +122,7 @@ function get_product_by_id($mysqli, $product_id)
             return $result->fetch_assoc();
         }
     }
-    return null;
+    return false;
 }
 
 // get product by name

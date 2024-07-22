@@ -39,7 +39,7 @@ function get_order_by_id($mysqli, $id)
 
 function get_order_by_invoice_id($mysqli, $invoice_id)
 {
-    $sql = "SELECT * FROM `orders`   WHERE invoice_id = $invoice_id";
+    $sql = "SELECT * FROM `orders` WHERE invoice_id = $invoice_id";
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
         return $result;
