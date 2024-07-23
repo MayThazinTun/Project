@@ -1,7 +1,7 @@
 <?php
 
 //create products
-function create_item($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price,$item_quantity, $item_note)
+function create_item($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)
 {
     $sql = "INSERT INTO `items`(`type_id`,`color_id`,`size_id`,`sticker_id`,`item_price`,`item_quantity`,`item_note`) VALUES ($type_id,$color_id,$size_id,null,$item_price,$item_quantity,null)";
     if ($mysqli->query($sql)) {
@@ -19,34 +19,37 @@ function createItemsAll($mysqli, $type_id, $color_id, $size_id, $sticker_id, $it
 }
 
 //get last item
-function get_last_item($mysqli){
+function get_last_item($mysqli)
+{
     $sql = "SELECT * FROM `items` ORDER BY `item_id` DESC LIMIT 1";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 // get all products
-// function getAll($mysqli)
-// {
-//     $sql = "SELECT items.*, categories.category_id FROM `products` 
-//     INNER JOIN categories ON products.category_id = categories.category_id";
-//     $result = $mysqli->query($sql);
-//     if ($result->num_rows > 0) {
-//         return $result;
-//     }
-//     return false;
-// }
+function getAllitems($mysqli)
+{
+    $sql = "SELECT * FROM items
+    INNER JOIN types ON items.type_id = types.type_id
+    INNER JOIN colors ON items.color_id = colors.color_id
+    INNER JOIN sizes ON items.size_id = sizes.size_id";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        return $result;
+    }
+    return false;
+}
 
 function get_all_items($mysqli)
 {
     $sql = "SELECT * FROM items
-INNER JOIN types ON products.type_id = types.type_id
-INNER JOIN colors ON products.color_id = colors.color_id
-INNER JOIN sizes ON products.size_id = sizes.size_id
-INNER JOIN stickers ON products.sticker_id = stickers.sticker_id";
+INNER JOIN types ON items.type_id = types.type_id
+INNER JOIN colors ON items.color_id = colors.color_id
+INNER JOIN sizes ON items.size_id = sizes.size_id
+INNER JOIN stickers ON items.sticker_id = stickers.sticker_id";
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
-        return $result->fetch_assoc();
+        return $result;
     }
     return false;
 }

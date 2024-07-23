@@ -29,7 +29,7 @@ if (isset($_SESSION['invoice_id'])) {
     $orders = get_order_by_invoice_id($mysqli, $_SESSION['invoice_id']);
     // var_dump($orders);
     if ($orders) {
-        $ordes = $orders->fetch_all(MYSQLI_ASSOC);;
+        $ordes = $orders->fetch_all(MYSQLI_ASSOC);
         // var_dump($ordes);
         foreach ($ordes as $ord) {
             $created_at = $ord['created_at'];
@@ -63,36 +63,6 @@ if (isset($_POST['refresh']) || isset($_POST['download'])) {
     session_destroy();
     echo "<script>window.location.href ='./carts.php' </script>";
 }
-// echo '<pre>';
-// echo $name;
-// echo $email;
-// echo $address;
-// echo $description;
-
-// $i = 0;
-// foreach ($ords as $od) {
-//     var_dump($od);
-//     echo $od['item_id'];
-//     $o_item = get_item_by_id($mysqli, $od['item_id']);
-//     echo '<pre>';
-//     var_dump($o_item);
-//     echo $i + 1;
-//     echo $od['order_id'];
-//     $type_img = (get_type_by_id($mysqli, $o_item['type_id']))->fetch_assoc();
-//     $photos = explode(',', $type_img['type_images']);
-//     $dir = "../images/All/types/" . $photos[0];
-//     if (!empty($photos[0])) : echo $dir;
-//     else : echo "../images/All/default_image.jpg";
-//     endif;
-//     $o_color = (getColorById($mysqli, $o_item['color_id']))->fetch_assoc();
-//     $o_size = (getSizeById($mysqli, $o_item['size_id']))->fetch_assoc();
-//     echo $o_color['color_name'];
-//     echo $o_size['size'];
-//     echo $od['order_quantity'];
-//     echo $o_item['item_price'] * $od['order_quantity'];
-//     $i++;
-// }
-// 
 ?>
 <div class="modal fade" id="invoice" aria-hidden="true" aria-labelledby="invoice" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -109,14 +79,14 @@ if (isset($_POST['refresh']) || isset($_POST['download'])) {
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary text-start">
-                            Invoice_ID : <?php echo $iv_id ?> <br>
-                            User_name : <?php echo $name ?> <br>
-                            Email : <?php echo $email ?> <br>
-                            Address : <?php echo $address ?> <br>
-                            Description : <?php echo $description ?>
+                            Invoice_ID      : <?php echo $iv_id ?> <br>
+                            User_name       : <?php echo $name ?> <br>
+                            Email           : <?php echo $email ?> <br>
+                            Address         : <?php echo $address ?> <br>
+                            Description     : <?php echo $description ?>
                         </p>
                         <p class="text-end text-secondary">
-                            Date : <?php echo $created_at ?>
+                            Date : <?php echo substr($created_at, 0, 10) ?>
                         </p>
                     </div>
                     <div>

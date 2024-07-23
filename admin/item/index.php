@@ -1,32 +1,25 @@
 <?php
 require_once('../layouts/adminHeader.php');
 require_once('../../database/itemDb.php');
+require_once('../../database/typeDb.php');
+require_once('../../database/colorDb.php');
+require_once('../../database/sizeDb.php');
+require_once('../../database/stickerDb.php');
 
-// Delete
-if (isset($_GET['deleted_id'])) {
-    delete_product_by_id($mysqli, $_GET['deleted_id']);
-    header('location: index.php');
-    exit;
-}
+$customized_products = (get_all_items($mysqli))->fetch_all(MYSQLI_ASSOC);
+$customized_product = (getAllitems($mysqli))->fetch_all(MYSQLI_ASSOC);
+// var_dump($customized_products);
 
 // Handle search input
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Number of products per page (2 rows * 4 columns)
-$limit = 4;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$total_items = get_total_item_count($mysqli, $search);
-$total_pages = ceil($total_items / $limit);
-
-$items = get_all_items_paginated($mysqli, $limit, $offset, $search);
+$total_products = get_total_item_count($mysqli, $search);
 
 ?>
-
-<div class="container-fluid mt-4">
-    <div class="d-flex justify-content-between mb-3">
-        <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;Item&nbsp;<i class="fa-solid fa-store"></i></a>
+<div class="container mt-2">
+    <h1 class="text-center">Customized Products List</h1>
+    <div class="d-flex justify-content-between mb-2">
+        <!-- <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;<i class="fas fa-user-plus"></i></a> -->
         <!-- Search Form -->
         <form method="get" class="d-flex">
             <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 150px;">
@@ -34,73 +27,128 @@ $items = get_all_items_paginated($mysqli, $limit, $offset, $search);
             <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
         </form>
     </div>
+    <div class="table-responsive" style="height: 500px;">
+        <table class="table table-striped table-bordered my-4 text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Product_ID</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Stickers</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Order_Quantity</th>
+                    <th scope="col">Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($customized_products as $c_p) {
+                    // echo $c_p['type_id'];
+                    $c_type = (get_type_by_id($mysqli, $c_p['type_id']))->fetch_assoc();
+                    $c_color = (getColorById($mysqli, $c_p['color_id']))->fetch_assoc();
+                    $c_size = (getSizeById($mysqli, $c_p['size_id']))->fetch_assoc();
+                    $c_sticker = (get_sticker_by_id($mysqli, $c_p['sticker_id']))->fetch_assoc();
+                ?>
+                    <!-- <tr>
+                        <td class="align-middle"><?php echo $c_p['item_id'] ?></td>
+                        <td class="align-middle">
+                            <?php
+                            $photos = explode(',', $c_type['type_images']);
+                            $dir = "../../images/All/types/" . $photos[0];
+                            if (!empty($photos[0])) : ?>
+                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                            <?php else : ?>
+                                <img src=<?php echo "../../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                            <?php endif;
+                            echo $c_type['type_name'];
+                            ?>
+                        </td>
+                        <td class="align-middle">
+                            <div class="border border-1 rounded" style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $c_color['color_name'] ?>"></div>
+                        </td>
+                        <td class="align-middle">
+                            <?php
+                            echo $c_size['size'];
+                            ?>
+                        </td>
+                        <td class="align-middle">
+                            <?php
+                            $photos = explode(',', $c_sticker['sticker_images']);
+                            $dir = "../../images/All/stickers/" . $photos[0];
+                            if (!empty($photos[0])) : ?>
+                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                            <?php else : ?>
+                                <img src=<?php echo "../../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                            <?php endif; ?>
+                        </td>
+                        <td class="align-middle"><?php echo $c_p['item_price'] ?></td>
+                        <td class="align-middle"><?php echo $c_p['item_quantity'] ?></td>
+                        <td class="align-middle"><?php echo $c_p['item_note'] ?></td>
+                    </tr> -->
+                <?php
+                }
+                ?>
+                <?php
+                foreach ($customized_product as $c_p) {
+                    // echo $c_p['type_id'];
+                    $c_type = (get_type_by_id($mysqli, $c_p['type_id']))->fetch_assoc();
+                    $c_color = (getColorById($mysqli, $c_p['color_id']))->fetch_assoc();
+                    $c_size = (getSizeById($mysqli, $c_p['size_id']))->fetch_assoc();
+                    if ($c_p['sticker_id'] != null) {
+                        $c_sticker = (get_sticker_by_id($mysqli, $c_p['sticker_id']))->fetch_assoc();
+                    } else {
+                        $c_sticker = false;
+                    }
+                ?>
+                    <tr>
+                        <td class="align-middle"><?php echo $c_p['item_id'] ?></td>
+                        <td class="align-middle">
+                            <?php
+                            $photos = explode(',', $c_type['type_images']);
+                            $dir = "../../images/All/types/" . $photos[0];
+                            if (!empty($photos[0])) : ?>
+                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                            <?php else : ?>
+                                <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                            <?php endif;
+                            echo $c_type['type_name'];
+                            ?>
+                        </td>
+                        <td class="align-middle">
+                            <div class="border border-1 rounded" style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $c_color['color_name'] ?>"></div>
+                        </td>
+                        <td class="align-middle">
+                            <?php
+                            echo $c_size['size'];
+                            ?>
+                        </td>
+                        <td class="align-middle">
+                            <?php
+                            if($c_sticker){
+                            $photos = explode(',', $c_sticker['sticker_images']);
+                            $dir = "../../images/All/stickers/" . $photos[0];
+                            if (!empty($photos[0])) : ?>
+                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                            <?php else : ?>
+                                <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                            <?php endif; }
+                            else { ?>
+                             No sticker include!
+                             <?php 
+                            }
+                            ?>
+                        </td>
+                        <td class="align-middle"><?php echo $c_p['item_price'] ?></td>
+                        <td class="align-middle"><?php echo $c_p['item_quantity'] ?></td>
+                        <td class="align-middle"><?php echo $c_p['item_note'] ?></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
-    <?php if (!empty($items)) : ?>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            <?php foreach ($items as $item) : ?>
-                <div class="col">
-                    <div class="card me-3 mb-2" style="width: 14rem; height:fit-content">
-                        <!-- <?php //foreach (explode(",", $product['product_images']) as $photo) : ?>
-                            <?php //if (!empty($photo)) : ?>
-                                <img src="<?php //echo htmlspecialchars($photo); ?>" class="card-img-top" style="max-width: 14rem; max-height: 14rem;">
-                            <?php //else : ?>
-                                <img src="../../images/All/default_image.jpg" class="card-img-top" style="max-width: 14rem; max-height: 14rem;" alt="No Image Available">
-                            <?php //endif; ?>
-                        <?php //endforeach; ?> -->
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <!-- <li class="list-group-item">
-                                    <span><?php //echo $product['product_name'] ?></span>
-                                </li> -->
-                                <li class="list-group-item">
-                                    Category&nbsp;: <span><?php echo htmlspecialchars($item['category_name']); ?></span>
-                                </li>
-                                <li class="list-group-item">
-                                    Price&nbsp;: <span><?php echo $item['item_price'] ?></span>
-                                </li>
-                                <li class="list-group-item">
-                                    Stock&nbsp;: <span><?php echo $item['item_quantity'] ?></span>
-                                </li>
-                            </ul>
-                            <div class="text-end">
-                                <a href="view.php?view_id=<?php echo $item['item_id'] ?>"><i class="btn btn-primary fa-solid fa-file-invoice"></i></a>
-                                <a href="edit.php?updated_id=<?php echo $item['item_id'] ?>"><i class="btn btn-warning fa-solid fa-pen-to-square"></i></a>
-                                <a href="index.php?deleted_id=<?php echo $item['item_id'] ?>"><i class="btn btn-danger fa-solid fa-trash"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-    <?php else : ?>
-        <p>No items found.</p>
-    <?php endif; ?>
-
-    <!-- Pagination -->
-    <nav aria-label="Pagination" class="mt-3">
-        <ul class="pagination justify-content-center">
-            <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
-                <a class="page-link" href="?page=<?php echo ($page > 1) ? $page - 1 : '#'; ?>" aria-label="Previous" <?php echo ($page <= 1) ? 'tabindex="-1" aria-disabled="true"' : ''; ?>>
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                </li>
-            <?php endfor; ?>
-
-            <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
-                <a class="page-link" href="?page=<?php echo ($page < $total_pages) ? $page + 1 : '#'; ?>" aria-label="Next" <?php echo ($page >= $total_pages) ? 'tabindex="-1" aria-disabled="true"' : ''; ?>>
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
 </div>
-
-</div>
-
 <?php require_once('../layouts/adminFooter.php'); ?>

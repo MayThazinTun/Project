@@ -190,7 +190,7 @@ if (isset($_POST['addToCart'])) {
             'sticker_images' => "",
             'sticker_price' => 0,
             'note' => "",
-            'total_price' => $_SESSION['type']['type_price'] + $_SESSION['size']['size_price'] + $_SESSION['sticker']['sticker_price'],
+            'total_price' => $_SESSION['type']['type_price'] + $_SESSION['size']['size_price'],
             'qty' => $shirtQty
         ]);
     }

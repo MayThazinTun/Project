@@ -27,7 +27,10 @@ function get_sticker_by_id($mysqli, $sticker_id)
 {
     $sql = "SELECT * FROM `stickers` WHERE `sticker_id` = $sticker_id";
     $result = $mysqli->query($sql);
-    return $result;
+    if ($result->num_rows > 0) {
+        return $result;
+    }
+    return false;
 }
 function get_sticker_by_sticker($mysqli, $sticker_images)
 {

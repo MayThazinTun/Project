@@ -66,8 +66,9 @@ if(!$admin){
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/colors/index.php' ?>">Colors</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/sizes/index.php' ?>">Sizes</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/stickers/index.php' ?>">Sticker</a></li>
-                    <li class="list-group-item"><a href="#">Groceries & Pets</a></li>
-                    <li class="list-group-item"><a href="#">Home & Lifestyle</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/item/index.php' ?>">Customized List</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/orders/index.php' ?>">Orders</a></li>
+                    <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/invoices/index.php' ?>">Invoices</a></li>
                     <li class="list-group-item"><a href="<?php echo BASE_URL.'admin/logout.php' ?>">Logout</a></li>
                 </ul>
             </div>
