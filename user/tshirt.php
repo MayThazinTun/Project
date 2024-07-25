@@ -223,9 +223,11 @@ if (isset($_POST['addToCart'])) {
                                 $dir = "../images/All/types/" . $shirt_types[$i]['type_images'];
                         ?>
                                 <div class="d-grid justify-content-center col-3 mx-3">
-                                    <img src="<?php echo $dir ?>" class="border border-2 mx-3" style="width:250px; height:150px;">
+                                    <img src="<?php echo $dir ?>" class="border border-2 mx-3" 
+                                    style="width:250px; height:150px;">
 
-                                    <button class="btn btn-outline-dark my-2 mx-3" name="type" type="submit" value="<?php echo $shirt_types[$i]['type_id'] ?>"><?php echo $shirt_types[$i]['type_name'] ?></button>
+                                    <button class="btn btn-outline-dark my-2 mx-3" name="type" type="submit" 
+                                    value="<?php echo $shirt_types[$i]['type_id'] ?>"><?php echo $shirt_types[$i]['type_name'] ?></button>
                                     <!-- <input type="text" name="type_id" value="" style="visibility: hidden; width: 0; height: 0;"> -->
                                 </div>
 
@@ -288,8 +290,6 @@ if (isset($_POST['addToCart'])) {
                                     if ($shirt_stickers != false) {
                                         foreach ($shirt_stickers as $shirt_sticker) {
                                             if (!str_contains($shirt_sticker['sticker_images'], 'custom_')) {
-
-
                                                 $dir = "../images/All/stickers/" . $shirt_sticker['sticker_images'];
                                     ?>
                                                 <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker" value="<?php echo $shirt_sticker['sticker_id'] ?>">
@@ -347,8 +347,8 @@ if (isset($_POST['addToCart'])) {
                             <div class=" d-flex">
                                 <label for="qty">Qty &nbsp; </label>
                                 <input type="number" name="qty" id="qty" class="mt-1" style="width:50px; height:25px;" value="<?php echo $qty ?>">
-                                <button class="btn btn-outline-secondary mt-1 border-0" name='qtyb'>
-                                    <i class="fa-solid fa-check" style="color: #c0c0c0;"></i>
+                                <button class="btn btn-outline-secondary mt-1 border-0 p-0" name='qtyb'>
+                                <i class="fa-solid fa-check btn" style="color: #c0c0c0;"></i>
                                 </button>
                             </div>
                         </div>
@@ -426,7 +426,7 @@ if (isset($_POST['addToCart'])) {
                 </div>
                 <div class="row justify-content-center gap-2 px-2 py-2">
 
-                    <button onclick="location.replace('./tshirt.php')" class="btn btn-dark col" name="addToCart" <?php echo $disabled ?>>Add to
+                    <button onclick="location.href='./tshirt.php';" class="btn btn-dark col" name="addToCart" <?php echo $disabled ?>>Add to
                         cart</button>
 
                 </div>

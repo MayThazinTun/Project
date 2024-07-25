@@ -1,11 +1,11 @@
 <?php
-require_once ("./Login/header.php");
-require_once ("./database/typeDb.php");
-require_once ("./database/sizeDb.php");
-require_once ("./database/colorDb.php");
-require_once ("./database/stickerDb.php");
-require_once ("./database/custom_add.php");
-require_once ("./database/add_to_cart.php");
+require_once("./Login/header.php");
+require_once("./database/typeDb.php");
+require_once("./database/sizeDb.php");
+require_once("./database/colorDb.php");
+require_once("./database/stickerDb.php");
+require_once("./database/custom_add.php");
+require_once("./database/add_to_cart.php");
 
 $shirt_types = get_all_types($mysqli);
 $shirt_sizes = get_all_sizes($mysqli);
@@ -14,8 +14,9 @@ $shirt_stickers = get_all_stickers($mysqli);
 $types_id = $sizes_id = $colors_id = $stickers_id = null;
 $qty = null;
 
-if (isset($_POST['qty'])) {
+if (isset($_POST['qtyb'])) {
     $qty = $_POST['qty'];
+    $_SESSION['qty'] = $qty;
 }
 
 if (isset($_POST['type'])) {
@@ -106,17 +107,15 @@ if (isset($_POST['removeSticker'])) {
                         if ($shirt_types != false) {
                             for ($i = 0; $i < count($shirt_types); $i++) {
                                 $dir = "./images/All/types/" . $shirt_types[$i]['type_images'];
-                                ?>
-                                <div class="d-grid justify-content-center col-3">
-                                    <img src="<?php echo $dir ?>" class="border border-2 mx-3"
-                                        style="width:150px; height:150px;">
+                        ?>
+                                <div class="d-grid justify-content-center col-3 mx-3">
+                                    <img src="<?php echo $dir ?>" class="border border-2 mx-3" style="width:250px; height:150px;">
 
-                                    <button class="btn btn-outline-dark my-2" name="type" type="submit"
-                                        value="<?php echo $shirt_types[$i]['type_id'] ?>"><?php echo $shirt_types[$i]['type_name'] ?></button>
+                                    <button class="btn btn-outline-dark my-2 mx-3" name="type" type="submit" value="<?php echo $shirt_types[$i]['type_id'] ?>"><?php echo $shirt_types[$i]['type_name'] ?></button>
                                     <!-- <input type="text" name="type_id" value="" style="visibility: hidden; width: 0; height: 0;"> -->
                                 </div>
 
-                            <?php }
+                        <?php }
                         } ?>
 
                     </div>
@@ -133,9 +132,8 @@ if (isset($_POST['removeSticker'])) {
                                     <?php
                                     if ($shirt_colors != false) {
                                         foreach ($shirt_colors as $shirt_color) { ?>
-                                            <button class="btn mt-2" value="<?php echo $shirt_color['color_id'] ?>" name="color"
-                                                style="background-color:<?php echo $shirt_color['color_name'] ?>; width:50px; height:50px;"></button>
-                                        <?php }
+                                            <button class="btn mt-2" value="<?php echo $shirt_color['color_id'] ?>" name="color" style="background-color:<?php echo $shirt_color['color_name'] ?>; width:50px; height:50px;"></button>
+                                    <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -160,7 +158,7 @@ if (isset($_POST['removeSticker'])) {
                                 <button class="btn btn-outline-dark" value="<?php echo $shirt_size['size_id'] ?>" name="size">
                                     <?php echo $shirt_size['size'] ?>
                                     </butto>
-                                <?php }
+                            <?php }
                         } ?>
                     </div>
                 </div>
@@ -176,11 +174,10 @@ if (isset($_POST['removeSticker'])) {
                                     if ($shirt_stickers != false) {
                                         foreach ($shirt_stickers as $shirt_sticker) {
                                             $dir = "./images/All/stickers/" . $shirt_sticker['sticker_images'];
-                                            ?>
-                                            <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker"
-                                                value="<?php echo $shirt_sticker['sticker_id'] ?>">
+                                    ?>
+                                            <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker" value="<?php echo $shirt_sticker['sticker_id'] ?>">
                                                 <img src="<?php echo $dir ?>" alt="" style="width:80px; heiht:80px;"></button>
-                                        <?php }
+                                    <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -209,11 +206,11 @@ if (isset($_POST['removeSticker'])) {
                         if (isset($_SESSION['type'])) {
                             $type = $_SESSION['type'];
                             $dir = "./images/All/types/" . $type['type_images'];
-                            ?>
+                        ?>
                             <div class="text-center">
-                                <img src="<?php echo $dir ?>" alt="" style="height:198px; max-width: 14rem;">
+                                <img src="<?php echo $dir ?>" alt="" class="my-2" style="height:11rem; max-width: 14rem;">
                             </div>
-                            <?php
+                        <?php
                         } ?>
                     </div>
                     <div class="row my-2 justify-content-around">
@@ -221,12 +218,11 @@ if (isset($_POST['removeSticker'])) {
                             Color:
                             <?php
                             if (isset($_SESSION['color'])) {
-                                ?>
-                                <div class="border border-1 rounded"
-                                    style="width:70px; height:30px; background-color:<?php echo $_SESSION['color']['color_name'] ?>">
-                                </div> <?php
-                            }
                             ?>
+                                <div class="border border-1 rounded" style="width:70px; height:30px; background-color:<?php echo $_SESSION['color']['color_name'] ?>">
+                                </div> <?php
+                                    }
+                                        ?>
                         </div>
                         <div class="col-auto d-flex border border-1 py-1">
                             Size :
@@ -238,16 +234,17 @@ if (isset($_POST['removeSticker'])) {
                         <div class="col-auto border border-1 py-1">
                             <div class=" d-flex">
                                 <label for="qty">Qty &nbsp; </label>
-                                <input type="number" name="qty" id="qty" class="mt-1" style="width:50px; height:25px;"
-                                    value="<?php echo $qty ?>">
+                                <input type="number" name="qty" id="qty" class="mt-1" style="width:50px; height:25px;" value="<?php echo $qty ?>">
+                                <button class="btn btn-outline-secondary mt-1 border-0 p-0" name='qtyb'>
+                                <i class="fa-solid fa-check btn" style="color: #c0c0c0;"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="my-2">
                         <div class="d-flex justify-content-between">
                             <h5>Sticker </h5>
-                            <button class="btn btn-outline-secondary border-0" name="removeSticker"><i
-                                    class="fa-solid fa-trash-can" style="color: #98999a;"></i></button>
+                            <button class="btn btn-outline-secondary border-0" name="removeSticker"><i class="fa-solid fa-trash-can" style="color: #98999a;"></i></button>
 
                         </div>
                         <div class="card" style="height:150px;">
@@ -256,21 +253,19 @@ if (isset($_POST['removeSticker'])) {
                             if (isset($_SESSION['sticker']) && $_SESSION['sticker'] != []) {
                                 $sticker = $_SESSION['sticker'];
                                 $dir = "./images/All/stickers/" . $sticker['sticker_images'];
-                                ?>
+                            ?>
                                 <div class="text-center">
                                     <img src="<?php echo $dir; ?>" alt="" style="max-width: 14rem; height:140px;">
                                 </div>
-                                <?php
+                            <?php
                             }
                             ?>
                         </div>
-                        <input type="file" name="images[]" id="upload_image" accept="image/*"
-                            class="form-control <?php echo $display ?>" style="">
+                        <input type="file" name="images[]" id="upload_image" accept="image/*" class="form-control <?php echo $display ?>" style="">
                     </div>
                     <div class="my-2">
                         <h5>Add Note for sticker placement</h5>
-                        <textarea name="note" style="width:100%; height:100px;"
-                            class="border border-secondary"></textarea>
+                        <textarea name="note" style="width:100%; height:100px;" class="border border-secondary"></textarea>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between text-secondary">
@@ -304,17 +299,17 @@ if (isset($_POST['removeSticker'])) {
                         if (isset($_SESSION['type']) && isset($_SESSION['size']) && isset($_POST['qty'])) {
                             $disabled = "";
                             if ((isset($_SESSION['sticker']) && $_SESSION['sticker'] != [])) {
-                                ?>
+                        ?>
                                 <h5><?php echo ($_SESSION['type']['type_price'] + $_SESSION['size']['size_price'] + $_SESSION['sticker']['sticker_price']) * $_POST['qty']; ?>
                                     MMK
                                 </h5>
-                                <?php
+                            <?php
                             } else {
-                                ?>
+                            ?>
                                 <h5><?php echo ($_SESSION['type']['type_price'] + $_SESSION['size']['size_price']) * $_POST['qty']; ?>
                                     MMK
                                 </h5>
-                            <?php }
+                        <?php }
                         } ?>
                     </div>
                 </div>
@@ -324,21 +319,18 @@ if (isset($_POST['removeSticker'])) {
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     You need to login first!
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                     <a href="./signin.php" class="btn btn-dark">OK</a>
                                 </div>
                             </div>
@@ -352,4 +344,4 @@ if (isset($_POST['removeSticker'])) {
 
 
 
-    <?php require_once ("./Login/footer.php") ?>
+    <?php require_once("./Login/footer.php") ?>
