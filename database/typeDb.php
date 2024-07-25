@@ -43,11 +43,17 @@ function update_type_by_id($mysqli, $type_id, $type_price, $type_images, $type_n
 // delete type by id
 function delete_type_by_id($mysqli, $type_id)
 {
-    $sql = "DELETE FROM `types` WHERE `type_id`=$type_id";
-    if ($mysqli->query($sql)) {
-        return true;
+    try {
+        $sql = "DELETE FROM `types` WHERE `type_id`=$type_id";
+        if ($mysqli->query($sql)) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo "Error deleting type: " . $e->getMessage();
+        return false;
     }
-    return false;
 }
 
 

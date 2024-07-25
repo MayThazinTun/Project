@@ -34,18 +34,6 @@ if ($product_id) {
                         <li class="list-group-item">
                             <h5 class="card-title">Category: <?php echo htmlspecialchars($product['category_name']); ?></h5>
                         </li>
-                        <!-- <li class="list-group-item">
-                            <h5 class="card-title">Type: <?php //echo htmlspecialchars($product['type_price']); ?></h5>
-                        </li>
-                        <li class="list-group-item">
-                            <h5 class="card-title">Color: <?php //echo htmlspecialchars($product['color_name']); ?></h5>
-                        </li>
-                        <li class="list-group-item">
-                            <h5 class="card-title">Size: <?php //echo htmlspecialchars($product['size']); ?></h5>
-                        </li>
-                        <li class="list-group-item">
-                            <h5 class="card-title">Sticker: <?php //echo htmlspecialchars($product['sticker_price']); ?></h5>
-                        </li> -->
                         <li class="list-group-item">
                             <h5 class="card-title">Size: <?php echo htmlspecialchars($product['product_size']); ?></h5>
                         </li>

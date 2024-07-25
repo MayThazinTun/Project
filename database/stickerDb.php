@@ -36,7 +36,7 @@ function get_sticker_by_sticker($mysqli, $sticker_images)
 {
     $sql = "SELECT * FROM `stickers` WHERE `sticker_images` = '$sticker_images'";
     $result = $mysqli->query($sql);
-    return $result;
+    return $result->fetch_assoc();
 }
 
 //update sticker by id
@@ -52,11 +52,17 @@ function update_sticker_by_id($mysqli, $sticker_id, $sticker_price, $sticker_ima
 // delete sticker by id
 function delete_sticker_by_id($mysqli, $sticker_id)
 {
-    $sql = "DELETE FROM `stickers` WHERE `sticker_id` = $sticker_id";
-    if ($mysqli->query($sql)) {
-        return true;
+    try {
+        $sql = "DELETE FROM `stickers` WHERE `sticker_id` = $sticker_id";
+        if ($mysqli->query($sql)) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo "Error deleting sticker: " . $e->getMessage();
+        return false;
     }
-    return false;
 }
 
 

@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 if (isset($_GET['deleted_id'])) {
     $category_id = $_GET['deleted_id'];
-    if (delete_category_by_id($mysqli, $category_id) === true) {
+    if (delete_category_by_id($mysqli, $category_id)) {
         header('location: index.php?success=Category has been deleted');
     } else {
         header('location: index.php?invalid=Something went wrong');
@@ -48,7 +48,7 @@ if (isset($_GET['updated_id'])) {
         if (update_category_by_id($mysqli, $category_id, $category_name)) {
             header('location: index.php?success=Category has been updated');
         } else {
-            header('location: index.php?invalid=Something went wrong');
+            header('location: index.php?invalid=This category cannot be deleted');
         }
     }
 }

@@ -17,6 +17,9 @@ if(isset($_SESSION['size'])){
 if(isset($_SESSION['sticker'])){
     $sticker = $_SESSION['sticker'];
 }
+if(isset($_SESSION['qty'])){
+    $shirtqty = $_SESSION['qty'];
+}
 if(isset($_SESSION['note'])){
     $shirtNote = $_SESSION['note'];
 }

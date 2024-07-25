@@ -6,8 +6,14 @@ require_once('../../database/colorDb.php');
 require_once('../../database/sizeDb.php');
 require_once('../../database/stickerDb.php');
 
-$customized_products = (get_all_items($mysqli))->fetch_all(MYSQLI_ASSOC);
-$customized_product = (getAllitems($mysqli))->fetch_all(MYSQLI_ASSOC);
+
+if (get_all_items($mysqli)) {
+    $customized_products = (get_all_items($mysqli))->fetch_all(MYSQLI_ASSOC);
+}
+$customized_product = "";
+if (getAllitems($mysqli)) {
+    $customized_product = (getAllitems($mysqli))->fetch_all(MYSQLI_ASSOC);
+}
 // var_dump($customized_products);
 
 // Handle search input
@@ -43,107 +49,62 @@ $total_products = get_total_item_count($mysqli, $search);
             </thead>
             <tbody>
                 <?php
-                foreach ($customized_products as $c_p) {
-                    // echo $c_p['type_id'];
-                    $c_type = (get_type_by_id($mysqli, $c_p['type_id']))->fetch_assoc();
-                    $c_color = (getColorById($mysqli, $c_p['color_id']))->fetch_assoc();
-                    $c_size = (getSizeById($mysqli, $c_p['size_id']))->fetch_assoc();
-                    $c_sticker = (get_sticker_by_id($mysqli, $c_p['sticker_id']))->fetch_assoc();
+                if ($customized_product) {
+                    foreach ($customized_product as $c_p) {
+                        // echo $c_p['type_id'];
+                        $c_type = (get_type_by_id($mysqli, $c_p['type_id']))->fetch_assoc();
+                        $c_color = (getColorById($mysqli, $c_p['color_id']))->fetch_assoc();
+                        $c_size = (getSizeById($mysqli, $c_p['size_id']))->fetch_assoc();
+                        if ($c_p['sticker_id'] != null) {
+                            $c_sticker = (get_sticker_by_id($mysqli, $c_p['sticker_id']))->fetch_assoc();
+                        } else {
+                            $c_sticker = false;
+                        }
                 ?>
-                    <!-- <tr>
-                        <td class="align-middle"><?php echo $c_p['item_id'] ?></td>
-                        <td class="align-middle">
-                            <?php
-                            $photos = explode(',', $c_type['type_images']);
-                            $dir = "../../images/All/types/" . $photos[0];
-                            if (!empty($photos[0])) : ?>
-                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
-                            <?php else : ?>
-                                <img src=<?php echo "../../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
-                            <?php endif;
-                            echo $c_type['type_name'];
-                            ?>
-                        </td>
-                        <td class="align-middle">
-                            <div class="border border-1 rounded" style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $c_color['color_name'] ?>"></div>
-                        </td>
-                        <td class="align-middle">
-                            <?php
-                            echo $c_size['size'];
-                            ?>
-                        </td>
-                        <td class="align-middle">
-                            <?php
-                            $photos = explode(',', $c_sticker['sticker_images']);
-                            $dir = "../../images/All/stickers/" . $photos[0];
-                            if (!empty($photos[0])) : ?>
-                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
-                            <?php else : ?>
-                                <img src=<?php echo "../../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
-                            <?php endif; ?>
-                        </td>
-                        <td class="align-middle"><?php echo $c_p['item_price'] ?></td>
-                        <td class="align-middle"><?php echo $c_p['item_quantity'] ?></td>
-                        <td class="align-middle"><?php echo $c_p['item_note'] ?></td>
-                    </tr> -->
+                        <tr>
+                            <td class="align-middle"><?php echo $c_p['item_id'] ?></td>
+                            <td class="align-middle">
+                                <?php
+                                $photos = explode(',', $c_type['type_images']);
+                                $dir = "../../images/All/types/" . $photos[0];
+                                if (!empty($photos[0])) : ?>
+                                    <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                                <?php else : ?>
+                                    <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                                <?php endif;
+                                echo $c_type['type_name'];
+                                ?>
+                            </td>
+                            <td class="align-middle">
+                                <div class="border border-1 rounded" style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $c_color['color_name'] ?>"></div>
+                            </td>
+                            <td class="align-middle">
+                                <?php
+                                echo $c_size['size'];
+                                ?>
+                            </td>
+                            <td class="align-middle">
+                                <?php
+                                if ($c_sticker) {
+                                    $photos = explode(',', $c_sticker['sticker_images']);
+                                    $dir = "../../images/All/stickers/" . $photos[0];
+                                    if (!empty($photos[0])) : ?>
+                                        <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                                    <?php else : ?>
+                                        <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                                    <?php endif;
+                                } else { ?>
+                                    No sticker include!
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td class="align-middle"><?php echo $c_p['item_price'] ?></td>
+                            <td class="align-middle"><?php echo $c_p['item_quantity'] ?></td>
+                            <td class="align-middle"><?php echo $c_p['item_note'] ?></td>
+                        </tr>
                 <?php
-                }
-                ?>
-                <?php
-                foreach ($customized_product as $c_p) {
-                    // echo $c_p['type_id'];
-                    $c_type = (get_type_by_id($mysqli, $c_p['type_id']))->fetch_assoc();
-                    $c_color = (getColorById($mysqli, $c_p['color_id']))->fetch_assoc();
-                    $c_size = (getSizeById($mysqli, $c_p['size_id']))->fetch_assoc();
-                    if ($c_p['sticker_id'] != null) {
-                        $c_sticker = (get_sticker_by_id($mysqli, $c_p['sticker_id']))->fetch_assoc();
-                    } else {
-                        $c_sticker = false;
                     }
-                ?>
-                    <tr>
-                        <td class="align-middle"><?php echo $c_p['item_id'] ?></td>
-                        <td class="align-middle">
-                            <?php
-                            $photos = explode(',', $c_type['type_images']);
-                            $dir = "../../images/All/types/" . $photos[0];
-                            if (!empty($photos[0])) : ?>
-                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
-                            <?php else : ?>
-                                <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
-                            <?php endif;
-                            echo $c_type['type_name'];
-                            ?>
-                        </td>
-                        <td class="align-middle">
-                            <div class="border border-1 rounded" style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $c_color['color_name'] ?>"></div>
-                        </td>
-                        <td class="align-middle">
-                            <?php
-                            echo $c_size['size'];
-                            ?>
-                        </td>
-                        <td class="align-middle">
-                            <?php
-                            if($c_sticker){
-                            $photos = explode(',', $c_sticker['sticker_images']);
-                            $dir = "../../images/All/stickers/" . $photos[0];
-                            if (!empty($photos[0])) : ?>
-                                <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
-                            <?php else : ?>
-                                <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
-                            <?php endif; }
-                            else { ?>
-                             No sticker include!
-                             <?php 
-                            }
-                            ?>
-                        </td>
-                        <td class="align-middle"><?php echo $c_p['item_price'] ?></td>
-                        <td class="align-middle"><?php echo $c_p['item_quantity'] ?></td>
-                        <td class="align-middle"><?php echo $c_p['item_note'] ?></td>
-                    </tr>
-                <?php
                 }
                 ?>
             </tbody>

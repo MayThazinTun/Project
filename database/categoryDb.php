@@ -47,11 +47,19 @@ function update_category_by_id($mysqli, $category_id, $category_name)
 //delete category by id
 function delete_category_by_id($mysqli, $category_id)
 {
-    $sql = "DELETE FROM `categories` WHERE `category_id`=$category_id";
-    if ($mysqli->query($sql)) {
-        return true;
+    try {
+        // Attempt to execute the query
+        $sql = "DELETE FROM `categories` WHERE `category_id`=$category_id";
+        if ($mysqli->query($sql) === TRUE) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        // Handle any errors
+        echo "Error deleting category: " . $e->getMessage();
+        return false;
     }
-    return false;
 }
 
 

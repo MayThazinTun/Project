@@ -1,22 +1,20 @@
 <?php
-require_once ("./Layout/header.php");
-require_once ("../database/typeDb.php");
-require_once ("../database/sizeDb.php");
-require_once ("../database/colorDb.php");
-require_once ("../database/stickerDb.php");
-require_once ("../database/custom_add.php");
-require_once ("../database/add_to_cart.php");
+require_once("./Layout/header.php");
+require_once("../database/typeDb.php");
+require_once("../database/sizeDb.php");
+require_once("../database/colorDb.php");
+require_once("../database/stickerDb.php");
+require_once("../database/custom_add.php");
+require_once("../database/add_to_cart.php");
 
 $shirt_types = get_all_types($mysqli);
 $shirt_sizes = get_all_sizes($mysqli);
 $shirt_colors = get_all_colors($mysqli);
 $shirt_stickers = get_all_stickers($mysqli);
 $types_id = $sizes_id = $colors_id = $stickers_id = null;
-$qty = null;
+$qty = 0;
 
-if (isset($_POST['qty'])) {
-    $qty = $_POST['qty'];
-}
+
 
 if (isset($_POST['type'])) {
 
@@ -90,6 +88,11 @@ if (isset($_POST['sticker'])) {
     $_SESSION['sticker'] = $sticker;
 }
 
+if (isset($_POST['qtyb'])) {
+    $qty = $_POST['qty'];
+    $_SESSION['qty'] = $qty;
+}
+
 if (isset($_POST['removeSticker'])) {
     $display = "";
     $sticker = [];
@@ -98,14 +101,13 @@ if (isset($_POST['removeSticker'])) {
 $shirt_note = "";
 if (isset($_POST['note'])) {
     $shirt_note = $_POST['note'];
-    $shirtNote  = ['shirt_note'=>$shirt_note];
+    $shirtNote  = ['shirt_note' => $shirt_note];
 }
 $_SESSION['note'] = $shirtNote;
 if (isset($_POST['addToCart'])) {
     if (isset($_POST['note'])) {
         $shirt_note = $_POST['note'];
     }
-    $shirtQty = $qty;
 
     $photos = $_FILES['images'];
     $photos_name = $photos['name'];
@@ -173,7 +175,7 @@ if (isset($_POST['addToCart'])) {
             'sticker_price' => $_SESSION['sticker']['sticker_price'],
             'note' => $_SESSION['note']['shirt_note'],
             'total_price' => $_SESSION['type']['type_price'] + $_SESSION['size']['size_price'] + $_SESSION['sticker']['sticker_price'],
-            'qty' => $shirtQty
+            'qty' => $_SESSION['qty']
         ]);
     } else {
         array_push($shirtCart, [
@@ -191,17 +193,17 @@ if (isset($_POST['addToCart'])) {
             'sticker_price' => 0,
             'note' => "",
             'total_price' => $_SESSION['type']['type_price'] + $_SESSION['size']['size_price'],
-            'qty' => $shirtQty
+            'qty' => $_SESSION['qty']
         ]);
     }
     unset($_SESSION['type']);
     unset($_SESSION['color']);
     unset($_SESSION['size']);
     unset($_SESSION['sticker']);
-    $qty = null;
+    unset($_SESSION['qty']);
+    $qty = 0;
     // var_dump($shirtCart);
     $_SESSION['shirtCart'] = $shirtCart;
-
 }
 
 ?>
@@ -219,17 +221,15 @@ if (isset($_POST['addToCart'])) {
                         if ($shirt_types != false) {
                             for ($i = 0; $i < count($shirt_types); $i++) {
                                 $dir = "../images/All/types/" . $shirt_types[$i]['type_images'];
-                                ?>
-                                <div class="d-grid justify-content-center col-3">
-                                    <img src="<?php echo $dir ?>" class="border border-2 mx-3"
-                                        style="width:150px; height:150px;">
+                        ?>
+                                <div class="d-grid justify-content-center col-3 mx-3">
+                                    <img src="<?php echo $dir ?>" class="border border-2 mx-3" style="width:250px; height:150px;">
 
-                                    <button class="btn btn-outline-dark my-2" name="type" type="submit"
-                                        value="<?php echo $shirt_types[$i]['type_id'] ?>"><?php echo $shirt_types[$i]['type_name'] ?></button>
+                                    <button class="btn btn-outline-dark my-2 mx-3" name="type" type="submit" value="<?php echo $shirt_types[$i]['type_id'] ?>"><?php echo $shirt_types[$i]['type_name'] ?></button>
                                     <!-- <input type="text" name="type_id" value="" style="visibility: hidden; width: 0; height: 0;"> -->
                                 </div>
 
-                            <?php }
+                        <?php }
                         } ?>
 
                     </div>
@@ -246,9 +246,8 @@ if (isset($_POST['addToCart'])) {
                                     <?php
                                     if ($shirt_colors != false) {
                                         foreach ($shirt_colors as $shirt_color) { ?>
-                                            <button class="btn mt-2" value="<?php echo $shirt_color['color_id'] ?>" name="color"
-                                                style="background-color:<?php echo $shirt_color['color_name'] ?>; width:50px; height:50px;"></button>
-                                        <?php }
+                                            <button class="btn mt-2" value="<?php echo $shirt_color['color_id'] ?>" name="color" style="background-color:<?php echo $shirt_color['color_name'] ?>; width:50px; height:50px;"></button>
+                                    <?php }
                                     } ?>
                                 </div>
                             </div>
@@ -272,8 +271,8 @@ if (isset($_POST['addToCart'])) {
                             foreach ($shirt_sizes as $shirt_size) { ?>
                                 <button class="btn btn-outline-dark" value="<?php echo $shirt_size['size_id'] ?>" name="size">
                                     <?php echo $shirt_size['size'] ?>
-                                    </butto>
-                                <?php }
+                                </button>
+                        <?php }
                         } ?>
                     </div>
                 </div>
@@ -292,22 +291,15 @@ if (isset($_POST['addToCart'])) {
 
 
                                                 $dir = "../images/All/stickers/" . $shirt_sticker['sticker_images'];
-                                                ?>
-                                                <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker"
-                                                    value="<?php echo $shirt_sticker['sticker_id'] ?>">
+                                    ?>
+                                                <button class="col-2 btn p-2 m-2" style="width:100px; height:100px;" name="sticker" value="<?php echo $shirt_sticker['sticker_id'] ?>">
                                                     <img src="<?php echo $dir ?>" alt="" style="width:80px; heiht:80px;"></button>
-                                            <?php }
+                                    <?php }
                                         }
                                     } ?>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col text-center">
-                            <label for="upload_image" class="btn btn-outline-secondary form-label">Choose from your
-                                browser</label>
-                            <input type="file" name="images[]" id="upload_image" accept="image/*" class="form-control"
-                                style="">
-                        </div> -->
                     </div>
                 </div>
             </form>
@@ -318,7 +310,6 @@ if (isset($_POST['addToCart'])) {
             <form method="post" enctype="multipart/form-data">
                 <div class="d-flex justify-content-between">
                     <h3>Choose your type</h3>
-                    <button class="btn btn-outline-secondary">clear</button>
                 </div>
                 <hr>
                 <div class="overflow-auto types">
@@ -327,11 +318,11 @@ if (isset($_POST['addToCart'])) {
                         if (isset($_SESSION['type'])) {
                             $type = $_SESSION['type'];
                             $dir = "../images/All/types/" . $type['type_images'];
-                            ?>
+                        ?>
                             <div class="text-center">
-                                <img src="<?php echo $dir ?>" alt="" style="height:198px; max-width: 14rem;">
+                                <img src="<?php echo $dir ?>" alt="" class="my-2" style="height:11rem; max-width: 14rem;">
                             </div>
-                            <?php
+                        <?php
                         } ?>
                     </div>
                     <div class="row my-2 justify-content-around">
@@ -339,12 +330,11 @@ if (isset($_POST['addToCart'])) {
                             Color:
                             <?php
                             if (isset($_SESSION['color'])) {
-                                ?>
-                                <div class="border border-1 rounded"
-                                    style="width:70px; height:30px; background-color:<?php echo $_SESSION['color']['color_name'] ?>">
-                                </div> <?php
-                            }
                             ?>
+                                <div class="border border-1 rounded" style="width:70px; height:30px; background-color:<?php echo $_SESSION['color']['color_name'] ?>">
+                                </div> <?php
+                                    }
+                                        ?>
                         </div>
                         <div class="col-auto d-flex border border-1 py-1">
                             Size :
@@ -356,32 +346,33 @@ if (isset($_POST['addToCart'])) {
                         <div class="col-auto border border-1 py-1">
                             <div class=" d-flex">
                                 <label for="qty">Qty &nbsp; </label>
-                                <input type="number" name="qty" id="qty" class="mt-1" style="width:50px; height:25px;"
-                                    value="<?php echo $qty ?>">
+                                <input type="number" name="qty" id="qty" class="mt-1" style="width:50px; height:25px;" value="<?php echo $qty ?>">
+                                <button class="btn btn-outline-secondary mt-1 border-0" name='qtyb'>
+                                    <i class="fa-solid fa-check" style="color: #c0c0c0;"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="my-2">
                         <div class="d-flex justify-content-between">
                             <h5>Sticker </h5>
-                            <button class="btn btn-outline-secondary border-0" name="removeSticker"><i
-                                    class="fa-solid fa-trash-can" style="color: #98999a;"></i></button>
+                            <button class="btn btn-outline-secondary border-0" name="removeSticker"><i class="fa-solid fa-trash-can" style="color: #98999a;"></i></button>
 
                         </div>
                         <div class="card" style="height:150px;">
                             <?php
                             if (isset($_SESSION['sticker']) && $_SESSION['sticker'] != []) {
-                                $dir = "../images/All/stickers/" . $_SESSION['sticker']['sticker_images'];
-                                ?>
+                                $sticker = $_SESSION['sticker'];
+                                $dir = "../images/All/stickers/" . $sticker['sticker_images'];
+                            ?>
                                 <div class="text-center">
                                     <img src="<?php echo $dir; ?>" alt="" style="max-width: 14rem; height:140px;">
                                 </div>
-                                <?php
+                            <?php
                             }
                             ?>
                         </div>
-                        <input type="file" name="images[]" id="upload_image" accept="image/*"
-                            class="form-control <?php echo $display ?>" style="">
+                        <input type="file" name="images[]" id="upload_image" accept="image/*" class="form-control <?php echo $display ?>" style="">
                     </div>
                     <div class="my-2">
                         <h5>Add Note for sticker placement</h5>
@@ -419,23 +410,23 @@ if (isset($_POST['addToCart'])) {
                         if (isset($_SESSION['type']) && isset($_SESSION['size']) && isset($_POST['qty'])) {
                             $disabled = "";
                             if ((isset($_SESSION['sticker']) && $_SESSION['sticker'] != [])) {
-                                ?>
+                        ?>
                                 <h5><?php echo ($_SESSION['type']['type_price'] + $_SESSION['size']['size_price'] + $_SESSION['sticker']['sticker_price']) * $_POST['qty']; ?>
                                     MMK
                                 </h5>
-                                <?php
+                            <?php
                             } else {
-                                ?>
+                            ?>
                                 <h5><?php echo ($_SESSION['type']['type_price'] + $_SESSION['size']['size_price']) * $_POST['qty']; ?>
                                     MMK
                                 </h5>
-                            <?php }
+                        <?php }
                         } ?>
                     </div>
                 </div>
                 <div class="row justify-content-center gap-2 px-2 py-2">
 
-                    <button href="#" class="btn btn-dark col" name="addToCart" <?php echo $disabled ?>>Add to
+                    <button onclick="location.replace('./tshirt.php')" class="btn btn-dark col" name="addToCart" <?php echo $disabled ?>>Add to
                         cart</button>
 
                 </div>
@@ -445,4 +436,4 @@ if (isset($_POST['addToCart'])) {
     </div>
 </div>
 
-<?php require_once ("./Layout/footer.php") ?>
+<?php require_once("./Layout/footer.php") ?>

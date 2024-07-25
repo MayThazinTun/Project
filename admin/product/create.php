@@ -58,7 +58,6 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    // if (empty($type_id) && empty($color_id) && empty($size_id) && empty($sticker_id)) {
     if (empty($category_id)) {
         $category_id_error = "Category is required";
     }
@@ -92,39 +91,6 @@ if (isset($_POST['submit'])) {
             $invalid = "Something went wrong";
         }
     }
-    // }else{
-    //     if (empty($category_id)) {
-    //         $category_id_error = "Category is required";
-    //     }
-    //     if(empty($type_id)) {
-    //         $type_id_error = "Type is required";
-    //     }
-    //     if(empty($color_id)) {
-    //         $color_id_error = "Color is required";
-    //     }
-    //     if(empty($size_id)) {
-    //         $size_id_error = "Size is required";
-    //     }
-    //     if (empty($product_name)) {
-    //         $product_name_error = "Name is required";
-    //     }
-    //     if (empty($product_price)) {
-    //         $product_price_error = "Price is required";
-    //     }
-    //     if (empty($product_quantity)) {
-    //         $product_quantity_error = "Quantity is required";
-    //     }
-    //     if (empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
-    //         $photo_paths_str = implode(",", $photos_paths);
-    //         $result = createProductAll($mysqli, $category_id, $type_id, $color_id, $size_id, $sticker_id, $product_name, $product_price, $product_quantity,$photo_paths_str,$product_description);
-    //         if ($result) {
-    //             header("Location: index.php");
-    //             exit;
-    //         } else {
-    //             $invalid = "Something went wrong";
-    //         }
-    //     }
-    // }
 }
 
 ?>
@@ -153,62 +119,6 @@ if (isset($_POST['submit'])) {
                         <small class="text-danger"><?php echo $category_id_error ?></small>
                     </div>
                 </div>
-                <!-- <div class="col-md-6 mb-2">
-                    <label for="type_id" class="form-label">Product Type</label>
-                    <div>
-                        <select class="form-select" name="type_id">
-                            <option value="" selected>Select type(optional)...</option>
-                            <?php //$types = get_all_types($mysqli);
-                            //foreach ($types as $type) {
-                            //echo '<option value="' . $type['type_id'] . '">' . $type['type_price'] . '</option>';
-                            //}
-                            ?>
-                        </select>
-                        <small class="text-danger"><?php //echo $type_id_error ?></small>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <label for="color_id" class="form-label">Product Color</label>
-                    <div>
-                        <select class="form-select" name="color_id">
-                            <option value="" selected>Select color(optional)...</option>
-                            <?php //$colors = get_all_colors($mysqli);
-                            //foreach ($colors as $color) {
-                            //echo '<option value="' . $color['color_id'] . '">' . $color['color_name'] . '</option>';
-                            //}
-                            ?>
-                        </select>
-                        <small class="text-danger"><?php //echo $color_id_error ?></small>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <label for="size_id" class="form-label">Product Size</label>
-                    <div>
-                        <select class="form-select" name="size_id">
-                            <option value="" selected>Select size(optional)...</option>
-                            <?php //$sizes = get_all_sizes($mysqli);
-                            //foreach ($sizes as $size) {
-                            //echo '<option value="' . $size['size_id'] . '">' . $size['size'] . '</option>';
-                            //}
-                            ?>
-                        </select>
-                        <small class="text-danger"><?php //echo $size_id_error ?></small>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-2">
-                    <label for="sticker_id" class="form-label">Product Sticker</label>
-                    <div>
-                        <select class="form-select" name="sticker_id">
-                            <option value="" selected>Select sticker(optional)...</option>
-                            <?php //$stickers = get_all_stickers($mysqli);
-                            //foreach ($stickers as $sticker) {
-                            //echo '<option value="' . $sticker['sticker_id'] . '">' . $sticker['sticker_price'] . '</option>';
-                            //}
-                            ?>
-                        </select>
-                        <small class="text-danger"><?php //echo $sticker_id_error ?></small>
-                    </div>
-                </div> -->
                 <div class="col-md-6 mb-2">
                     <label for="product_name" class="form-label">Enter Your Product Name</label>
                     <div>

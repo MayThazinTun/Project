@@ -1,8 +1,8 @@
 <?php
-require_once ("../database/index.php");
-require_once ("../database/categoryDb.php");
-require_once ("../database/productDb.php");
-require_once ("../database/add_to_cart.php");
+require_once("../database/index.php");
+require_once("../database/categoryDb.php");
+require_once("../database/productDb.php");
+require_once("../database/add_to_cart.php");
 
 
 $message = false;
@@ -32,8 +32,10 @@ if (isset($_GET['product_id'])) {
     for ($i = 0; $i < count($cate); $i++) {
         if ($category_id == $cate[$i]['category_id']) {
             $newCategory = false;
-            $cate[$i]['category_qty']++;
-            $cate[$i]['amount'] = $cate[$i]['category_qty'] * $cate[$i]['price'];
+            if ($product['product_quantity'] > $cate[$i]['category_qty']) {
+                $cate[$i]['category_qty']++;
+                $cate[$i]['amount'] = $cate[$i]['category_qty'] * $cate[$i]['price'];
+            }
         }
     }
     // echo $isNew;
@@ -69,43 +71,41 @@ if (isset($_GET['product_id'])) {
         }
     }
 }
-require_once ("./Layout/header.php");
+require_once("./Layout/header.php");
 ?>
 
 <div class="row">
     <div class="col-auto">
         <div class="shadow">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-white" style="width: 200px; height:100vh;">
-            <div class="fs-5 ps-3">
-                Catagories
-            </div>
-            <hr>
-            <div class="btn-group-vertical gap-2">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-white" style="width: 200px; height:100vh;">
+                <div class="fs-5 ps-3">
+                    Catagories
+                </div>
+                <hr>
+                <div class="btn-group-vertical gap-2">
 
-                <button class="btn btn-outline-secondary border-0 text-start ps-4"
-                    onclick="location.href='./store.php';">All</button>
-                <?php
-                $categories = get_all_categories($mysqli);
-                while ($category = $categories->fetch_assoc()) {
-                    ?>
-                    <button class="btn btn-outline-secondary border-0 text-start ps-4"
-                        onclick="location.href='./store.php?category_id=<?php echo $category['category_id'] ?>';">
-                        <?php echo $category['category_name'] ?>
-                    </button>
+                    <button class="btn btn-outline-secondary border-0 text-start ps-4" onclick="location.href='./store.php';">All</button>
                     <?php
-                }
-                ?>
-                <!-- <button class="btn btn-outline-secondary border-0 text-start ps-4">database</button> -->
+                    $categories = get_all_categories($mysqli);
+                    while ($category = $categories->fetch_assoc()) {
+                    ?>
+                        <button class="btn btn-outline-secondary border-0 text-start ps-4" onclick="location.href='./store.php?category_id=<?php echo $category['category_id'] ?>';">
+                            <?php echo $category['category_name'] ?>
+                        </button>
+                    <?php
+                    }
+                    ?>
+                    <!-- <button class="btn btn-outline-secondary border-0 text-start ps-4">database</button> -->
 
+                </div>
             </div>
-        </div>
         </div>
     </div>
     <div class="col overflow-auto" style="height:100vh;">
         <div>
             <?php if (isset($_GET['category_id'])) {
                 $category = get_category_by_id($mysqli, $_GET['category_id']);
-                ?>
+            ?>
                 <h1> <?php echo $category['category_name'] ?> </h1>
             <?php } else { ?>
                 <h1> All </h1>
@@ -114,25 +114,29 @@ require_once ("./Layout/header.php");
         </div>
         <div class="card-content row gap-5">
             <?php
+            if ($message) {
+                echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                                    <strong>This product is out of stock</strong>
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                </div>";
+            }
             //Product by category
             $products = getAll($mysqli);
             if (isset($_GET['category_id'])) {
                 $products = get_product_by_category_id($mysqli, $_GET['category_id']);
             }
             if ($products) {
-                
+
                 while ($product = $products->fetch_assoc()) {
-                    
-                    ?>
+
+            ?>
                     <div class="card col-2 ms-5 mt-3 p-1 mb-3 shadow" style="width:280px; height: auto;">
                         <?php $photos = explode(',', $product['product_images']);
-                        $dir = "../images/All/products/".$photos[0];
-                        if (!empty($photos[0])): ?>
-                            <img src="<?php echo $dir; ?>" class="rounded"
-                                style="width:270px; height:150px;">
-                        <?php else: ?>
-                            <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded"
-                                style="width:270px; height:150px;" alt="No Image Available">
+                        $dir = "../images/All/products/" . $photos[0];
+                        if (!empty($photos[0])) : ?>
+                            <img src="<?php echo $dir; ?>" class="rounded" style="width:270px; height:150px;">
+                        <?php else : ?>
+                            <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded" style="width:270px; height:150px;" alt="No Image Available">
                         <?php endif; ?>
                         <!-- <img src="..." class="card-img-top" alt="..."> -->
                         <div class="card-body">
@@ -144,13 +148,11 @@ require_once ("./Layout/header.php");
                             </p>
                             <div class="row justify-content-center gap-2 px-2">
                                 <?php if (isset($_GET['category_id'])) { ?>
-                                    <a type="button" class="col btn btn-dark"
-                                        href="./store.php?product_id=<?php echo $product['product_id'] ?>&category_id=<?php echo $product['category_id'] ?>">
+                                    <a type="button" class="col btn btn-dark" href="./store.php?product_id=<?php echo $product['product_id'] ?>&category_id=<?php echo $product['category_id'] ?>">
                                         Add to cart
                                     </a>
                                 <?php } else { ?>
-                                    <a type="button" class="col btn btn-dark"
-                                        href="./store.php?product_id=<?php echo $product['product_id'] ?>">
+                                    <a type="button" class="col btn btn-dark" href="./store.php?product_id=<?php echo $product['product_id'] ?>">
                                         Add to cart
                                     </a>
                                 <?php } ?>
@@ -166,5 +168,5 @@ require_once ("./Layout/header.php");
     </div>
 </div>
 <div class="shadow-top">
-<?php require_once ("./Layout/footer.php") ?>
+    <?php require_once("./Layout/footer.php") ?>
 </div>

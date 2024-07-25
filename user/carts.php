@@ -6,9 +6,6 @@ require_once("../database/add_to_cart.php");
 require_once("../database/invoiceDb.php");
 require_once("../database/itemDb.php");
 require_once("../database/orderDb.php");
-// require_once ("./cart_modal/order.php");
-// require_once ("./cart_modal/buy.php");
-// require_once ("./cart_modal/invoice.php");
 
 $modal_buy = $modal_order = $modal_invoice = $close = false;
 if (isset($_GET['dec'])) {
@@ -61,7 +58,10 @@ if (isset($_GET['delete'])) {
     header("Location:./carts.php");
 }
 if (isset($_GET['delect'])) {
-    unset($_SESSION['shirtCart'][$_GET['delect']]);
+    $index = $_GET['delect'];
+    unset($shirtCart[$index]);
+    $shirtCart = array_values($shirtCart);
+    $_SESSION['shirtCart'] = $shirtCart;
     header("Location:./carts.php");
 }
 require_once("./Layout/header.php");

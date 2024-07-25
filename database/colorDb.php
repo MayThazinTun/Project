@@ -102,9 +102,17 @@ function updateColor($mysqli, $color_id, $color_name)
 //delete color by id
 function deleteColor($mysqli, $color_id)
 {
-    $sql = "DELETE FROM `colors` WHERE `color_id` = $color_id";
-    $result = $mysqli->query($sql);
-    return $result;
+    try {
+        $sql = "DELETE FROM `colors` WHERE `color_id` = $color_id";
+        if ($mysqli->query($sql)) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo "Error deleting color: " . $e->getMessage();
+        return false;
+    }
 }
 
 // Get color by Pagination

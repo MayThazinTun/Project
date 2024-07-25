@@ -8,7 +8,10 @@ require_once('../../database/colorDb.php');
 require_once('../../database/sizeDb.php');
 require_once('../../database/stickerDb.php');
 
-$orders_list = (get_all_orders($mysqli))->fetch_all(MYSQLI_ASSOC);
+$orders_list = "";
+if (get_all_orders($mysqli)) {
+    $orders_list = (get_all_orders($mysqli))->fetch_all(MYSQLI_ASSOC);
+}
 
 // Handle search input
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -42,53 +45,56 @@ $total_products = get_total_order_count($mysqli, $search);
             </thead>
             <tbody>
                 <?php
-                foreach ($orders_list as $ol) {
-                    if ($ol['product_id'] != null) {
-                        $o_product = get_product_by_id($mysqli, $ol['product_id']);
-                    } else {
-                        $o_product = false;
-                    }
+                if ($orders_list) {
+                    foreach ($orders_list as $ol) {
+                        if ($ol['product_id'] != null) {
+                            $o_product = get_product_by_id($mysqli, $ol['product_id']);
+                        } else {
+                            $o_product = false;
+                        }
                 ?>
-                    <tr>
-                        <td scope="col"><?php echo $ol['order_id'] ?></td>
-                        <td scope="col"><?php echo $ol['user_id'] ?></td>
-                        <td scope="col">
-                            <?php
-                            if ($o_product) {
-                                $photos = explode(',', $o_product['product_images']);
-                                $dir = "../../images/All/products/" . $photos[0];
-                                if (!empty($photos[0])) : ?>
-                                    <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
-                                <?php else : ?>
-                                    <img src=<?php echo "../../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
-                                <?php endif;
-                            } else { ?>
-                                -
-                            <?php
-                            }
-                            ?>
-                        </td>
-                        <td scope="col">
-                            <?php
-                            if ($ol['item_id'] != null) { 
-                                echo $ol['item_id'];
-                            } else {?>
-                                -
-                            <?php
-                                ;
-                            }
-                            ?>
-                        </td>
-                        <td scope="col">
-                            <?php if($ol['product_type'] == 'item'){ ?>
-                                Customized products
-                            <?php }else{  echo $ol['product_type']; } ?>
-                        </td>
-                        <td scope="col"><?php echo $ol['invoice_id'] ?></td>
-                        <td scope="col"><?php echo $ol['shipping_address'] ?></td>
-                        <td scope="col"><?php echo $ol['order_description'] ?></td>
-                    </tr>
+                        <tr>
+                            <td scope="col"><?php echo $ol['order_id'] ?></td>
+                            <td scope="col"><?php echo $ol['user_id'] ?></td>
+                            <td scope="col">
+                                <?php
+                                if ($o_product) {
+                                    $photos = explode(',', $o_product['product_images']);
+                                    $dir = "../../images/All/products/" . $photos[0];
+                                    if (!empty($photos[0])) : ?>
+                                        <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:100px; height:60px;" alt="Product Image"> <br>
+                                    <?php else : ?>
+                                        <img src=<?php echo "../../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:100px; height:60px;" alt="No Image Available"> <br>
+                                    <?php endif;
+                                } else { ?>
+                                    -
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td scope="col">
+                                <?php
+                                if ($ol['item_id'] != null) {
+                                    echo $ol['item_id'];
+                                } else { ?>
+                                    -
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td scope="col">
+                                <?php if ($ol['product_type'] == 'item') { ?>
+                                    Customized products
+                                <?php } else {
+                                    echo $ol['product_type'];
+                                } ?>
+                            </td>
+                            <td scope="col"><?php echo $ol['invoice_id'] ?></td>
+                            <td scope="col"><?php echo $ol['shipping_address'] ?></td>
+                            <td scope="col"><?php echo $ol['order_description'] ?></td>
+                        </tr>
                 <?php
+                    }
                 }
                 ?>
             </tbody>

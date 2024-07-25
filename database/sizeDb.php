@@ -73,8 +73,17 @@ function updateSizeByName($mysqli, $size, $size_price)
 //delete size by id
 function deleteSizeById($mysqli, $size_id)
 {
-    $sql = "DELETE FROM `sizes` WHERE `size_id` = $size_id";
-    $mysqli->query($sql);
+    try {
+        $sql = "DELETE FROM `sizes` WHERE `size_id` = $size_id";
+        if ($mysqli->query($sql)) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo "Error deleting size: " . $e->getMessage();
+        return false;
+    }
 }
 
 function get_total_sizes_count($mysqli) {

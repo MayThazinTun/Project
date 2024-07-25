@@ -60,8 +60,6 @@ if (isset($_POST['colorPick'])) {
     ];
     $_SESSION['color'] = $color;
 }
-
-
 if (isset($_POST['size'])) {
     $sizes_id = $_POST['size'];
     $result = getSizeById($mysqli, $sizes_id);
@@ -254,9 +252,10 @@ if (isset($_POST['removeSticker'])) {
                         </div>
                         <div class="card" style="height:150px;">
                             <?php
-                            //var_dump($_SESSION['sticker']);
+                            // var_dump($sticker);
                             if (isset($_SESSION['sticker']) && $_SESSION['sticker'] != []) {
-                                $dir = "./images/All/stickers/" . $_SESSION['sticker']['sticker_images'];
+                                $sticker = $_SESSION['sticker'];
+                                $dir = "./images/All/stickers/" . $sticker['sticker_images'];
                                 ?>
                                 <div class="text-center">
                                     <img src="<?php echo $dir; ?>" alt="" style="max-width: 14rem; height:140px;">
@@ -340,7 +339,7 @@ if (isset($_POST['removeSticker'])) {
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <a href="./Register/signin.php" class="btn btn-dark">OK</a>
+                                    <a href="./signin.php" class="btn btn-dark">OK</a>
                                 </div>
                             </div>
                         </div>

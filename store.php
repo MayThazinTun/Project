@@ -78,7 +78,7 @@ if ($user) {
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
-                                                <a href="./Register/signin.php" class="btn btn-dark">OK</a>
+                                                <a href="./signin.php" class="btn btn-dark">OK</a>
                                             </div>
                                         </div>
                                     </div>
