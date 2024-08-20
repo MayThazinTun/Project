@@ -113,7 +113,7 @@ $categories = get_all_categories_pagination($mysqli, $limit, $offset);
                         <div class="col-auto">
                             <?php if (isset($_GET['updated_id'])) : ?>
                                 <button type="submit" name="update" class="btn btn-primary">Update&nbsp;<i class="fa-solid fa-circle-plus"></i></button>
-                                <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
+                                <a href="index.php" class="btn btn-secondary">Cancel</a>
                             <?php else : ?>
                                 <button type="submit" name="submit" class="btn btn-primary">Create&nbsp;<i class="fa-solid fa-circle-plus"></i></button>
                             <?php endif; ?>

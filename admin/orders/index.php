@@ -41,6 +41,7 @@ $total_products = get_total_order_count($mysqli, $search);
                     <th scope="col">Invoice_ID</th>
                     <th scope="col">Shipping_address</th>
                     <th scope="col">Order_description</th>
+                    <th scope="col">Order_Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -92,6 +93,7 @@ $total_products = get_total_order_count($mysqli, $search);
                             <td scope="col"><?php echo $ol['invoice_id'] ?></td>
                             <td scope="col"><?php echo $ol['shipping_address'] ?></td>
                             <td scope="col"><?php echo $ol['order_description'] ?></td>
+                            <td scope="col"><?php echo $ol['created_at'] ?></td>
                         </tr>
                 <?php
                     }
