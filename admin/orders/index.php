@@ -39,7 +39,7 @@ $total_products = get_total_order_count($mysqli, $search);
                     <th scope="col">Customized_ID</th>
                     <th scope="col">Types</th>
                     <th scope="col">Invoice_ID</th>
-                    <th scope="col">Shipping_address</th>
+                    <th scope="col">Address</th>
                     <th scope="col">Order_description</th>
                     <th scope="col">Order_Date</th>
                 </tr>

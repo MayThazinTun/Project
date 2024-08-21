@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
                 $success = "Category created successfully";
                 $category_name = "";
             } else {
-                $invalid = "Something went wrong";
+                $invalid = "This Product has instocks";
             }
         }
     }
@@ -35,7 +35,7 @@ if (isset($_GET['deleted_id'])) {
     if (delete_category_by_id($mysqli, $category_id)) {
         header('location: index.php?success=Category has been deleted');
     } else {
-        header('location: index.php?invalid=Something went wrong');
+        header('location: index.php?invalid=This Product has instocks');
     }
 }
 

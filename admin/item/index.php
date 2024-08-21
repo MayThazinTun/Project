@@ -45,6 +45,7 @@ $total_products = get_total_item_count($mysqli, $search);
                     <th scope="col">Price</th>
                     <th scope="col">Order_Quantity</th>
                     <th scope="col">Note</th>
+                    <th scope="col">Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,6 +103,7 @@ $total_products = get_total_item_count($mysqli, $search);
                             <td class="align-middle"><?php echo $c_p['item_price'] ?></td>
                             <td class="align-middle"><?php echo $c_p['item_quantity'] ?></td>
                             <td class="align-middle"><?php echo $c_p['item_note'] ?></td>
+                            <td class="align-middle"><?php echo substr($c_p['created_at'], 0, 10) ?></td>
                         </tr>
                 <?php
                     }
