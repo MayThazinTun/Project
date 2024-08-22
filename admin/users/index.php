@@ -73,6 +73,7 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
     <table class="table table-striped table-bordered my-4 text-center">
         <thead>
             <tr>
+                <th scope="col">#</th>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
@@ -88,6 +89,7 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
             foreach ($users as $user): ?>
                 <tr>
                     <td class="align-middle"><?php echo $ID++ ?></td>
+                    <td class="align-middle"><?php echo $user['id']; ?></td>
                     <td class="align-middle"><?php echo $user['name']; ?></td>
                     <td class="align-middle"><?php echo $user['email']; ?></td>
                     <td class="align-middle"><?php echo $user['address']; ?></td>

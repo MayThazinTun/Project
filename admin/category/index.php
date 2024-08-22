@@ -33,9 +33,9 @@ if (isset($_POST['submit'])) {
 if (isset($_GET['deleted_id'])) {
     $category_id = $_GET['deleted_id'];
     if (delete_category_by_id($mysqli, $category_id)) {
-        header('location: index.php?success=Category has been deleted');
+        header('location: index.php?success=Category has been deleted!');
     } else {
-        header('location: index.php?invalid=This category cannot be deleted');
+        header('location: index.php?invalid=This category has instocks!');
     }
 }
 
