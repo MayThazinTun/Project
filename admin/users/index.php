@@ -1,8 +1,22 @@
 <?php require_once('../../database/userDb.php'); ?>
 <?php require_once('../layouts/adminHeader.php');
+$success = "";
+$invalid = "";
+if (isset($_GET['success'])) {
+    $success = $_GET['success'];
+}
+
+if (isset($_GET['invalid'])) {
+    $invalid = $_GET['invalid'];
+}
+
 if (isset($_GET['deleted_id'])) {
-    delete_user($mysqli, $_GET['deleted_id']);
-    header('location: index.php');
+    if (delete_user($mysqli, $_GET['deleted_id'])) {
+        header('location: index.php?success=Member has been deleted');
+    } else {
+        header('location: index.php?invalid=This member cannot be deleted');
+    }
+
     exit;
 }
 
@@ -11,7 +25,7 @@ if (isset($_GET['deleted_id'])) {
 $limit = 5;
 
 // Page Number where we are
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
 // Value from input field
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -28,16 +42,34 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
 ?>
 
 <div class="container mt-2">
-    <h1 class="text-center">Users Information</h1>
+    <h1 class="text-center">Members Information</h1>
     <div class="d-flex justify-content-between mb-2">
         <a href="./create.php" class="btn btn-primary">Create&nbsp;New&nbsp;<i class="fas fa-user-plus"></i></a>
         <!-- Search Form -->
         <form method="get" class="d-flex">
-            <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?php echo htmlspecialchars($search); ?>" style="width: 150px;">
+            <input type="text" name="search" class="form-control me-2" placeholder="Search"
+                value="<?php echo htmlspecialchars($search); ?>" style="width: 150px;">
             <button type="submit" class="btn btn-primary me-2"><i class="fa-solid fa-magnifying-glass"></i></button>
             <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
         </form>
     </div>
+    <?php if ($success) { ?>
+        <div class="d-flex justify-content-center">
+            <div class='col-6 alert alert-primary alert-dismissible fade show' role='alert'>
+                <strong><?php echo $success ?></strong>
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>
+        </div>
+    <?php }
+    if ($invalid) {
+        ?>
+        <div class="d-flex justify-content-center">
+            <div class='col-6 alert alert-danger alert-dismissible fade show' role='alert'>
+                <strong><?php echo $invalid ?></strong>
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>
+        </div>
+    <?php } ?>
     <table class="table table-striped table-bordered my-4 text-center">
         <thead>
             <tr>
@@ -53,7 +85,7 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
         <tbody>
             <?php
             $ID = 1;
-            foreach ($users as $user) : ?>
+            foreach ($users as $user): ?>
                 <tr>
                     <td class="align-middle"><?php echo $ID++ ?></td>
                     <td class="align-middle"><?php echo $user['name']; ?></td>
@@ -61,39 +93,50 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
                     <td class="align-middle"><?php echo $user['address']; ?></td>
                     <td class="align-middle"><?php echo $user['role']; ?></td>
                     <td class="align-middle">
-                        <?php foreach (explode(",", $user['images']) as $photo) :
-                            $dir = "../../images/All/users/".$photo;
+                        <?php foreach (explode(",", $user['images']) as $photo):
+                            $dir = "../../images/All/users/" . $photo;
                             ?>
-                            <img src="<?php echo $dir; ?>" alt="" class="img-fluid rounded-circle mx-auto d-block" style="max-width: 60px; max-height: 60px;">
+                            <img src="<?php echo $dir; ?>" alt="" class="img-fluid rounded-circle mx-auto d-block"
+                                style="max-width: 60px; max-height: 60px;">
                         <?php endforeach; ?>
                     </td>
                     <td class="align-middle">
-                        <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2'><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i class="fa-solid fa-trash"></i></a>
+                        <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2'><i
+                                class="fa-solid fa-pen-to-square"></i></a>
+                        <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i
+                                class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
+
     <!-- Pagination -->
     <div class="container">
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
-                <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
-                    <a class="page-link" href="<?php if ($page > 1) echo '?page=' . ($page - 1);
-                                                else echo '#'; ?>" aria-label="Previous">
+                <li class="page-item <?php if ($page <= 1)
+                    echo 'disabled'; ?>">
+                    <a class="page-link" href="<?php if ($page > 1)
+                        echo '?page=' . ($page - 1);
+                    else
+                        echo '#'; ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                    <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="page-item <?php if ($i == $page)
+                        echo 'active'; ?>">
                         <a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i; ?></a>
                     </li>
                 <?php endfor; ?>
-                <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
-                    <a class="page-link" href="<?php if ($page < $total_pages) echo '?page=' . ($page + 1);
-                                                else echo '#'; ?>" aria-label="Next">
+                <li class="page-item <?php if ($page >= $total_pages)
+                    echo 'disabled'; ?>">
+                    <a class="page-link" href="<?php if ($page < $total_pages)
+                        echo '?page=' . ($page + 1);
+                    else
+                        echo '#'; ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

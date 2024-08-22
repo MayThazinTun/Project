@@ -59,11 +59,17 @@ function update_user_by_id($mysqli, $id, $name, $email, $address, $password, $ro
 //delete user by id
 function delete_user($mysqli, $id)
 {
-    $sql = "DELETE FROM `users` WHERE `id` = $id";
-    if ($mysqli->query($sql)) {
-        return true;
+    try {
+        $sql = "DELETE FROM `users` WHERE `id` = $id";
+        if ($mysqli->query($sql)) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        echo "Error deleting type: " . $e->getMessage();
+        return false;
     }
-    return false;
 }
 
 
@@ -71,7 +77,7 @@ function get_all_users_pagination($mysqli, $limit, $offset, $search)
 {
     $search = mysqli_real_escape_string($mysqli, $search);
     $sql = "SELECT * FROM `users` 
-            WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%'
+            WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%' OR `role` LIKE '%$search%'
             LIMIT $limit OFFSET $offset";
 
     $result = $mysqli->query($sql);
@@ -84,7 +90,7 @@ function get_all_users_pagination($mysqli, $limit, $offset, $search)
 function get_total_user_count($mysqli, $search)
 {
     $search = mysqli_real_escape_string($mysqli, $search);
-    $sql = "SELECT count(*) as total FROM `users` WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%'";
+    $sql = "SELECT count(*) as total FROM `users` WHERE `name` LIKE '%$search%' OR `email` LIKE '%$search%' OR `role` LIKE '%$search%'";
     $result = $mysqli->query($sql);
     $row = $result->fetch_assoc();
     return $row['total'];

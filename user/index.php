@@ -9,15 +9,13 @@
                 background="transparent" speed="1" style="width: 450px; height: 450px;" loop
                 autoplay></dotlottie-player>
         </div>
-        <div class="col-5 text-white" id="card">
-            <h2>Welcome</h2>
-            <p class="">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, quam illum! Eaque tempora omnis
-                excepturi nihil quas enim libero facilis, corrupti error molestias quo pariatur repudiandae numquam?
-                Asperiores, sit nihil.
-            </p>
-            <div class="btn border border-1-dark" id="btn"><a href="./store.php"
-                    style="text-decoration:none; color:black;"> Shop now <i class="fa-solid fa-arrow-right"></i> </a>
+        <div class="col-5 border border-1 border-light text-center py-5" id="card"
+            style="border-radius: 20px; background: rgb(255,255,255);
+                    background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 35%, rgba(255,255,255,0.19931722689075626) 100%);">
+            <h2 class="fst-italic fs-1" style="color:lightblue; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Welcome from our website!</h2>
+            <div class="btn border border-1-dark mt-5" id="btn"><a href="./store.php"
+                    style="text-decoration:none; color:black;"> Shop now <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </div>

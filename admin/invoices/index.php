@@ -31,6 +31,7 @@ $total_products = get_total_invoice_count($mysqli, $search);
                     <th scope="col">User_ID</th>
                     <th scope="col">Order_ID</th>
                     <th scope="col">Invoice_total</th>
+                    <th scope="col">Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +49,7 @@ $total_products = get_total_invoice_count($mysqli, $search);
                         <td scope="col"><?php echo $order_id[0]['user_id'] ?></td>
                         <td scope="col"><?php echo $order_id[0]['order_id'] ?></td>
                         <td scope="col"><?php echo $il['total_amount'] ?></td>
+                        <td scope="col"><?php echo substr($order_id[0]['created_at'], 0, 10) ?></td>
                     </tr>
                 <?php
                 }

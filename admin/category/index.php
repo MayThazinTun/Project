@@ -35,7 +35,7 @@ if (isset($_GET['deleted_id'])) {
     if (delete_category_by_id($mysqli, $category_id)) {
         header('location: index.php?success=Category has been deleted');
     } else {
-        header('location: index.php?invalid=This Product has instocks');
+        header('location: index.php?invalid=This category cannot be deleted');
     }
 }
 
@@ -48,7 +48,7 @@ if (isset($_GET['updated_id'])) {
         if (update_category_by_id($mysqli, $category_id, $category_name)) {
             header('location: index.php?success=Category has been updated');
         } else {
-            header('location: index.php?invalid=This category cannot be deleted');
+            header('location: index.php?invalid=This category cannot be updated');
         }
     }
 }

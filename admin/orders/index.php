@@ -93,7 +93,7 @@ $total_products = get_total_order_count($mysqli, $search);
                             <td scope="col"><?php echo $ol['invoice_id'] ?></td>
                             <td scope="col"><?php echo $ol['shipping_address'] ?></td>
                             <td scope="col"><?php echo $ol['order_description'] ?></td>
-                            <td scope="col"><?php echo $ol['created_at'] ?></td>
+                            <td scope="col"><?php echo substr($ol['created_at'], 0, 10) ?></td>
                         </tr>
                 <?php
                     }

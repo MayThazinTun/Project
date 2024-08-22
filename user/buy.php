@@ -30,8 +30,10 @@ if (isset($_POST['back']) || isset($_POST['close'])) {
     unset($_SESSION['order']);
     $modal_order = true;
 }
+
 $type_id = $size_id = $color_id = $sticker_id = $item_price = $item_quantity = $item_note = $orderTotal = "";
 $product_id = $item_id = null;
+
 if (isset($_POST['pay'])) {
     $modal_invoice = true;
     if (isset($_SESSION['orderTotal'])) {
@@ -52,17 +54,18 @@ if (isset($_POST['pay'])) {
             $item_price = $sc['total_price'];
             $item_quantity = $sc['qty'];
             $item_note = $sc['note'];
-        }
-        if (empty($sticker_id) && empty($item_note)) {
-            if (create_item($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)) {
-                $creItem = get_last_item($mysqli);
+
+            if (empty($sticker_id) && empty($item_note)) {
+                if (create_item($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)) {
+                    $creItem = get_last_item($mysqli);
+                }
+            } else {
+                if (createItemsAll($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)) {
+                    $creItem = get_last_item($mysqli);
+                }
             }
-        } else {
-            if (createItemsAll($mysqli, $type_id, $color_id, $size_id, $sticker_id, $item_price, $item_quantity, $item_note)) {
-                $creItem = get_last_item($mysqli);
-            }
+            $status = create_order_item($mysqli, $id, $product_id, $creItem['item_id'], "item", $creInvoice['invoice_id'], $item_quantity, $address, $description);
         }
-        $status = create_order_item($mysqli, $id, $product_id, $creItem['item_id'],"item", $creInvoice['invoice_id'],$item_quantity, $address, $description);
     }
     if (isset($_SESSION['products'])) {
         foreach ($cart as $c) {
@@ -80,7 +83,7 @@ if (isset($_POST['pay'])) {
                 $updateProduct['product_images'],
                 $updateProduct['product_description']
             );
-             $status = create_order_product($mysqli, $id, $c['product_id'], $item_id,"product", $creInvoice['invoice_id'],$c['product_quantity'], $address, $description);
+            $status = create_order_product($mysqli, $id, $c['product_id'], $item_id, "product", $creInvoice['invoice_id'], $c['product_quantity'], $address, $description);
         }
     }
     unset($_SESSION['products']);
@@ -110,7 +113,7 @@ if (isset($_POST['pay'])) {
             <tbody>
                 <?php
                 for ($i = 0; $i < count($shirtCart); $i++) {
-                ?>
+                    ?>
                     <tr>
                         <th scope="row"><?php echo $i + 1 ?></th>
                         <td><?php echo $shirtCart[$i]['type_name'] ?></td>
@@ -118,12 +121,12 @@ if (isset($_POST['pay'])) {
                         <td><?php echo $shirtCart[$i]['qty'] ?></td>
                         <td><?php echo $shirtCart[$i]['total_price'] * $shirtCart[$i]['qty'] ?> MMK </td>
                     </tr>
-                <?php
+                    <?php
                 }
                 ?>
                 <?php
                 for ($i = 0; $i < count($cart); $i++) {
-                ?>
+                    ?>
                     <tr>
                         <th scope="row"><?php echo $i + 1 ?></th>
                         <td><?php echo $cart[$i]['product_name'] ?></td>
@@ -153,21 +156,25 @@ if (isset($_POST['pay'])) {
             <div class="row justify-content-evenly">
                 <div class="form-group mb-2 col">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" value="<?php echo $name ?>" disabled>
+                    <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
+                        value="<?php echo $name ?>" disabled>
                 </div>
                 <div class="form-group mb-2 col">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value="<?php echo $email ?>" disabled>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                        value="<?php echo $email ?>" disabled>
                 </div>
             </div>
             <div class="row justify-content-evenly">
                 <div class="form-group mb-2 col">
                     <label for="address" class="form-label">Address</label>
-                    <textarea type="text" class="form-control" id="address" aria-describedby="emailHelp" disabled><?php echo $address ?></textarea>
+                    <textarea type="text" class="form-control" id="address" aria-describedby="emailHelp"
+                        disabled><?php echo $address ?></textarea>
                 </div>
                 <div class="form-group mb-2 col">
                     <label for="description" class="form-label">Description</label>
-                    <textarea type="text" class="form-control" id="description" aria-describedby="emailHelp" disabled><?php echo $description ?></textarea>
+                    <textarea type="text" class="form-control" id="description" aria-describedby="emailHelp"
+                        disabled><?php echo $description ?></textarea>
                 </div>
             </div>
         </div>
@@ -177,7 +184,8 @@ if (isset($_POST['pay'])) {
             <a href="./carts.php" class="btn btn-secondary" name="back">Back</a>
             <button class="btn btn-dark" name="pay">Pay</button>
         </form>
-        <button class="d-none" id="vouchar" data-bs-target="#invoice" data-bs-toggle="modal" data-bs-dismiss="modal"></button>
+        <button class="d-none" id="vouchar" data-bs-target="#invoice" data-bs-toggle="modal"
+            data-bs-dismiss="modal"></button>
         <?php require_once("./cart_modal/invoice.php") ?>
     </div>
 </div>
