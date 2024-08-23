@@ -195,7 +195,7 @@ if (isset($_POST['refresh']) || isset($_POST['download'])) {
                         <p>
                             ph no : +959 - 123456789<br>
                             address : Yangon,Myanmar.<br>
-                            email : teewroldmyanmar@gmail.com
+                            email : teeworldmyanmar@gmail.com
                         </p>
                     </div>
                     <div class="text-center">

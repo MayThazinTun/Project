@@ -2,10 +2,38 @@
 require_once('../layouts/adminHeader.php');
 require_once('../../database/productDb.php');
 
+$success = "";
+$invalid = "";
+if (isset($_GET['success'])) {
+    $success = $_GET['success'];
+}
+
+if (isset($_GET['invalid'])) {
+    $invalid = $_GET['invalid'];
+}
 // Delete
 if (isset($_GET['deleted_id'])) {
-    delete_product_by_id($mysqli, $_GET['deleted_id']);
-    header('location: index.php');
+    if(delete_product_by_id($mysqli, $_GET['deleted_id'])){
+        header('location: index.php?success=Products has been deleted!');
+    } else {
+        $pp = get_product_by_id($mysqli,$_GET['deleted_id']);
+        $pp['product_quantity'] = 0;
+        $rp = update_product($mysqli,
+        $pp['product_id'],
+        $pp['category_id'],
+        $pp['product_name'],
+        $pp['product_size'],
+        $pp['product_color'],
+        $pp['product_quantity'],
+        $pp['product_price'],
+        $pp['product_images'],
+        $pp['product_description']);
+        if($rp){
+            header('location: index.php?success=Product has been deleted!');
+        }else {
+            header('location: index.php?invalid=Product cannot be deleted!');
+        }
+    }
     exit;
 }
 
@@ -39,6 +67,7 @@ $products = get_all_products_paginated($mysqli, $limit, $offset, $search);
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <?php foreach ($products as $product) : ?>
                 <div class="col">
+                    <?php if($product['product_quantity'] != 0) {?>
                     <div class="card me-3 mb-2" style="width: 14rem; height:fit-content">
                         <?php foreach (explode(",", $product['product_images']) as $photo) : ?>
                             <?php if (!empty($photo)) : 
@@ -71,6 +100,7 @@ $products = get_all_products_paginated($mysqli, $limit, $offset, $search);
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
             <?php endforeach; ?>
         </div>

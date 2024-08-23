@@ -125,17 +125,16 @@ require_once ("./Layout/header.php");
                     <a href="./change_pw.php" class="btn btn-outline-dark border-0 text-start ps-4">Change password</a>
                 </div>
             </div>
-            <a class="btn btn-outline-secondary border-0 text-start ps-1" data-bs-toggle="collapse" href="#information"
-                role="button" aria-expanded="false" aria-controls="collapseExample">
-                <i class="fa-solid fa-caret-down fa-lg" style="color: #696969;"></i> &nbsp; Information
+            <a class="btn btn-outline-secondary border-0 text-start ps-1 ps-3" role="button" href="./contact_us.php">
+                Contact us
             </a>
-            <div class="collapse ps-2" id="information" style="width:90%">
+            <!-- <div class="collapse ps-2" id="information" style="width:90%">
                 <div class="d-grid gap-2">
                     <a href="" class="btn btn-outline-dark border-0 text-start ps-4">Contact Us</a>
                     <a href="" class="btn btn-outline-dark border-0 text-start ps-4">About Us</a>
                     <a href="" class="btn btn-outline-dark border-0 text-start ps-4">Shop Address</a>
                 </div>
-            </div>
+            </div> -->
             <form method="post" class="">
                 <button name="logout" class="btn btn-outline-secondary border-0"><i
                         class="fa-solid fa-arrow-right-from-bracket fa-xl" style="color: #616161;"></i> Logout</button>

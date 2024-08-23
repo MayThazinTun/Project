@@ -128,6 +128,7 @@ require_once("./Layout/header.php");
             if ($products) {
 
                 while ($product = $products->fetch_assoc()) {
+                    if($product['product_quantity']!=0){
 
             ?>
                     <div class="card col-2 ms-5 mt-3 p-1 mb-3 shadow" style="width:280px; height: auto;">
@@ -159,7 +160,7 @@ require_once("./Layout/header.php");
                             </div>
                         </div>
                     </div>
-                <?php }
+                <?php } }
             } else { ?>
                 <h1 class="text-secondary text-center mt-5">Out of stock!</h1>
             <?php } ?>

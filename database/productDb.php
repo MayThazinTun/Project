@@ -194,9 +194,17 @@ function update_product($mysqli, $product_id, $category_id, $product_name, $prod
 // delete product by id
 function delete_product_by_id($mysqli, $product_id)
 {
-    $sql = "DELETE FROM `products` WHERE `product_id` = $product_id";
-    if ($mysqli->query($sql)) {
-        return true;
+    try {
+        // Attempt to execute the query
+        $sql = "DELETE FROM `products` WHERE `product_id` = $product_id";
+        if ($mysqli->query($sql) === TRUE) {
+            return true;
+        } else {
+            throw new Exception($mysqli->error);
+        }
+    } catch (Exception $e) {
+        // Handle any errors
+        echo "Error deleting category: " . $e->getMessage();
+        return false;
     }
-    return false;
 }

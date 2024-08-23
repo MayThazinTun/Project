@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
     if (empty($product_name_error) && empty($product_price_error) && empty($product_quantity_error)) {
         $photo_paths_str = implode(",", $photos_paths);
         if (empty($product_size)) {
-            $result = update_product($mysqli, $product_id, $category_id, $product_name, null, $product_color, $product_quantity, $product_price, $photo_paths_str, $product_description);
+            $result = update_product($mysqli, $product_id, $category_id, $product_name, $product_size, $product_color, $product_quantity, $product_price, $photo_paths_str, $product_description);
         } else {
             $result = update_product($mysqli, $product_id, $category_id, $product_name, $product_size, $product_color, $product_quantity, $product_price, $photo_paths_str, $product_description);
         }
@@ -102,6 +102,7 @@ if (isset($_POST['submit'])) {
     }
     
 }
+echo "1",$product['product_color'], "2", $product['product_size'];
 ?>
 
 <div class="container mt-2">
@@ -141,7 +142,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-2">
                     <label for="product_size" class="form-label">Enter Your Product Size</label>
                     <div>
-                        <input type="text" size="product_size" class="form-control" value="<?php echo $product_size ?>"
+                        <input type="text" name="product_size" class="form-control" value="<?php echo $product_size ?>"
                             id="product_size">
                         <small class="text-danger"><?php echo $product_size_error ?></small>
                     </div>
@@ -149,7 +150,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-2">
                     <label for="product_color" class="form-label">Enter Your Product Color</label>
                     <div>
-                        <input type="text" color="product_color" class="form-control" value="<?php echo $product_color ?>"
+                        <input type="text" name="product_color" class="form-control" value="<?php echo $product_color ?>"
                             id="product_color">
                         <small class="text-danger"><?php echo $product_color_error ?></small>
                     </div>

@@ -1,24 +1,25 @@
 <?php require_once('../../database/userDb.php'); ?>
 <?php require_once('../layouts/adminHeader.php');
-$success = "";
-$invalid = "";
-if (isset($_GET['success'])) {
-    $success = $_GET['success'];
-}
 
-if (isset($_GET['invalid'])) {
-    $invalid = $_GET['invalid'];
-}
+// $success = "";
+// $invalid = "";
+// if (isset($_GET['success'])) {
+//     $success = $_GET['success'];
+// }
 
-if (isset($_GET['deleted_id'])) {
-    if (delete_user($mysqli, $_GET['deleted_id'])) {
-        header('location: index.php?success=Member has been deleted');
-    } else {
-        header('location: index.php?invalid=This member cannot be deleted');
-    }
+// if (isset($_GET['invalid'])) {
+//     $invalid = $_GET['invalid'];
+// }
 
-    exit;
-}
+// if (isset($_GET['deleted_id'])) {
+//     if (delete_user($mysqli, $_GET['deleted_id'])) {
+//         header('location: index.php?success=Member has been deleted');
+//     } else {
+//         header('location: index.php?invalid=This member cannot be deleted');
+//     }
+
+//     exit;
+// }
 
 
 // Page Limit for Users
@@ -53,23 +54,23 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
             <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i></a>
         </form>
     </div>
-    <?php if ($success) { ?>
-        <div class="d-flex justify-content-center">
+    <?php //if ($success) { ?>
+        <!-- <div class="d-flex justify-content-center">
             <div class='col-6 alert alert-primary alert-dismissible fade show' role='alert'>
-                <strong><?php echo $success ?></strong>
+                <strong><?php //echo $success ?></strong>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>
-        </div>
-    <?php }
-    if ($invalid) {
+        </div> -->
+    <?php //}
+    //if ($invalid) {
         ?>
-        <div class="d-flex justify-content-center">
+        <!-- <div class="d-flex justify-content-center">
             <div class='col-6 alert alert-danger alert-dismissible fade show' role='alert'>
-                <strong><?php echo $invalid ?></strong>
+                <strong><?php //echo $invalid ?></strong>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>
-        </div>
-    <?php } ?>
+        </div> -->
+    <?php //} ?>
     <table class="table table-striped table-bordered my-4 text-center">
         <thead>
             <tr>
@@ -105,8 +106,8 @@ $users = get_all_users_pagination($mysqli, $limit, $offset, $search);
                     <td class="align-middle">
                         <a href='edit.php?updated_id=<?php echo $user['id']; ?>' class='btn btn-warning me-2'><i
                                 class="fa-solid fa-pen-to-square"></i></a>
-                        <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i
-                                class="fa-solid fa-trash"></i></a>
+                        <!-- <a href='index.php?deleted_id=<?php echo $user['id']; ?>' class='btn btn-danger'><i
+                                class="fa-solid fa-trash"></i></a> -->
                     </td>
                 </tr>
             <?php endforeach; ?>

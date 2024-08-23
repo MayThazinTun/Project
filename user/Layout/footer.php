@@ -39,9 +39,9 @@
             <div class="col-2">
                 <h5 style="color:gray;">Information</h5>
                 <p>
-                    <a href="" style="text-decoration: none; color:gray;">Contact Us</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">About Us</a><br>
-                    <a href="" style="text-decoration: none; color:gray;">Shop Address</a><br>
+                    <a href="./contact_us.php" style="text-decoration: none; color:gray;">Contact Us</a><br>
+                    <!-- <a href="" style="text-decoration: none; color:gray;">About Us</a><br>
+                    <a href="" style="text-decoration: none; color:gray;">Shop Address</a><br> -->
                 </p>
             </div>
             <div class="col-2">
