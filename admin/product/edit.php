@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
     }
     
 }
-echo "1",$product['product_color'], "2", $product['product_size'];
+// echo "1",$product['product_color'], "2", $product['product_size'];
 ?>
 
 <div class="container mt-2">
