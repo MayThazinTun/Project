@@ -78,15 +78,17 @@ require_once("./Layout/header.php");
                 <hr>
                 <div class="btn-group-vertical gap-2">
 
-                    <button class="btn btn-outline-secondary border-0 text-start ps-4" onclick="location.href='./carts.php'">All</button>
+                    <button class="btn btn-outline-secondary border-0 text-start ps-4"
+                        onclick="location.href='./carts.php'">All</button>
                     <?php
                     $categories = get_all_categories($mysqli);
                     while ($category = $categories->fetch_assoc()) {
-                    ?>
-                        <button class="btn btn-outline-secondary border-0 text-start ps-4" onclick="location.href='./carts.php?category_id=<?php echo $category['category_id'] ?>';">
+                        ?>
+                        <button class="btn btn-outline-secondary border-0 text-start ps-4"
+                            onclick="location.href='./carts.php?category_id=<?php echo $category['category_id'] ?>';">
                             <?php echo $category['category_name'] ?>
                         </button>
-                    <?php
+                        <?php
                     }
                     ?>
                     <!-- <button class="btn btn-outline-secondary border-0 text-start ps-4">database</button> -->
@@ -116,10 +118,12 @@ require_once("./Layout/header.php");
                                                 <div class="col-3 text-center">
                                                     <?php $photos = explode(',', $shirtCart[$i]['type_images']);
                                                     $dir = "../images/All/types/" . $photos[0];
-                                                    if (!empty($photos[0])) : ?>
-                                                        <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:170px; height:100px;" alt="Product Image">
-                                                    <?php else : ?>
-                                                        <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:170px; height:100px;" alt="No Image Available">
+                                                    if (!empty($photos[0])): ?>
+                                                        <img src="<?php echo $dir; ?>" class="rounded border border-1"
+                                                            style="width:170px; height:100px;" alt="Product Image">
+                                                    <?php else: ?>
+                                                        <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 "
+                                                            style="width:170px; height:100px;" alt="No Image Available">
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="col-3 ps-5">
@@ -129,7 +133,8 @@ require_once("./Layout/header.php");
                                                     <p style="display:inline;">
                                                         Size : <?php echo $shirtCart[$i]['size'] ?><br>
                                                         Color
-                                                    <div class="border border-1 rounded" style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $shirtCart[$i]['color_name'] ?>">
+                                                    <div class="border border-1 rounded"
+                                                        style="margin-left: 60px; width:30px; height:30px; background-color:<?php echo $shirtCart[$i]['color_name'] ?>">
                                                     </div>
                                                     Price : <?php echo $shirtCart[$i]['total_price'] ?>MMK<br>
                                                     </p>
@@ -142,27 +147,30 @@ require_once("./Layout/header.php");
                                                 </div>
                                             </div>
                                             <div>
-                                                <a href="./carts.php?delect=<?php echo $i ?>" class="btn" name="delect"><i class="fa-solid fa-trash-can" style="color: #98999a;"></i></a>
+                                                <a href="./carts.php?delect=<?php echo $i ?>" class="btn" name="delect"><i
+                                                        class="fa-solid fa-trash-can" style="color: #98999a;"></i></a>
                                             </div>
                                         </div>
-                                <?php }
+                                    <?php }
                                 } ?>
 
                                 <?php
                                 for ($i = 0; $i < count($cart); $i++) {
-                                ?>
+                                    ?>
                                     <div class="d-flex">
                                         <div class="row justify-content-evenly" style="width:700px;">
                                             <div class="col-3 text-center">
                                                 <?php $photos = explode(',', $cart[$i]['product_images']);
                                                 $dir = "../images/All/products/" . $photos[0];
-                                                if (!empty($photos[0])) : ?>
-                                                    <img src="<?php echo $dir; ?>" class="rounded border border-1" style="width:170px; height:100px;" alt="Product Image">
-                                                <?php else : ?>
-                                                    <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:170px; height:100px;" alt="No Image Available">
+                                                if (!empty($photos[0])): ?>
+                                                    <img src="<?php echo $dir; ?>" class="rounded border border-1"
+                                                        style="width:170px; height:100px;" alt="Product Image">
+                                                <?php else: ?>
+                                                    <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 "
+                                                        style="width:170px; height:100px;" alt="No Image Available">
                                                 <?php endif; ?>
                                                 <!-- <img src="<?php //echo $cart[$i]['product_images'] 
-                                                                ?>" alt="" style="width:auto; height:80px;"> -->
+                                                        ?>" alt="" style="width:auto; height:80px;"> -->
                                             </div>
                                             <div class="col-3 ps-5">
                                                 <h6><?php echo $cart[$i]['product_name'] ?></h6>
@@ -182,11 +190,13 @@ require_once("./Layout/header.php");
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column ">
-                                            <a href="./carts.php?dec=<?php echo $i ?>" class="btn" name="dec"><i class="fa-solid fa-delete-left" style="color: #a8a8a8;"></i></a>
-                                            <a href="./carts.php?delete=<?php echo $i ?>" class="btn" name="delect"><i class="fa-solid fa-trash-can" style="color: #98999a;"></i></a>
+                                            <a href="./carts.php?dec=<?php echo $i ?>" class="btn" name="dec"><i
+                                                    class="fa-solid fa-delete-left" style="color: #a8a8a8;"></i></a>
+                                            <a href="./carts.php?delete=<?php echo $i ?>" class="btn" name="delect"><i
+                                                    class="fa-solid fa-trash-can" style="color: #98999a;"></i></a>
                                         </div>
                                     </div>
-                                    <?php }
+                                <?php }
                             } else {
                                 if (count($cart) === 0 && count($shirtCart) === 0) {
                                     echo "<h3 class='text-secondary text-center'> No products are added to cart yet <h3>";
@@ -197,13 +207,16 @@ require_once("./Layout/header.php");
                                             <div class="row justify-content-evenly" style="width:700px;">
                                                 <div class="col-3 text-center">
                                                     <?php $photos = explode(',', $c['product_images']);
-                                                    if (!empty($photos[0])) : ?>
-                                                        <img src="<?php echo htmlspecialchars($photos[0]); ?>" class="rounded" style="max-width: 20rem; max-height: 30rem;" alt="Product Image">
-                                                    <?php else : ?>
-                                                        <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 " style="width:170px; height:100px;" alt="No Image Available">
+                                                    $dir = "../images/All/products/" . $photos[0];
+                                                    if (!empty($photos[0])): ?>
+                                                        <img src="<?php echo $dir; ?>" class="rounded"
+                                                            style="width:170px; height:100px;" alt="Product Image">
+                                                    <?php else: ?>
+                                                        <img src=<?php echo "../images/All/default_image.jpg" ?> class="rounded ms-2 "
+                                                            style="width:170px; height:100px;" alt="No Image Available">
                                                     <?php endif; ?>
                                                     <!-- <img src="<?php //echo $cart[$i]['product_images'] 
-                                                                    ?>" alt="" style="width:auto; height:80px;"> -->
+                                                                ?>" alt="" style="width:auto; height:80px;"> -->
                                                 </div>
                                                 <div class="col-3 ps-5">
                                                     <h6><?php echo $c['product_name'] ?></h6>
@@ -222,12 +235,14 @@ require_once("./Layout/header.php");
                                                     <?php echo $c['total_amount'] ?>MMK
                                                 </div>
                                             </div>
-                                            <div class="d-flex flex-column">
-                                                <a href="./carts.php?dec=<?php echo $i ?>" class="btn" name="dec"><i class="fa-solid fa-delete-left" style="color: #a8a8a8;"></i></a>
-                                                <a href="./carts.php?delete=<?php echo $i ?>" class="btn" name="delect"><i class="fa-solid fa-trash-can" style="color: #98999a;"></i></a>
+                                            <div class="d-flex flex-column ">
+                                                <a href="./carts.php?dec=<?php echo $i ?>" class="btn" name="dec"><i
+                                                        class="fa-solid fa-delete-left" style="color: #a8a8a8;"></i></a>
+                                                <a href="./carts.php?delete=<?php echo $i ?>" class="btn" name="delect"><i
+                                                        class="fa-solid fa-trash-can" style="color: #98999a;"></i></a>
                                             </div>
                                         </div>
-                            <?php }
+                                    <?php }
                                 }
                             } ?>
 
@@ -249,7 +264,7 @@ require_once("./Layout/header.php");
                                 $sq = $sq + $sc['qty'];
                                 $shirtTotal = ($shirtTotal + $sc['total_price']) * $sq;
                             }
-                        ?>
+                            ?>
                             <div class="d-flex justify-content-between px-2">
                                 <div>
                                     Shirt (<?php echo $sq ?>)
@@ -258,14 +273,14 @@ require_once("./Layout/header.php");
                                     <?php echo $shirtTotal ?>
                                 </div>
                             </div>
-                        <?php
+                            <?php
                         }
                         for ($i = 0; $i < count($cate); $i++) {
                             //var_dump($cate['category_id']);
                             $categories = get_category_by_id($mysqli, $cate[$i]['category_id']);
                             //var_dump($categories);
                             //var_dump($category);
-                        ?>
+                            ?>
                             <div class="d-flex justify-content-between px-2">
                                 <div>
                                     <?php echo $categories['category_name'] ?> (<?php echo $cate[$i]['category_qty'] ?>)
@@ -294,8 +309,7 @@ require_once("./Layout/header.php");
                         </div>
                     </div>
                     <div class="d-grid">
-                        <a class="btn btn-dark" data-bs-toggle="modal" href="#order" role="button">Process
-                            to Order</a>
+                        <a class="btn btn-dark" data-bs-toggle="modal" href="#order" role="button">Order Now</a>
                         <?php
                         require_once("./cart_modal/order.php");
                         ?>

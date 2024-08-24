@@ -117,8 +117,7 @@ if (isset($_POST['order'])) {
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button class="btn btn-dark" name="order" <?php echo $disabled ?>>Process to
-                                Buy</button>
+                            <button class="btn btn-dark" name="order" <?php echo $disabled ?>>OK</button>
                         </div>
                     </form>
                 </div>
